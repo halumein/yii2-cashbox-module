@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\search\CashboxSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Cashboxes';
+$this->title = 'Кассы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cashbox-index">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?php echo Html::a('Create Cashbox', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php echo Html::a('Добавить кассу', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php echo GridView::widget([
@@ -28,9 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'currency',
             'balance',
-            'deleted',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            // 'deleted',
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
         ],
     ]); ?>
 

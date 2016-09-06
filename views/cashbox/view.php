@@ -7,17 +7,19 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Cashbox */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Cashboxes', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Кассы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cashbox-view">
 
     <p>
-        <?php echo Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?php echo Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?php // TODO переделать на транслэйт ?>
+        <?php echo Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php echo Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                // TODO переделать на транслэйт
+                'confirm' => 'Уверены что хотите удалить кассу?',
                 'method' => 'post',
             ],
         ]) ?>

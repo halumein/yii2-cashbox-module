@@ -9,19 +9,28 @@ use yii\bootstrap\ActiveForm;
 ?>
 
 <div class="cashbox-form">
-
     <?php $form = ActiveForm::begin(); ?>
-
-    <?php echo $form->errorSummary($model); ?>
-
-    <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?php echo $form->field($model, 'currency')->textInput(['maxlength' => true]) ?>
-
-    <div class="form-group">
-        <?php echo Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    <div class="row">
+        <div class="col-sm-12">
+            <?= $form->errorSummary($model); ?>
+        </div>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-sm-3">
+            <?= $form->field($model, 'currency')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <?php echo Html::submitButton($model->isNewRecord ? 'Добавить' : 'Изменить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            </div>
+        </div>
+    </div>
+    <?php ActiveForm::end(); ?>
 </div>

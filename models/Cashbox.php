@@ -49,4 +49,9 @@ class Cashbox extends \yii\db\ActiveRecord
             'deleted' => 'Удалена',
         ];
     }
+
+    public function getActiveCashboxes()
+    {
+        return Cashbox::find()->where(['deleted' => null])->all();
+    }
 }

@@ -55,8 +55,12 @@ class CashboxSearch extends Cashbox
         $query->andFilterWhere([
             'id' => $this->id,
             'balance' => $this->balance,
+        ]);
+
+        $query->andWhere([
             'deleted' => $this->deleted,
         ]);
+
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'currency', $this->currency]);

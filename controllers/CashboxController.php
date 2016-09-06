@@ -34,7 +34,11 @@ class CashboxController extends Controller
    public function actionIndex()
    {
        $searchModel = new CashboxSearch();
-       $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+       $searchParams = Yii::$app->request->queryParams;
+       $searchParams['CashboxSearch']['deleted'] = null;
+
+       $dataProvider = $searchModel->search($searchParams);
 
        return $this->render('index', [
            'searchModel' => $searchModel,
@@ -99,9 +103,16 @@ class CashboxController extends Controller
     */
    public function actionDelete($id)
    {
-       $this->findModel($id)->delete();
+       $model = $this->findModel($id);
+       $model->deleted = date('Y:m:d H:i:s', time());
+       if ($model->save()) {
+           return $this->redirect(['index']);
+       } else {
+           return $this->render('/error', [
+               'error' => $model->errors
+           ]);
+       }
 
-       return $this->redirect(['index']);
    }
 
    /**
