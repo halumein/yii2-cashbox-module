@@ -23,4 +23,4 @@ php yii migrate --migrationPath=vendor/halumein/yii2-cashbox-module/migrations
     ]
 ```
 
-дальше обращаться по адреса cashbox/<имя_контроллера>
+дальше обращаться по адресу cashbox/<имя_контроллера>
