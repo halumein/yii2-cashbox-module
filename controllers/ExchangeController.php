@@ -37,7 +37,6 @@ class ExchangeController extends Controller
 
         $searchModel = new ExchangeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        //var_dump(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'activeCashboxes' => $cashbox->activeCashboxes,
@@ -65,14 +64,32 @@ class ExchangeController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Exchange();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model = new Exchange();
+        $cashbox = new Cashbox();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->from_cashbox_id === $model->to_cashbox_id){
+                Yii::$app->getSession()->setFlash('error', "Касса списания не может быть кассой приема!");
+                return $this->render('create', [
+                    'model' => $model,
+                    'activeCashboxes' => $cashbox->activeCashboxes,
+                ]);
+            }
+
+
+
+
+            $model->staffer_id = Yii::$app->user->identity->id;
+            $model->date = date("Y-m-d H:i:s");
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+                return $this->render('create', [
+                    'model' => $model,
+                    'activeCashboxes' => $cashbox->activeCashboxes,
+                ]);
         }
     }
 

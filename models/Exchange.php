@@ -37,7 +37,7 @@ class Exchange extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['from_cashbox_id', 'to_cashbox_id', 'date', 'staffer_id', 'comment'], 'required'],
+            [['from_cashbox_id', 'from_sum', 'to_cashbox_id', 'to_sum', 'staffer_id'], 'required'],
             [['from_cashbox_id', 'to_cashbox_id', 'staffer_id'], 'integer'],
             [['from_sum', 'to_sum', 'rate'], 'number'],
             [['date'], 'safe'],
@@ -88,4 +88,5 @@ class Exchange extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'staffer_id']);
     }
+
 }
