@@ -65,6 +65,24 @@ class ExchangeSearch extends Exchange
 
         $query->andFilterWhere(['like', 'comment', $this->comment]);
 
+        if($dateStart = yii::$app->request->get('date_start')) {
+            $dateStart = date('Y-m-d', strtotime($dateStart));
+            if(!yii::$app->request->get('date_stop')) {
+                $query->andWhere('DATE_FORMAT(date, "%Y-%m-%d") = :dateStart', [':dateStart' => $dateStart]);
+            } else {
+                $query->andWhere('date > :dateStart', [':dateStart' => $dateStart]);
+            }
+        }
+
+        if($dateStop = yii::$app->request->get('date_stop')) {
+            $dateStop = date('Y-m-d', strtotime($dateStop));
+            if($dateStop == '0000-00-00 00:00:00') {
+                $dateStop = date('Y-m-d');
+            }
+
+            $query->andWhere('date < :dateStop', [':dateStop' => $dateStop]);
+        }
+
         return $dataProvider;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace halumein\cashbox\controllers;
 
+use halumein\cashbox\models\Cashbox;
 use Yii;
 use halumein\cashbox\models\Exchange;
 use halumein\cashbox\models\search\ExchangeSearch;
@@ -32,10 +33,14 @@ class ExchangeController extends Controller
      */
     public function actionIndex()
     {
+        $cashbox = new Cashbox();
+
         $searchModel = new ExchangeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        //var_dump(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'activeCashboxes' => $cashbox->activeCashboxes,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

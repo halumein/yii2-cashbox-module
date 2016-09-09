@@ -2,6 +2,7 @@
 
 namespace halumein\cashbox\models;
 
+use common\models\User;
 use yii;
 
 /**
@@ -53,15 +54,14 @@ class Exchange extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            //'from_cashbox_id' => yii::t('cashbox', 'From Cashbox ID'),
-            'from_cashbox_id' => 'Касса списания',
-            'from_sum' => yii::t('cashbox', 'From Sum'),
-            'to_cashbox_id' => yii::t('cashbox', 'To Cashbox ID'),
-            'to_sum' => yii::t('cashbox', 'To Sum'),
-            'date' => yii::t('cashbox', 'Date'),
-            'rate' => yii::t('cashbox', 'Rate'),
-            'staffer_id' => yii::t('cashbox', 'Staffer ID'),
-            'comment' => yii::t('cashbox', 'Comment'),
+            'from_cashbox_id'   => 'Касса списания', //yii::t('cashbox', 'From Cashbox ID'),
+            'from_sum'          => 'Сумма списания', //yii::t('cashbox', 'From Sum'),
+            'to_cashbox_id'     => 'Касса приходования', //yii::t('cashbox', 'To Cashbox ID'),
+            'to_sum'            => 'Сумма приходования', //yii::t('cashbox', 'To Sum'),
+            'date'              => 'Дата транзакции', //yii::t('cashbox', 'Date'),
+            'rate'              => 'Курс транзакции', //yii::t('cashbox', 'Rate'),
+            'staffer_id'        => 'Автор транзакции', //yii::t('cashbox', 'Staffer ID'),
+            'comment'           => 'Комментарий', //yii::t('cashbox', 'Comment'),
         ];
     }
 
@@ -79,5 +79,13 @@ class Exchange extends \yii\db\ActiveRecord
     public function getToCashbox()
     {
         return $this->hasOne(Cashbox::className(), ['id' => 'to_cashbox_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStaffer()
+    {
+        return $this->hasOne(User::className(), ['id' => 'staffer_id']);
     }
 }
