@@ -17,6 +17,7 @@ use Yii;
  * @property integer $client_id
  * @property integer $staffer_id
  * @property string $comment
+ *  * @property string $status
  */
 class Operation extends \yii\db\ActiveRecord
 {
@@ -35,11 +36,12 @@ class Operation extends \yii\db\ActiveRecord
     {
         return [
             [['type', 'balance', 'sum', 'cashbox_id', 'date', 'staffer_id'], 'required'],
-            [['type', 'comment'], 'string'],
+            [['type', 'comment', 'status'], 'string'],
             [['balance', 'sum'], 'number'],
             [['cashbox_id', 'item_id', 'client_id', 'staffer_id'], 'integer'],
             [['date'], 'safe'],
             [['model'], 'string', 'max' => 255],
+            [['cashbox_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cashbox::className(), 'targetAttribute' => ['cashbox_id' => 'id']],
         ];
     }
 
@@ -60,6 +62,15 @@ class Operation extends \yii\db\ActiveRecord
             'client_id' => 'ID клиента',
             'staffer_id' => 'ID работника',
             'comment' => 'Комментарий',
+            'status' => 'Статус',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCashbox()
+    {
+        return $this->hasOne(Cashbox::className(), ['id' => 'cashbox_id']);
     }
 }
