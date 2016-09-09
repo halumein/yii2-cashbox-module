@@ -1,0 +1,65 @@
+<?php
+namespace halumein\cashbox\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "{{%cashbox_operation}}".
+ *
+ * @property integer $id
+ * @property string $type
+ * @property string $balance
+ * @property string $sum
+ * @property integer $cashbox_id
+ * @property string $model
+ * @property integer $item_id
+ * @property string $date
+ * @property integer $client_id
+ * @property integer $staffer_id
+ * @property string $comment
+ */
+class Operation extends \yii\db\ActiveRecord
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return '{{%cashbox_operation}}';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['type', 'balance', 'sum', 'cashbox_id', 'date', 'staffer_id'], 'required'],
+            [['type', 'comment'], 'string'],
+            [['balance', 'sum'], 'number'],
+            [['cashbox_id', 'item_id', 'client_id', 'staffer_id'], 'integer'],
+            [['date'], 'safe'],
+            [['model'], 'string', 'max' => 255],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'type' => 'Тип',
+            'balance' => 'Баланс',
+            'sum' => 'Сумма',
+            'cashbox_id' => 'ID кассы',
+            'model' => 'Модель',
+            'item_id' => 'ID объекта',
+            'date' => 'Дата',
+            'client_id' => 'ID клиента',
+            'staffer_id' => 'ID работника',
+            'comment' => 'Комментарий',
+        ];
+    }
+}
