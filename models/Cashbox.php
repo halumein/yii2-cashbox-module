@@ -50,7 +50,7 @@ class Cashbox extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getActiveCashboxes()
+    public static function getActiveCashboxes()
     {
         return Cashbox::find()->where(['deleted' => null])->all();
     }

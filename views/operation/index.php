@@ -23,20 +23,43 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'id',
-            'type',
+            [
+                'label' => 'Тип',
+                'attribute' => 'type',
+                'value' => function ($model) {
+                    return ($model->type === 'income') ? 'Приход' : 'Расход';
+                },
+                'filter' => ['income' => 'Приход', 'outcome' => 'Расход'],
+            ],
+            [
+                'label' => 'Статус',
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    switch ($model->status) {
+                        case 'created' : return 'Создан';
+                        case 'charged' : return 'Проведён';
+                        case 'refunded' : return 'Возврат';
+                    }
+                },
+                'filter' => ['created' => 'Создан', 'charged' => 'Проведён', 'refunded' => 'Возврат'],
+            ],
             'balance',
             'sum',
             'cashbox_id',
             // 'model',
             // 'item_id',
-            // 'date',
+            [
+                'label' => 'Дата',
+                'attribute' => 'date',
+                'filter' => ''
+            ],
+             'date',
             // 'client_id',
             // 'staffer_id',
             // 'comment:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 65px;']],
         ],
     ]); ?>
 

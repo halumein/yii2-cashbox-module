@@ -19,7 +19,7 @@ class Operationsearch extends Operation
     {
         return [
             [['id', 'cashbox_id', 'item_id', 'client_id', 'staffer_id'], 'integer'],
-            [['type', 'model', 'date', 'comment'], 'safe'],
+            [['type', 'model', 'date', 'comment', 'status'], 'safe'],
             [['balance', 'sum'], 'number'],
         ];
     }
@@ -61,12 +61,29 @@ class Operationsearch extends Operation
             'date' => $this->date,
             'client_id' => $this->client_id,
             'staffer_id' => $this->staffer_id,
+            'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'model', $this->model])
             ->andFilterWhere(['like', 'comment', $this->comment]);
 
+        if($dateStart = yii::$app->request->get('date_start')) {
+            if(!yii::$app->request->get('date_stop')) {
+                $query->andWhere('DATE_FORMAT(date, "%Y-%m-%d") = :dateStart', [':dateStart' => $dateStart]);
+            } else {
+                $query->andWhere('date > :dateStart', [':dateStart' => $dateStart]);
+            }
+        }
+
+        if($dateStop = yii::$app->request->get('date_stop')) {
+            if($dateStop == '0000-00-00 00:00:00') {
+                $dateStop = date('Y-m-d H:i:s');
+            }
+
+            $query->andWhere('date < :dateStop', [':dateStop' => $dateStop]);
+        }
+        
         return $dataProvider;
     }
 }

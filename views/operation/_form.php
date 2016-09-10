@@ -12,21 +12,43 @@ use yii\bootstrap\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php echo $form->errorSummary($model); ?>
-
-    <?php echo $form->field($model, 'type')->dropDownList([ 'income' => 'Приход', 'outcome' => 'Исход', ]) ?>
-
-    <?php echo $form->field($model, 'status')->dropDownList([ 'created' => 'Создан', 'charged' => 'проведён', 'refunded' => 'Отменён',]) ?>
-
-    <?php echo $form->field($model, 'sum')->textInput(['maxlength' => true]) ?>
-
-    <?php echo $form->field($model, 'cashbox_id')->textInput() ?>
-
-    <?php echo $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
-
-    <div class="form-group">
-        <?php echo Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    <div class="row">
+        <div class="col-sm-12">
+            <?= $form->errorSummary($model); ?>
+        </div>
     </div>
+
+    <div class="row">
+        <div class="col-sm-5">
+            <?= $form->field($model, 'type')->dropDownList([ 'income' => 'Приход', 'outcome' => 'Расход', ]) ?>        </div>
+        <div class="col-sm-5 col-sm-offset-1">
+            <?= $form->field($model, 'status')->dropDownList(['charged' => 'Проведён', 'created' => 'Создан']) ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-5">
+            <?= $form->field($model, 'sum')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-sm-5 col-sm-offset-1">
+            <?= $form->field($model, 'cashbox_id')->textInput() ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <?= Html::submitButton('Провести', ['class' => 'btn btn-success']) ?>
+            </div>
+        </div>
+    </div>
+
 
     <?php ActiveForm::end(); ?>
 
