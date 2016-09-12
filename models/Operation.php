@@ -55,7 +55,7 @@ class Operation extends \yii\db\ActiveRecord
             'type' => 'Тип',
             'balance' => 'Баланс',
             'sum' => 'Сумма',
-            'cashbox_id' => 'ID кассы',
+            'cashbox_id' => 'Касса',
             'model' => 'Модель',
             'item_id' => 'ID объекта',
             'date' => 'Дата',
@@ -73,4 +73,5 @@ class Operation extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Cashbox::className(), ['id' => 'cashbox_id']);
     }
+
 }

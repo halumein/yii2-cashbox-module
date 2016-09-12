@@ -10,7 +10,9 @@ use yii\bootstrap\ActiveForm;
 
 <div class="operation-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'action' => Url::to(['/cashbox/operation/add-transaction'])
+    ]); ?>
 
     <div class="row">
         <div class="col-sm-12">
