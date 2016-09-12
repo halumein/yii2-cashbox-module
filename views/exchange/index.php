@@ -153,7 +153,6 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 ),
                 'value' => 'staffer.name'
             ],
-            //'staffer_id',
             [
                 'attribute' => 'comment',
                 'filter' => false,

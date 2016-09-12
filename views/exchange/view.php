@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'rate',
             'staffer_id',
             'comment',
+            'deleted',
         ],
     ]) ?>
 

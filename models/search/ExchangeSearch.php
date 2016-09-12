@@ -63,6 +63,10 @@ class ExchangeSearch extends Exchange
             'staffer_id' => $this->staffer_id,
         ]);
 
+        $query->andWhere([
+            'deleted' => $this->deleted,
+        ]);
+
         $query->andFilterWhere(['like', 'comment', $this->comment]);
 
         if($dateStart = yii::$app->request->get('date_start')) {

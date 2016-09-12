@@ -44,6 +44,7 @@ class Exchange extends \yii\db\ActiveRecord
             [['comment'], 'string', 'max' => 255],
             [['from_cashbox_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cashbox::className(), 'targetAttribute' => ['from_cashbox_id' => 'id']],
             [['to_cashbox_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cashbox::className(), 'targetAttribute' => ['to_cashbox_id' => 'id']],
+            [['deleted'], 'safe'],
         ];
     }
 
@@ -62,6 +63,7 @@ class Exchange extends \yii\db\ActiveRecord
             'rate'              => 'Курс транзакции', //yii::t('cashbox', 'Rate'),
             'staffer_id'        => 'Автор транзакции', //yii::t('cashbox', 'Staffer ID'),
             'comment'           => 'Комментарий', //yii::t('cashbox', 'Comment'),
+            'deleted'           => 'Удалена',
         ];
     }
 
@@ -87,6 +89,11 @@ class Exchange extends \yii\db\ActiveRecord
     public function getStaffer()
     {
         return $this->hasOne(User::className(), ['id' => 'staffer_id']);
+    }
+
+    public static function getActiveExchanges()
+    {
+        return Exchange::find()->where(['deleted' => null])->all();
     }
 
 }

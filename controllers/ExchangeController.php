@@ -34,9 +34,11 @@ class ExchangeController extends Controller
     public function actionIndex()
     {
         $cashbox = new Cashbox();
-
         $searchModel = new ExchangeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $searchParams = Yii::$app->request->queryParams;
+        $searchParams['ExchangeSearch']['deleted'] = null;
+        $dataProvider = $searchModel->search($searchParams);
 
         return $this->render('index', [
             'activeCashboxes' => $cashbox->activeCashboxes,
@@ -120,9 +122,15 @@ class ExchangeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        $model->deleted = date('Y:m:d H:i:s', time());
+        if ($model->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('/error', [
+                'error' => $model->errors
+            ]);
+        }
     }
 
     /**
