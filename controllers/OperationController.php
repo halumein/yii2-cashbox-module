@@ -67,32 +67,18 @@ class OperationController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Operation();
-
         $request = Yii::$app->request->post();
+        $transaction = Yii::$app->operation->addTransaction($request);
 
-        if ($request){
-            $model->date = date('Y:m:d H:i:s', time());
-            $model->staffer_id = Yii::$app->user->id;
-            $model->balance = 1; // Для прохождения на валидацию, т.к. balance обязательное поле
-        }
-
-        if ($model->load($request) && $model->save()) {
-            $cashbox = Cashbox::findOne($model->cashbox_id);
-
-            if ( $model->type === 'income' ) {
-                $cashbox->balance += $model->sum;
-            } elseif ( $model->type === 'outcome' ) {
-                $cashbox->balance -= $model->sum;
-            }
-
-            $model->balance = $cashbox->balance;
-
-            $model->save();
-            $cashbox->save();
-
+        if ($transaction['status']) {
             return $this->redirect(['index']);
         } else {
+            $model = new Operation();
+
+            if ($request) {
+                $model->addErrors($transaction['message']);
+            }
+
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -123,7 +109,7 @@ class OperationController extends Controller
                 $order->status = 'paid'; // полностью оплачен
             } elseif ($model->sum < $order->cost) {
                 $cashbox->balance += $model->sum;
-                $order->status = 'half-paid'; // полностью оплачен
+                $order->status = 'half-paid'; // частично оплачен
             }
 
 
@@ -134,7 +120,7 @@ class OperationController extends Controller
             $model->status = 'charged';
 
             // тип, сумма, ид_кассы, ид_стаффера, ид_ордера, статус, коммент,  модель-класс-нэйм, ид_клиента
-            $response = $this->addTransaction($model->type, $model->balance, $model->sum, $model->cashbox_id, $model->staffer_id, $order->id, $model->status, $model->comment);
+            $response = $this->addTransaction($model->type, $model->balance, $model->sum, $model->cashbox_id, $model->staffer_id, $order->id, $model->status, $model->comment, $order::className());
             if ($response['status'] === 'ok') {
                 $cashbox->save();
                 $order->save();

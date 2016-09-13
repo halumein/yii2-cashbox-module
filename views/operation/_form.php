@@ -11,7 +11,7 @@ use yii\bootstrap\ActiveForm;
 <div class="operation-form">
 
     <?php $form = ActiveForm::begin([
-        'action' => Url::to(['/cashbox/operation/add-transaction'])
+//        'action' => \yii\helpers\Url::to(['/cashbox/operation/add-transaction'])
     ]); ?>
 
     <div class="row">
@@ -22,7 +22,8 @@ use yii\bootstrap\ActiveForm;
 
     <div class="row">
         <div class="col-sm-5">
-            <?= $form->field($model, 'type')->dropDownList([ 'income' => 'Приход', 'outcome' => 'Расход', ]) ?>        </div>
+            <?= $form->field($model, 'type')->dropDownList(['income' => 'Приход', 'outcome' => 'Расход'], ['options' => [ 'income' => ['selected ' => true]]]) ?>
+        </div>
         <div class="col-sm-5 col-sm-offset-1">
             <?= $form->field($model, 'status')->dropDownList(['charged' => 'Проведён', 'created' => 'Создан']) ?>
         </div>
