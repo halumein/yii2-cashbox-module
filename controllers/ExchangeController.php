@@ -104,12 +104,14 @@ class ExchangeController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $cashbox = new Cashbox();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'activeCashboxes' => $cashbox->activeCashboxes,
             ]);
         }
     }
