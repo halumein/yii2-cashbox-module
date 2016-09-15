@@ -4,7 +4,6 @@ namespace halumein\cashbox\widgets;
 use yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use halumein\cashbox\models\Cashbox;
 
