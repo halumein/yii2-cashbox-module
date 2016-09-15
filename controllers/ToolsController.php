@@ -38,6 +38,26 @@ class ToolsController extends Controller
         }
     }
 
+    public function actionSetUserDefaultCashbox()
+    {
+        $cashboxId = Yii::$app->request->post('cashboxId');
+
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $userModel = $this->module->userModel;
+
+        if ($userModel->setDefaultCashbox($cashboxId)) {
+            return [
+                'status' => 'success',
+            ];
+        } else {
+            return [
+                'status' => 'error',
+                'message' => 'unable to save data'
+            ];
+        }
+
+    }
 
 
 }

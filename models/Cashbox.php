@@ -54,4 +54,12 @@ class Cashbox extends \yii\db\ActiveRecord
     {
         return Cashbox::find()->where(['deleted' => null])->all();
     }
+
+    public static function getAvailable()
+    {
+        return static::find()->all();
+        // return $this->hasMany(Product::className(), ['id' => 'product_id'])
+        //      ->viaTable('{{%shop_product_to_category}}', ['category_id' => 'id'])->available();
+    }
+
 }

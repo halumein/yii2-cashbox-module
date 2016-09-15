@@ -31,6 +31,21 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'deleted',
             ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
         ],
-    ]); ?>
+    ]);
+    ?>
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <?= halumein\cashbox\widgets\UserCashboxSelector::widget() ?>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
 
 </div>

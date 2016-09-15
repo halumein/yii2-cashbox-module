@@ -27,3 +27,31 @@
 .payment-form-notify {
     color: red;
 }
+
+.cashbox-modal-trigger {
+    cursor: pointer;
+}
+
+.cashbox-list-group {
+    margin: 0 auto;
+    display: inline-block;
+    height: 50px;
+    padding: 3px;
+    min-height: 256px;
+}
+
+.cashbox-list-group-item {
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 250px;
+    min-height: 40px;
+    font-size: 30px;
+    line-height: 45px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.cashbox-list-group-item:hover {
+    background-color: #3c8dbc;
+}

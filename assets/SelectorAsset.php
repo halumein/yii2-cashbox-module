@@ -3,7 +3,7 @@ namespace halumein\cashbox\assets;
 
 use yii\web\AssetBundle;
 
-class CashboxAsset extends AssetBundle
+class SelectorAsset extends AssetBundle
 {
     public $depends = [
         'yii\web\JqueryAsset',
@@ -11,9 +11,11 @@ class CashboxAsset extends AssetBundle
     ];
 
     public $js = [
+        'js/selector.js',
     ];
 
     public $css = [
+        'css/selector.css',
     ];
 
     public function init()
