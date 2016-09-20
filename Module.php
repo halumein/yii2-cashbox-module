@@ -10,6 +10,7 @@ class Module extends \yii\base\Module
     public $userRoles = ['@'];
     public $orderModel = 'pistol88\order\models\Order';
     public $userModel = null;
+    public $paymentSuccessRedirect = '/cashbox/operation/index';
 
     public function init()
     {
@@ -22,4 +23,12 @@ class Module extends \yii\base\Module
 
         parent::init();
     }
+
+    public function testTrigger()
+    {
+        $event = new \halumein\cashbox\events\TestEvent;
+        $event->text = 13;
+        $this->trigger(self::EVENT_TEST, $event);
+    }
+
 }

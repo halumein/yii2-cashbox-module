@@ -16,25 +16,24 @@ class ToolsController extends Controller
 
     public function actionGetIframeRedirect($id)
     {
-        return '<script>parent.document.location = "' . Url::to(['/cashbox/tools/payment-form', 'orderId' => $id]) . '"; </script>';
+        // return '<script>parent.document.location = "' . Url::to(['/cashbox/tools/payment-form', 'orderId' => $id]) . '"; </script>';
+        return '<script>console.log("getIframeRedirect")</script>';
+        // return true;
     }
 
-    public function actionPaymentForm($orderId)
+    public function actionPaymentForm($id, $useAjax = false)
     {
         $orderModel = $this->module->orderModel;
-        $order = $orderModel::findOne($orderId);
+        $order = $orderModel::findOne($id);
 
         if ($order) {
             $model = new Operation();
             $cashboxes = Cashbox::getActiveCashboxes();
 
-            return $this->render('payment', [
-                'model' => $model,
+            return $this->renderAjax('paymentForm', [
                 'order' => $order,
-                'cashboxes' => $cashboxes
+                'useAjax' => $useAjax
             ]);
-        } else {
-            return $this->redirect(['/service/price/order']);
         }
     }
 
@@ -58,6 +57,5 @@ class ToolsController extends Controller
         }
 
     }
-
 
 }

@@ -17,10 +17,13 @@ use Yii;
  * @property integer $client_id
  * @property integer $staffer_id
  * @property string $comment
- *  * @property string $status
+ * @property string $status
  */
 class Operation extends \yii\db\ActiveRecord
 {
+
+    public $itemCost;
+
     /**
      * @inheritdoc
      */
@@ -72,6 +75,16 @@ class Operation extends \yii\db\ActiveRecord
     public function getCashbox()
     {
         return $this->hasOne(Cashbox::className(), ['id' => 'cashbox_id']);
+    }
+
+    public function setDate()
+    {
+         $this->date = date('Y:m:d H:i:s');
+    }
+
+    public function setStafferId()
+    {
+          $this->staffer_id = \Yii::$app->user->id;
     }
 
 }

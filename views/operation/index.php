@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -8,6 +9,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Операции';
+$this->params['breadcrumbs'][] = ['label' => 'Кассы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="operation-index">
@@ -54,7 +56,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'date',
                 'filter' => ''
             ],
-             'date',
             // 'client_id',
             // 'staffer_id',
             // 'comment:ntext',

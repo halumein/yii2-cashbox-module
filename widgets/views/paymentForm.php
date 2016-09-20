@@ -1,42 +1,40 @@
 <?php
 
-use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
 
-\halumein\cashbox\assets\CashboxAsset::register($this);
-$this->title = 'Форма оплаты';
 ?>
-
-
-<div class="container">
-
+<div class="payment-form">
     <?php $form = ActiveForm::begin([
-        'action' => Url::to(['/cashbox/operation/payment-confirm']),
+        'id' => $model->formName(),
+        'action' => $useAjax ? Url::to(['/cashbox/operation/payment-confirm-ajax']) : Url::to(['/cashbox/operation/payment-confirm']),
         'options' => [
             'data-role' => 'payment-form',
+            'data-ajax' => $useAjax ? 'true' : 'false',
         ]
     ]); ?>
 
     <div class="hidden">
         <?= $form->field($model, 'item_id')->textInput(['value' => $order->id])?>
+        <?= $form->field($model, 'itemCost')->textInput(['value' => $order->cost])?>
     </div>
 
     <div class="row row-centered">
-        <div class="col-xs-6 col-centered col-fixed">
+        <div class="col-xs-12 col-centered col-fixed">
             <h1>Сумма к оплате: <span data-role="payment-cost"><?= $order->cost ?></h1>
         </div>
     </div>
 
     <div class="row row-centered">
-        <div class="col-xs-6 col-centered col-fixed text-left">
+        <div class="col-xs-12 col-centered col-fixed text-left">
             <?= $form->field($model, 'cashbox_id')->dropDownList(ArrayHelper::map($cashboxes, 'id', 'name')) ?>
         </div>
     </div>
 
     <div class="row row-centered">
-        <div class="col-xs-6 col-centered col-fixed text-left">
+        <div class="col-xs-12 col-centered col-fixed text-left">
             <?= $form->field($model, 'sum')->textInput([
                 'maxlength' => true,
                 'data-role' => 'payment-sum',
@@ -47,7 +45,7 @@ $this->title = 'Форма оплаты';
     </div>
 
     <div class="row row-centered">
-        <div class="col-xs-6 col-centered col-fixed text-left">
+        <div class="col-xs-12 col-centered col-fixed text-left">
             <?= $form->field($model, 'comment')->textArea([
                 'class' => 'form-control',
                 'rows' => 4,
@@ -57,13 +55,13 @@ $this->title = 'Форма оплаты';
     </div>
 
     <div class="row row-centered">
-        <div class="col-xs-6 col-centered col-fixed text-right">
+        <div class="col-xs-12 col-centered col-fixed text-right">
             <h1>Сдача: <span data-role="payment-change">0</span></h1>
         </div>
     </div>
 
     <div class="row row-centered">
-        <div class="col-xs-6 col-centered col-fixed text-right">
+        <div class="col-xs-12 col-centered col-fixed text-right">
             <div class="form-group">
                 <?= Html::submitButton('Провести оплату', [
                     'class' => 'btn btn-success',
@@ -75,12 +73,11 @@ $this->title = 'Форма оплаты';
     </div>
 
     <div class="row row-centered">
-        <div class="col-xs-6 col-centered col-fixed text-left">
+        <div class="col-xs-12 col-centered col-fixed text-left">
             <span id="payment-notify"class="payment-form-notify"></span>
         </div>
     </div>
 
 
     <?php ActiveForm::end(); ?>
-
 </div>

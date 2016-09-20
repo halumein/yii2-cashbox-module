@@ -19,7 +19,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-	echo "indexAction";
+        echo "indexAction";
         die;
     }
 

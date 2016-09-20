@@ -68,7 +68,7 @@ class OperationController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request->post();
-        $transaction = Yii::$app->operation->addTransaction($request);
+        $transaction = Yii::$app->cashboxOperation->addTransaction($request);
 
         if ($transaction['status']) {
             return $this->redirect(['index']);
@@ -90,82 +90,51 @@ class OperationController extends Controller
     {
         $request = Yii::$app->request->post();
 
-        $model = new Operation();
+        var_dump($request);
+        die;
 
-        if ($model->load($request)) {
+        $request['Operation']['type'] = 'income';
 
-            $model->type = 'income';
+        // ёбаный стыд, но пока так. проверяет если внесено больше денег чем стоит заказ (крупная купюра с которой сдали)
+        // то присваиваем входящую сумму равной стоимости заказа.
+        if ($request['Operation']['sum'] > $request['Operation']['itemCost'] ) {
+            $request['Operation']['sum'] = $request['Operation']['itemCost'];
+        }
+        $transaction = Yii::$app->cashboxOperation->addTransaction($request);
 
-            $order = Order::findOne($model->item_id);
-            $cashbox = Cashbox::findOne($model->cashbox_id);
+        if ($transaction['status']) {
+            return $this->redirect([$this->module->paymentSuccessRedirect]);
+            // return '<script>parent.document.location = "' . Url::to(['/service/price/order']) . '"; </script>';
+        } else {
+            $model = new Operation();
 
-            // Костыль на обработку входящей суммы. Может быть меньше нужной (занесёт позже),
-            // может быть больше (сдача), может быть вообще нуль(бесплатная мойка)
-            // TODO вынести это извращение в отдельный модуль оплаты
-            // что бы сюда поступали только транзацкции по кассе
-            if ($model->sum > $order->cost) {
-                $model->sum = $order->cost;
-                $cashbox->balance += $order->cost;
-                $order->status = 'paid'; // полностью оплачен
-            } elseif ($model->sum < $order->cost) {
-                $cashbox->balance += $model->sum;
-                $order->status = 'half-paid'; // частично оплачен
+            if ($request) {
+                $model->addErrors($transaction['message']);
             }
 
-
-            $model->balance = $cashbox->balance;
-
-            $model->date = date('Y:m:d H:i:s', time());
-            $model->staffer_id = Yii::$app->user->id;
-            $model->status = 'charged';
-
-            // тип, сумма, ид_кассы, ид_стаффера, ид_ордера, статус, коммент,  модель-класс-нэйм, ид_клиента
-            $response = $this->addTransaction($model->type, $model->balance, $model->sum, $model->cashbox_id, $model->staffer_id, $order->id, $model->status, $model->comment, $order::className());
-            if ($response['status'] === 'ok') {
-                $cashbox->save();
-                $order->save();
-                return $this->redirect(['/order/order/print', 'id' => $order->id]);
-            } else {
-                var_dump($response);
-                // return $this->redirect('/service/price/order');
-            }
+            var_dump($model->errors);
+            die;
         }
     }
 
-    protected function addTransaction($type, $balance, $sum, $cashbox_id, $stafferId, $itemId = null, $status = 'created', $comment = null, $modelClass = null, $clientId = null)
+    public function actionPaymentConfirmAjax()
     {
-
-        $model = new Operation();
-
-        $model->type = $type;
-        if ($model->type === 'income') {
-            $model->balance = $balance + $sum;
+        $request = Yii::$app->request->post();
+        $request['Operation']['type'] = 'income';
+        // ёбаный стыд, но пока так. проверяет если внесено больше денег чем стоит заказ (крупная купюра с которой сдали)
+        // то присваиваем входящую сумму равной стоимости заказа.
+        if ($request['Operation']['sum'] > $request['Operation']['itemCost'] ) {
+            $request['Operation']['sum'] = $request['Operation']['itemCost'];
         }
+        $transaction = Yii::$app->cashboxOperation->addTransaction($request);
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return [
+            'status' => 'success',
+            'response' => $transaction['status']
+        ];
 
-        if ($model->type === 'outcome') {
-            $model->balance = $balance - $sum;
-        }
 
-        $model->sum = (float)$sum;
-        $model->cashbox_id = $cashbox_id;
-        $model->model = $modelClass;
-        $model->item_id = $itemId;
-        $model->date = date('Y:m:d H:i:s');
-        $model->client_id = $clientId;
-        $model->staffer_id = $stafferId;
-        $model->comment = $comment;
-        $model->status = $status;
 
-        if ($model->save()) {
-            return [
-                'status' => 'ok'
-            ];
-        } else {
-            return [
-                'status' => 'error',
-                'message' => $model->errors
-            ];
-        }
     }
 
     /**

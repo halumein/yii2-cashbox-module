@@ -1,8 +1,10 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 
+use pistol88\order\models\Order;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\CashboxSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -11,7 +13,6 @@ $this->title = 'Кассы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cashbox-index">
-
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -33,6 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
+
+    <?php // echo halumein\cashbox\widgets\UserCashboxSelector::widget() ?>
+
 
 
 </div>

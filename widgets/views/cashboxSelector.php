@@ -1,5 +1,3 @@
-<?php  ?>
-
 <div class="cashbox-selector">
     <a class="cashbox-modal-trigger" data-toggle="modal" data-target="#cashbox-choice-modal"> <?= $cashboxName ?> </a>
 </div>

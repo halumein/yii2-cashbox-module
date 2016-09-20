@@ -5,9 +5,8 @@ if (typeof halumein == "undefined" || !halumein) {
 
 halumein.cashboxSelector = {
         init: function() {
-            console.log('cashboxSelector init');
+            // console.log('cashboxSelector init');
             var choiceItem = '.cashbox-choice-item';
-
 
             halumein.cashboxSelector.currentCashboxName = $('.cashbox-modal-trigger');
             halumein.cashboxSelector.modal = $('#cashbox-choice-modal'),
@@ -40,7 +39,7 @@ halumein.cashboxSelector = {
                         }
                     },
                     fail : function() {
-                        console.log('test');
+                        console.log('fail');
                     }
                 });
             } else {

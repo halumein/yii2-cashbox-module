@@ -6,17 +6,22 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use halumein\cashbox\models\Cashbox;
+use halumein\cashbox\models\Operation;
 
 class PaymentForm extends \yii\base\Widget
 {
     public $actionUrl = null;
+    public $order = null;
+    public $cost = null;
+    public $useAjax = null;
 
     public function init()
     {
 
         if ($this->actionUrl === null) {
-            $this->actionUrl = '/cashbox/tools/setUserCashbox';
+            $this->actionUrl = '/cashbox/operation/payment-confirm';
         }
+
 
         parent::init();
 
@@ -28,8 +33,22 @@ class PaymentForm extends \yii\base\Widget
     public function run()
     {
 
-        return $this->render('paymentForm', [
+        if ($this->order === null) {
+            return false;
+        }
 
+        $userModel = Yii::$app->getModule('cashbox')->userModel;
+
+        $operationModel = new Operation();
+        $cashboxes = Cashbox::find()->All();
+
+        $operationModel->cashbox_id = $userModel->defaultCashbox;
+
+        return $this->render('paymentForm', [
+            'model' => $operationModel,
+            'order' => $this->order,
+            'cashboxes' => $cashboxes,
+            'useAjax' => $this->useAjax
         ]);
 
 

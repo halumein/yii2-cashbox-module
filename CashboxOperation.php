@@ -5,8 +5,9 @@ use halumein\cashbox\models\Cashbox;
 use halumein\cashbox\models\Operation;
 use yii\base\Component;
 
-class Operations extends Component
+class CashboxOperation extends Component
 {
+
     public function addTransaction($params)
     {
         $model = new Operation();
@@ -23,6 +24,8 @@ class Operations extends Component
             $model->balance = $cashBox->balance - $model->sum;
         }
 
+        $model->status = 'charged';
+
         if ($model->save()) {
             $cashBox->balance = $model->balance;
             $cashBox->save();
@@ -37,4 +40,5 @@ class Operations extends Component
             ];
         }
     }
+
 }

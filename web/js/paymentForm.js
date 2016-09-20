@@ -1,5 +1,8 @@
 $(function () {
-	/* some scripts */
+
+	if (typeof halumein == "undefined" || !halumein) {
+	    var halumein = {};
+	}
 
 	var $paymentInput = $('[data-role=payment-sum]');
 		paymentCost = +$('[data-role=payment-cost]').html();
@@ -7,8 +10,10 @@ $(function () {
 		$submit = $('#submit-payment'),
 		$comment = $('[data-role=payment-comment]'),
 		$notify = $('#payment-notify'),
-		$form = $('[data-role=payment-form]');
-
+		$form = $('[data-role=payment-form]'),
+		csrfToken = $form.find('[name="_csrf"]').val(),
+		useAjax = $form.data('ajax'),
+		confirmUrl = $form.attr('action');
 
 	// обработчик для поля внесённой суммы. осталвяем только цыфры и точку
 	$paymentInput.keydown(function (e) {
@@ -40,17 +45,55 @@ $(function () {
 		}
 	});
 
-	$submit.on('click', function(e) {
-		e.preventDefault();
 
-		var income = +$paymentInput.val();
-		if ((income < paymentCost) && $comment.val() === '') {
-			$notify.html('Внимание! Укажите в комментарии, почему сумма платежа меньше суммы заказа.').slideDown();
-		} else {
-			$notify.slideUp();
-			$notify.html();
-			$form.submit();
+	halumein.paymentForm = {
+		init : function() {
+			$submit.on('click', function(e) {
+				halumein.paymentForm.sendData(e);
+			});
+		},
+
+		sendData: function(e) {
+			e.preventDefault();
+
+			var income = +$paymentInput.val();
+			if ((income < paymentCost) && $comment.val() === '') {
+				$notify.html('Внимание! Укажите в комментарии, почему сумма платежа меньше суммы заказа.').slideDown();
+			} else {
+				$notify.slideUp();
+				$notify.html();
+
+				if (useAjax === true) {
+					console.log('useAjax');
+
+					var serializedFormData = $form.serialize();
+
+					$.ajax({
+						type : 'POST',
+						url : confirmUrl,
+						data : serializedFormData,
+						success : function(response) {
+							console.log('success');
+						},
+						fail : function() {
+							console.log('fail');
+						}
+					});
+
+				} else {
+					// console.log('use standart submit');
+					$form.submit();
+				}
+				return false;
+			}
 		}
-	})
+	}
+
+
+	// $submit.on('click', function(e) {
+	//
+	// });
+
+	halumein.paymentForm.init();
 
 });

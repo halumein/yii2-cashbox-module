@@ -26,6 +26,14 @@ php yii migrate --migrationPath=vendor/halumein/yii2-cashbox-module/migrations
 дальше обращаться по адресу cashbox/<имя_контроллера>
 
 
+компонент:
+
+```
+'CashboxOperations' => [
+    'class' => 'halumein\cashbox\CashboxOperations'
+],
+```
+
 Виджет выбора дефолтной кассы:
 
 Для этого имплементим модель юзера и добавляем необходимые методы:
