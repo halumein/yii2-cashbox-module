@@ -148,10 +148,11 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 'filter' => Html::activeDropDownList(
                     $searchModel,
                     'staffer_id',
-                    ArrayHelper::map(User::find()->all(), 'id', 'name'),
+                    //ArrayHelper::map(User::find()->all(), 'id', 'name'),
+                    ArrayHelper::map($activeUsers, 'id', 'name'),
                     ['class' => 'form-control', 'prompt' => 'Все сотрудники']
                 ),
-                'value' => 'staffer.name'
+                'value' => 'user.fullName'
             ],
             [
                 'attribute' => 'comment',
