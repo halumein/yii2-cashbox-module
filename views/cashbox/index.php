@@ -29,7 +29,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'currency',
             'balance',
-            // 'deleted',
+            //'user_ids',
+            [
+                'attribute' => 'user_ids',
+                //'value' => 'users',
+                'content' => function($model) {
+                    $stringUserNames = '';
+                    foreach ($model->users as $user){
+                        $stringUserNames = $stringUserNames . $user->username  . "; ";
+                    }
+                    return  Html::a($stringUserNames, ['/cashbox/cashbox/update', 'id' => $model->id]);
+                },
+//                'contentOptions' => [
+//                    'width' => 450],
+            ],
+
+
             ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
         ],
     ]);

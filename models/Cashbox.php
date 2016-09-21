@@ -1,6 +1,7 @@
 <?php
 namespace halumein\cashbox\models;
 
+use common\models\User;
 use Yii;
 
 /**
@@ -22,6 +23,39 @@ class Cashbox extends \yii\db\ActiveRecord
         return 'cashbox_cashbox';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \voskobovich\manytomany\ManyToManyBehavior::className(),
+//                'relations' => [
+//                    'user_ids' => [
+//                        'users',
+//                        'fields' => [
+//                            'string' => [
+//                                'get' => function($value) {
+//                                    return implode(',', $value);
+//                                },
+//                                'set' => function($value) {
+//                                    return explode(',', $value);
+//                                },
+//                            ],
+//                        ],
+//                    ]
+//                ]
+
+                'relations' => [
+                    'user_ids' => 'users',
+                ],
+            ],
+        ];
+    }
+
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('cashbox_to_user', ['cashbox_id' => 'id']);
+    }
+
     /**
      * @inheritdoc
      */
@@ -33,6 +67,7 @@ class Cashbox extends \yii\db\ActiveRecord
             [['deleted'], 'safe'],
             [['name'], 'string', 'max' => 255],
             [['currency'], 'string', 'max' => 100],
+            [['user_ids'], 'each', 'rule' => ['integer']],
         ];
     }
 
@@ -46,6 +81,7 @@ class Cashbox extends \yii\db\ActiveRecord
             'name' => 'Имя кассы',
             'currency' => 'Валюта',
             'balance' => 'Баланс',
+            'user_ids' => 'Операторы кассы',
             'deleted' => 'Удалена',
         ];
     }

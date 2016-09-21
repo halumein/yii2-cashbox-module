@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
+use common\models\User;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Cashbox */
@@ -24,6 +27,24 @@ use yii\bootstrap\ActiveForm;
             <?= $form->field($model, 'currency')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
+
+    <?php
+    //на dropDownList c мультивыбором
+    //echo $form->field($model, 'user_ids')->label('Пользователи, которые имеют доступ')->dropDownList(ArrayHelper::map($activeUsers,'id','username'), ['multiple' => true]);
+    ?>
+
+    <?php
+    //на Select2 c мультивыбором
+    echo $form->field($model, 'user_ids')->label('Пользователи, которые имеют доступ')
+        ->widget(Select2::classname(), [
+            'data' => ArrayHelper::map($activeUsers, 'id', 'username'),
+            'language' => 'ru',
+            'options' => ['multiple' => true, 'placeholder' => 'Выберите пользователей ...'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);
+    ?>
 
     <div class="row">
         <div class="col-sm-12">
