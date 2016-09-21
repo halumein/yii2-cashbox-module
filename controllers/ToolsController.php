@@ -32,7 +32,7 @@ class ToolsController extends Controller
 
             return $this->renderAjax('paymentForm', [
                 'order' => $order,
-                'useAjax' => $useAjax
+                'useAjax' => $useAjax,
             ]);
         }
     }

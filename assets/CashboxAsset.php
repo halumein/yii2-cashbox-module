@@ -11,6 +11,7 @@ class CashboxAsset extends AssetBundle
     ];
 
     public $js = [
+        'js/test.js'
     ];
 
     public $css = [

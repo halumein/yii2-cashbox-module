@@ -48,7 +48,7 @@ class PaymentForm extends \yii\base\Widget
             'model' => $operationModel,
             'order' => $this->order,
             'cashboxes' => $cashboxes,
-            'useAjax' => $this->useAjax
+            'useAjax' => $this->useAjax,
         ]);
 
 

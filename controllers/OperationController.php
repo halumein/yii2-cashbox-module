@@ -128,9 +128,14 @@ class OperationController extends Controller
         }
         $transaction = Yii::$app->cashboxOperation->addTransaction($request);
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+
+        $nextStepAction = Url::to(['/order/order/get-order-form-light', 'useAjax' => 1]);
+
         return [
             'status' => 'success',
-            'response' => $transaction['status']
+            'response' => $transaction['status'],
+            'nextStep' => $nextStepAction,
         ];
 
 

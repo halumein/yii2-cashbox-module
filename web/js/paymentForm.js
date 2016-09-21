@@ -13,6 +13,7 @@ $(function () {
 		$form = $('[data-role=payment-form]'),
 		csrfToken = $form.find('[name="_csrf"]').val(),
 		useAjax = $form.data('ajax'),
+		nextStep = $form.data('next-step'),
 		confirmUrl = $form.attr('action');
 
 	// обработчик для поля внесённой суммы. осталвяем только цыфры и точку
@@ -73,7 +74,12 @@ $(function () {
 						url : confirmUrl,
 						data : serializedFormData,
 						success : function(response) {
-							console.log('success');
+							if (response.status === 'success' && typeof response.nextStep != 'undefined' && response.nextStep != false) {
+								// console.log(response.nextStep);
+								$form.parent().animate({width:'toggle'},350);
+								$form.parent().parent().load(response.nextStep);
+								pistol88.service.clearServiceOrder();
+							}
 						},
 						fail : function() {
 							console.log('fail');
@@ -88,11 +94,6 @@ $(function () {
 			}
 		}
 	}
-
-
-	// $submit.on('click', function(e) {
-	//
-	// });
 
 	halumein.paymentForm.init();
 

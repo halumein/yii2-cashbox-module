@@ -37,6 +37,4 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo halumein\cashbox\widgets\UserCashboxSelector::widget() ?>
 
-
-
 </div>
