@@ -28,22 +28,6 @@ class Cashbox extends \yii\db\ActiveRecord
         return [
             [
                 'class' => \voskobovich\manytomany\ManyToManyBehavior::className(),
-//                'relations' => [
-//                    'user_ids' => [
-//                        'users',
-//                        'fields' => [
-//                            'string' => [
-//                                'get' => function($value) {
-//                                    return implode(',', $value);
-//                                },
-//                                'set' => function($value) {
-//                                    return explode(',', $value);
-//                                },
-//                            ],
-//                        ],
-//                    ]
-//                ]
-
                 'relations' => [
                     'user_ids' => 'users',
                 ],

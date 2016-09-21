@@ -32,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
             //'user_ids',
             [
                 'attribute' => 'user_ids',
-                //'value' => 'users',
                 'content' => function($model) {
                     $stringUserNames = '';
                     foreach ($model->users as $user){
