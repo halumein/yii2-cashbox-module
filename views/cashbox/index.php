@@ -28,7 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'currency',
-            'balance',
+            [
+                'label' => 'Баланс',
+                'attribute' => 'balance',
+                'content' => function ($model) {
+                    return Html::a($model->balance, ['/cashbox/operation/index', 'OperationSearch[cashbox_id]' => $model->id]);
+                }
+            ],
             // 'deleted',
             ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
         ],
