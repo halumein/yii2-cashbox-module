@@ -10,7 +10,7 @@ use halumein\cashbox\models\Operation;
 /**
  * Operationsearch represents the model behind the search form about `halumein\cashbox\models\Operation`.
  */
-class Operationsearch extends Operation
+class OperationSearch extends Operation
 {
     /**
      * @inheritdoc
