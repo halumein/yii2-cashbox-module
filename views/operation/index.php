@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Касса',
                 'attribute' => 'cashbox_id',
                 'value' => 'cashbox.name',
-                'filter' => \yii\helpers\ArrayHelper::map(Cashbox::getActiveCashboxes(), 'id', 'name'),
+                'filter' => \yii\helpers\ArrayHelper::map(Cashbox::getAvailable(), 'id', 'name'),
             ],
             // 'model',
             // 'item_id',
