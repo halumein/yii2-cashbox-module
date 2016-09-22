@@ -36,7 +36,8 @@ class RevisionController extends Controller
         $cashbox = new Cashbox();
 
         $searchModel = new RevisionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchParams = Yii::$app->request->queryParams;
+        $dataProvider = $searchModel->search($searchParams);
 
         $userForCashboxModel = $this->module->userForCashbox;
         $activeUsers = $userForCashboxModel::find()->all();

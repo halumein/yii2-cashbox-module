@@ -15,11 +15,11 @@ $this->title = 'Переводы';
 $this->params['breadcrumbs'][] = $this->title;
 
 if($dateStart = yii::$app->request->get('date_start')) {
-    $dateStart = date('Y-m-d', strtotime($dateStart));
+    $dateStart = date('d.m.Y', strtotime($dateStart));
 }
 
 if($dateStop = yii::$app->request->get('date_stop')) {
-    $dateStop = date('Y-m-d', strtotime($dateStop));
+    $dateStop = date('d.m.Y', strtotime($dateStop));
 }
 
 ?>

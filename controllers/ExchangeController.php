@@ -43,6 +43,9 @@ class ExchangeController extends Controller
         $userForCashboxModel = $this->module->userForCashbox;
         $activeUsers = $userForCashboxModel::find()->all();
 
+//        echo "<pre>";
+//        var_dump($dataProvider);
+
         return $this->render('index', [
             'activeCashboxes' => $cashbox->activeCashboxes,
             'searchModel' => $searchModel,
