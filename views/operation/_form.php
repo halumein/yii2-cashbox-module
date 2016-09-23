@@ -39,13 +39,13 @@ use yii\bootstrap\ActiveForm;
     </div>
 
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-11">
             <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-11">
             <div class="form-group">
                 <?= Html::submitButton('Провести', ['class' => 'btn btn-success']) ?>
             </div>

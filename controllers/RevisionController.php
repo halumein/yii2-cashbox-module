@@ -3,6 +3,7 @@
 namespace halumein\cashbox\controllers;
 
 use halumein\cashbox\models\Cashbox;
+use halumein\cashbox\models\Operation;
 use Yii;
 use halumein\cashbox\models\Revision;
 use halumein\cashbox\models\search\RevisionSearch;
@@ -33,8 +34,6 @@ class RevisionController extends Controller
      */
     public function actionIndex()
     {
-        $cashbox = new Cashbox();
-
         $searchModel = new RevisionSearch();
         $searchParams = Yii::$app->request->queryParams;
         $dataProvider = $searchModel->search($searchParams);
@@ -45,7 +44,7 @@ class RevisionController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'activeCashboxes' => $cashbox->activeCashboxes,
+            'activeCashboxes' => Cashbox::getActiveCashboxes(),
             'activeUsers' => $activeUsers,
         ]);
     }
@@ -70,20 +69,22 @@ class RevisionController extends Controller
     public function actionCreate()
     {
         $model = new Revision();
-        $cashbox = new Cashbox();
 
         if ($model->load(Yii::$app->request->post())) {
-                $model->user_id = Yii::$app->user->identity->id;
-                $model->date = date("Y-m-d H:i:s");
-                if ($model->save()){
-                    return $this->redirect(['index']);
-                }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'activeCashboxes' => $cashbox->activeCashboxes,
-            ]);
+            $model->user_id = Yii::$app->user->id;
+            $model->date =  date('Y:m:d H:i:s');
+
+            $model->balance_expect = Cashbox::findOne($model->cashbox_id)->balance;
+
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
+
+        return $this->render('create', [
+            'model' => $model,
+            'activeCashboxes' => Cashbox::getActiveCashboxes(),
+        ]);
     }
 
     /**
@@ -105,19 +106,6 @@ class RevisionController extends Controller
                 'activeCashboxes' => $cashbox->activeCashboxes,
             ]);
         }
-    }
-
-    /**
-     * Deletes an existing Revision model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

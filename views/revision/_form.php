@@ -16,11 +16,8 @@ use kartik\select2\Select2;
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?php //echo $form->field($model, 'cashbox_id')->textInput() ?>
-
-    <?php
-    echo $form->field($model, 'cashbox_id')
-        ->widget(Select2::classname(), [
+    <?php echo $form->field($model, 'cashbox_id')
+        ->widget(Select2::className(), [
             'data' => ArrayHelper::map($activeCashboxes, 'id', 'name'),
             'language' => 'ru',
             'options' => ['placeholder' => 'Выберите кассу ...'],
@@ -31,13 +28,7 @@ use kartik\select2\Select2;
     ?>
 
     <?php echo $form->field($model, 'balance_fact')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
-
-    <?php echo $form->field($model, 'balance_expect')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
-
-    <?php //echo $form->field($model, 'date')->textInput() ?>
-
-    <?php //echo $form->field($model, 'user_id')->textInput() ?>
-
+    
     <?php echo $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">

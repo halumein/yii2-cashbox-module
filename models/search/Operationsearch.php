@@ -10,7 +10,7 @@ use halumein\cashbox\models\Operation;
 /**
  * Operationsearch represents the model behind the search form about `halumein\cashbox\models\Operation`.
  */
-class Operationsearch extends Operation
+class OperationSearch extends Operation
 {
     /**
      * @inheritdoc
@@ -69,19 +69,11 @@ class Operationsearch extends Operation
             ->andFilterWhere(['like', 'comment', $this->comment]);
 
         if($dateStart = yii::$app->request->get('date_start')) {
-            if(!yii::$app->request->get('date_stop')) {
-                $query->andWhere('DATE_FORMAT(date, "%Y-%m-%d") = :dateStart', [':dateStart' => $dateStart]);
-            } else {
-                $query->andWhere('date > :dateStart', [':dateStart' => $dateStart]);
-            }
+            $query->andWhere('date >= :dateStart', [':dateStart' => $dateStart]);
         }
 
         if($dateStop = yii::$app->request->get('date_stop')) {
-            if($dateStop == '0000-00-00 00:00:00') {
-                $dateStop = date('Y-m-d H:i:s');
-            }
-
-            $query->andWhere('date < :dateStop', [':dateStop' => $dateStop]);
+            $query->andWhere('date <= :dateStop', [':dateStop' => $dateStop]);
         }
         
         return $dataProvider;

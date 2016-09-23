@@ -60,7 +60,7 @@ class RevisionSearch extends Revision
             'date' => $this->date,
             'user_id' => $this->user_id,
         ]);
-
+        
         $query->andFilterWhere(['like', 'comment', $this->comment]);
 
         if($dateStart = yii::$app->request->get('date_start')) {

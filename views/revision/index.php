@@ -120,6 +120,22 @@ if($dateStop = yii::$app->request->get('date_stop')) {
             [
                 'attribute' => 'balance_expect',
                 'filter' => false,
+                'content' => function ($model) {
+                    $dateStart = \halumein\cashbox\models\Revision::find()
+                        ->where(['cashbox_id' => $model->cashbox_id])
+                        ->andWhere('id < :id', [':id' => $model->id])
+                        ->orderBy(['id' => SORT_DESC])
+                        ->one()
+                        ->date;
+
+                    return Html::a($model->balance_expect,
+                        [
+                            '/cashbox/operation/index',
+                            'date_start' => $dateStart,
+                            'date_stop' => $model->date,
+                            'OperationSearch[cashbox_id]' => $model->cashbox_id,
+                        ]);
+                },
                 'contentOptions' => [
                     'width' => 180
                 ]
@@ -133,7 +149,6 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 'filter' => Html::activeDropDownList(
                     $searchModel,
                     'user_id',
-                    //ArrayHelper::map(User::find()->all(), 'id', 'name'),
                     ArrayHelper::map($activeUsers, 'id', 'name'),
                     ['class' => 'form-control', 'prompt' => 'Все сотрудники']
                 ),
@@ -144,7 +159,7 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 'filter' => false,
             ],
 
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 65px;']],
         ],
     ]); ?>
 

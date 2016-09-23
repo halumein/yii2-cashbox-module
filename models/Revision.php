@@ -48,8 +48,8 @@ class Revision extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'cashbox_id' => 'Касса',
-            'balance_fact' => 'Фактический баланс',
-            'balance_expect' => 'Плановый баланс',
+            'balance_fact' => 'Сумма в кассе',
+            'balance_expect' => 'Сумма по оперциям',
             'date' => 'Дата',
             'user_id' => 'Пользователь',
             'comment' => 'Комментарий',
