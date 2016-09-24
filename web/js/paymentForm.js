@@ -76,6 +76,9 @@ halumein.paymentForm = {
 							$form.parent().animate({width:'toggle'},350);
 							$form.parent().parent().load(response.nextStep);
 							pistol88.service.clearServiceOrder();
+                            if (response.printRedirect !== null) {
+                                $('#orderSubmitter').attr('src', response.printRedirect);
+                            }
 						}
 					},
 					fail : function() {

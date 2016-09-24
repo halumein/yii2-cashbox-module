@@ -131,11 +131,16 @@ class OperationController extends Controller
 
 
         $nextStepAction = Url::to(['/order/order/get-order-form-light', 'useAjax' => 1]);
+        if ($this->module->printCheckRedirect) {
+            $printCheckRedirect = Url::to([$this->module->printCheckRedirect, 'id' => $request['Operation']['item_id']]);
+        } else {
+            $printCheckRedirect = null;
+        }
 
         return [
             'status' => 'success',
-            'response' => $transaction['status'],
             'nextStep' => $nextStepAction,
+            'printRedirect' => $printCheckRedirect
         ];
 
 
