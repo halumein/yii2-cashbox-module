@@ -40,7 +40,6 @@ halumein.paymentForm = {
 		});
 
 		$submit.on('click', function(e) {
-            console.log('click');
 			halumein.paymentForm.sendData(e);
 		});
 	},
