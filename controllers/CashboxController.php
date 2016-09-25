@@ -70,8 +70,11 @@ class CashboxController extends Controller
        if ($model->load(Yii::$app->request->post()) && $model->save()) {
            return $this->redirect('index');
        } else {
+           $userForCashboxModel = $this->module->userForCashbox;
+           $activeUsers = $userForCashboxModel::find()->active()->all();
            return $this->render('create', [
                'model' => $model,
+               'activeUsers' => $activeUsers,
            ]);
        }
    }
@@ -89,8 +92,11 @@ class CashboxController extends Controller
        if ($model->load(Yii::$app->request->post()) && $model->save()) {
            return $this->redirect(['view', 'id' => $model->id]);
        } else {
+           $userForCashboxModel = $this->module->userForCashbox;
+           $activeUsers = $userForCashboxModel::find()->active()->all();
            return $this->render('update', [
                'model' => $model,
+               'activeUsers' => $activeUsers,
            ]);
        }
    }

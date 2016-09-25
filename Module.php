@@ -11,7 +11,11 @@ class Module extends \yii\base\Module
     public $orderModel = 'pistol88\order\models\Order';
     public $userModel = null;
     public $paymentSuccessRedirect = '/cashbox/operation/index';
+<<<<<<< HEAD
     public $printCheckRedirect = null;
+=======
+    public $userForCashbox;
+>>>>>>> cashbox_to_user
 
     public function init()
     {
