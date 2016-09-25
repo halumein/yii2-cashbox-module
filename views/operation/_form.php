@@ -34,7 +34,7 @@ use yii\bootstrap\ActiveForm;
             <?= $form->field($model, 'sum')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-sm-5 col-sm-offset-1">
-            <?= $form->field($model, 'cashbox_id')->textInput() ?>
+            <?= $form->field($model, 'cashbox_id')->dropDownList(\yii\helpers\ArrayHelper::map(\halumein\cashbox\models\Cashbox::getAvailable(), 'id', 'name')) ?>
         </div>
     </div>
 

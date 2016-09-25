@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => false,
             ],
             'name',
+<<<<<<< HEAD
             [
                 'attribute' => 'currency',
                 'filter' => false,
@@ -53,6 +54,17 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
 
+=======
+            'currency',
+            [
+                'label' => 'Баланс',
+                'attribute' => 'balance',
+                'content' => function ($model) {
+                    return Html::a($model->balance, ['/cashbox/operation/index', 'OperationSearch[cashbox_id]' => $model->id]);
+                }
+            ],
+            // 'deleted',
+>>>>>>> cashbox_operation_fixes
             ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
         ],
     ]);

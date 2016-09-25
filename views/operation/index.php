@@ -3,8 +3,12 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
+<<<<<<< HEAD
 use nex\datepicker\DatePicker;
 
+=======
+use halumein\cashbox\models\Cashbox;
+>>>>>>> cashbox_operation_fixes
 
 /* @var $this yii\web\View */
 /* @var $searchModel halumein\cashbox\models\search\Operationsearch */
@@ -114,7 +118,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'balance',
             'sum',
-            'cashbox_id',
+            [
+                'label' => 'Касса',
+                'attribute' => 'cashbox_id',
+                'value' => 'cashbox.name',
+                'filter' => \yii\helpers\ArrayHelper::map(Cashbox::getAvailable(), 'id', 'name'),
+            ],
             // 'model',
             // 'item_id',
             [
