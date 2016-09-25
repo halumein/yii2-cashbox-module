@@ -3,15 +3,13 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
-use halumein\cashbox\models\Cashbox;
-use common\models\User;
 use nex\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ExchangeSearch */
+/* @var $searchModel halumein\cashbox\models\search\RevisionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Переводы';
+$this->title = 'Инкассации';
 $this->params['breadcrumbs'][] = $this->title;
 
 if($dateStart = yii::$app->request->get('date_start')) {
@@ -21,14 +19,13 @@ if($dateStart = yii::$app->request->get('date_start')) {
 if($dateStop = yii::$app->request->get('date_stop')) {
     $dateStop = date('d.m.Y', strtotime($dateStop));
 }
-
 ?>
-<div class="exchange-index">
+<div class="revision-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]);?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?php echo Html::a('Добавить перевод', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php echo Html::a('Добавить инкассацию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <div class="panel panel-primary">
@@ -37,7 +34,7 @@ if($dateStop = yii::$app->request->get('date_stop')) {
         </div>
         <div class="panel-body">
             <form action="" class="row search">
-                <input type="hidden" name="ExchangeSearch[name]" value="" />
+                <input type="hidden" name="RevisionSearch[name]" value="" />
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-6">
@@ -94,6 +91,8 @@ if($dateStop = yii::$app->request->get('date_stop')) {
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            //['class' => 'yii\grid\SerialColumn'],
+
             [
                 'attribute' => 'id',
                 'filter' => false,
@@ -102,35 +101,41 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 ]
             ],
             [
-                'attribute' => 'from_cashbox_id',
+                'attribute' => 'cashbox_id',
                 'filter' => Html::activeDropDownList(
                     $searchModel,
-                    'from_cashbox_id',
+                    'cashbox_id',
                     ArrayHelper::map($activeCashboxes, 'id', 'name'),
                     ['class' => 'form-control', 'prompt' => 'Все кассы']
                 ),
-                'value' => 'fromCashbox.name'
+                'value' => 'cashbox.name'
             ],
             [
-                'attribute' => 'from_sum',
+                'attribute' => 'balance_fact',
                 'filter' => false,
                 'contentOptions' => [
                     'width' => 180
                 ]
             ],
             [
-                'attribute' => 'to_cashbox_id',
-                'filter' => Html::activeDropDownList(
-                    $searchModel,
-                    'to_cashbox_id',
-                    ArrayHelper::map($activeCashboxes, 'id', 'name'),
-                    ['class' => 'form-control', 'prompt' => 'Все кассы']
-                ),
-                'value' => 'toCashbox.name'
-            ],
-            [
-                'attribute' => 'to_sum',
+                'attribute' => 'balance_expect',
                 'filter' => false,
+                'content' => function ($model) {
+                    $dateStart = \halumein\cashbox\models\Revision::find()
+                        ->where(['cashbox_id' => $model->cashbox_id])
+                        ->andWhere('id < :id', [':id' => $model->id])
+                        ->orderBy(['id' => SORT_DESC])
+                        ->one()
+                        ->date;
+
+                    return Html::a($model->balance_expect,
+                        [
+                            '/cashbox/operation/index',
+                            'date_start' => $dateStart,
+                            'date_stop' => $model->date,
+                            'OperationSearch[cashbox_id]' => $model->cashbox_id,
+                        ]);
+                },
                 'contentOptions' => [
                     'width' => 180
                 ]
@@ -140,15 +145,10 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 'filter' => false,
             ],
             [
-                'attribute' => 'rate',
-                'filter' => false,
-            ],
-            [
-                'attribute' => 'staffer_id',
+                'attribute' => 'user_id',
                 'filter' => Html::activeDropDownList(
                     $searchModel,
-                    'staffer_id',
-                    //ArrayHelper::map(User::find()->all(), 'id', 'name'),
+                    'user_id',
                     ArrayHelper::map($activeUsers, 'id', 'name'),
                     ['class' => 'form-control', 'prompt' => 'Все сотрудники']
                 ),
@@ -159,7 +159,7 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 'filter' => false,
             ],
 
-            ['class' => 'yii\grid\ActionColumn',  'template' => '{update} {delete}'],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 65px;']],
         ],
     ]); ?>
 

@@ -86,9 +86,10 @@ class Exchange extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStaffer()
+    public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'staffer_id']);
+        $userForCashbox = Yii::$app->getModule('cashbox')->userForCashbox;
+        return $this->hasOne($userForCashbox::className(), ['id' => 'staffer_id']);
     }
 
     public static function getActiveExchanges()

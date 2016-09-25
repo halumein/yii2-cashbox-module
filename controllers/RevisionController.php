@@ -3,17 +3,18 @@
 namespace halumein\cashbox\controllers;
 
 use halumein\cashbox\models\Cashbox;
+use halumein\cashbox\models\Operation;
 use Yii;
-use halumein\cashbox\models\Exchange;
-use halumein\cashbox\models\search\ExchangeSearch;
+use halumein\cashbox\models\Revision;
+use halumein\cashbox\models\search\RevisionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ExchangeController implements the CRUD actions for Exchange model.
+ * RevisionController implements the CRUD actions for Revision model.
  */
-class ExchangeController extends Controller
+class RevisionController extends Controller
 {
     public function behaviors()
     {
@@ -28,34 +29,28 @@ class ExchangeController extends Controller
     }
 
     /**
-     * Lists all Exchange models.
+     * Lists all Revision models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $cashbox = new Cashbox();
-        $searchModel = new ExchangeSearch();
-
+        $searchModel = new RevisionSearch();
         $searchParams = Yii::$app->request->queryParams;
-        $searchParams['ExchangeSearch']['deleted'] = null;
         $dataProvider = $searchModel->search($searchParams);
 
         $userForCashboxModel = $this->module->userForCashbox;
         $activeUsers = $userForCashboxModel::find()->all();
 
-//        echo "<pre>";
-//        var_dump($dataProvider);
-
         return $this->render('index', [
-            'activeCashboxes' => $cashbox->activeCashboxes,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'activeCashboxes' => Cashbox::getActiveCashboxes(),
             'activeUsers' => $activeUsers,
         ]);
     }
 
     /**
-     * Displays a single Exchange model.
+     * Displays a single Revision model.
      * @param integer $id
      * @return mixed
      */
@@ -67,43 +62,33 @@ class ExchangeController extends Controller
     }
 
     /**
-     * Creates a new Exchange model.
+     * Creates a new Revision model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-
-        $model = new Exchange();
-        $cashbox = new Cashbox();
+        $model = new Revision();
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->from_cashbox_id === $model->to_cashbox_id){
-                Yii::$app->getSession()->setFlash('error', "Касса списания не может быть кассой приема!");
-                return $this->render('create', [
-                    'model' => $model,
-                    'activeCashboxes' => $cashbox->activeCashboxes,
-                ]);
+            $model->user_id = Yii::$app->user->id;
+            $model->date =  date('Y:m:d H:i:s');
+
+            $model->balance_expect = Cashbox::findOne($model->cashbox_id)->balance;
+
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-
-
-
-
-            $model->staffer_id = Yii::$app->user->identity->id;
-            $model->date = date("Y-m-d H:i:s");
-            if ($model->save()) {
-                return $this->redirect(['index']);
-            }
-        } else {
-                return $this->render('create', [
-                    'model' => $model,
-                    'activeCashboxes' => $cashbox->activeCashboxes,
-                ]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+            'activeCashboxes' => Cashbox::getActiveCashboxes(),
+        ]);
     }
 
     /**
-     * Updates an existing Exchange model.
+     * Updates an existing Revision model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -114,7 +99,7 @@ class ExchangeController extends Controller
         $cashbox = new Cashbox();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -124,34 +109,15 @@ class ExchangeController extends Controller
     }
 
     /**
-     * Deletes an existing Exchange model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $model = $this->findModel($id);
-        $model->deleted = date('Y:m:d H:i:s', time());
-        if ($model->save()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('/error', [
-                'error' => $model->errors
-            ]);
-        }
-    }
-
-    /**
-     * Finds the Exchange model based on its primary key value.
+     * Finds the Revision model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Exchange the loaded model
+     * @return Revision the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Exchange::findOne($id)) !== null) {
+        if (($model = Revision::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

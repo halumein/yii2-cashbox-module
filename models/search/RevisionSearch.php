@@ -5,12 +5,12 @@ namespace halumein\cashbox\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use halumein\cashbox\models\Operation;
+use halumein\cashbox\models\Revision;
 
 /**
- * Operationsearch represents the model behind the search form about `halumein\cashbox\models\Operation`.
+ * RevisionSearch represents the model behind the search form about `halumein\cashbox\models\Revision`.
  */
-class OperationSearch extends Operation
+class RevisionSearch extends Revision
 {
     /**
      * @inheritdoc
@@ -18,9 +18,9 @@ class OperationSearch extends Operation
     public function rules()
     {
         return [
-            [['id', 'cashbox_id', 'item_id', 'client_id', 'staffer_id'], 'integer'],
-            [['type', 'model', 'date', 'comment', 'status'], 'safe'],
-            [['balance', 'sum'], 'number'],
+            [['id', 'cashbox_id', 'user_id'], 'integer'],
+            [['balance_fact', 'balance_expect'], 'number'],
+            [['date', 'comment'], 'safe'],
         ];
     }
 
@@ -42,7 +42,7 @@ class OperationSearch extends Operation
      */
     public function search($params)
     {
-        $query = Operation::find();
+        $query = Revision::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,28 +54,25 @@ class OperationSearch extends Operation
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'balance' => $this->balance,
-            'sum' => $this->sum,
             'cashbox_id' => $this->cashbox_id,
-            'item_id' => $this->item_id,
+            'balance_fact' => $this->balance_fact,
+            'balance_expect' => $this->balance_expect,
             'date' => $this->date,
-            'client_id' => $this->client_id,
-            'staffer_id' => $this->staffer_id,
-            'status' => $this->status,
+            'user_id' => $this->user_id,
         ]);
-
-        $query->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'model', $this->model])
-            ->andFilterWhere(['like', 'comment', $this->comment]);
+        
+        $query->andFilterWhere(['like', 'comment', $this->comment]);
 
         if($dateStart = yii::$app->request->get('date_start')) {
+            $dateStart = date('Y-m-d', strtotime($dateStart));
             $query->andWhere('date >= :dateStart', [':dateStart' => $dateStart]);
         }
 
         if($dateStop = yii::$app->request->get('date_stop')) {
+            $dateStop = date('Y-m-d H:i:s', strtotime($dateStop)+86399);
             $query->andWhere('date <= :dateStop', [':dateStop' => $dateStop]);
         }
-        
+
         return $dataProvider;
     }
 }
