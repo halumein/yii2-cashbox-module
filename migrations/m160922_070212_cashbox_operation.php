@@ -3,7 +3,7 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
-class m160922_070212_Mass extends Migration
+class m160922_070212_cashbox_operation extends Migration
 {
 
     public function init()
@@ -29,13 +29,10 @@ class m160922_070212_Mass extends Migration
            'comment'=> $this->text()->null()->defaultValue(null),
            'status'=> $this->string()->notNull()->defaultValue('created'),
         ], $tableOptions);
-        $this->createIndex('cashbox_id','{{%cashbox_operation}}','cashbox_id',true);
-        $this->addForeignKey('fk_cashbox_operation_cashbox_id','{{%cashbox_operation}}','cashbox_id','cashbox_cashbox','id');
     }
 
     public function safeDown()
     {
-        $this->dropForeignKey('fk_cashbox_operation_cashbox_id', '{{%cashbox_operation}}');
         $this->dropTable('{{%cashbox_operation}}');
     }
 }

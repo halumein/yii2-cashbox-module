@@ -3,24 +3,27 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
-<<<<<<< HEAD
 use nex\datepicker\DatePicker;
-
-=======
 use halumein\cashbox\models\Cashbox;
->>>>>>> cashbox_operation_fixes
 
 /* @var $this yii\web\View */
 /* @var $searchModel halumein\cashbox\models\search\Operationsearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+
+if($dateStart = yii::$app->request->get('date_start')) {
+    $dateStart = date('d.m.Y', strtotime($dateStart));
+}
+
+if($dateStop = yii::$app->request->get('date_stop')) {
+    $dateStop = date('d.m.Y', strtotime($dateStop));
+}
+
 
 $this->title = 'Операции';
 $this->params['breadcrumbs'][] = ['label' => 'Кассы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="operation-index">
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?php echo Html::a('Провести операцию', ['create'], ['class' => 'btn btn-success']) ?>

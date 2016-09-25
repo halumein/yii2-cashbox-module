@@ -129,8 +129,8 @@ class OperationController extends Controller
         $transaction = Yii::$app->cashboxOperation->addTransaction($request);
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-
         $nextStepAction = Url::to(['/order/order/get-order-form-light', 'useAjax' => 1]);
+
         if ($this->module->printCheckRedirect) {
             $printCheckRedirect = Url::to([$this->module->printCheckRedirect, 'id' => $request['Operation']['item_id']]);
         } else {
@@ -142,9 +142,6 @@ class OperationController extends Controller
             'nextStep' => $nextStepAction,
             'printRedirect' => $printCheckRedirect
         ];
-
-
-
     }
 
     /**

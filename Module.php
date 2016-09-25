@@ -11,11 +11,8 @@ class Module extends \yii\base\Module
     public $orderModel = 'pistol88\order\models\Order';
     public $userModel = null;
     public $paymentSuccessRedirect = '/cashbox/operation/index';
-<<<<<<< HEAD
     public $printCheckRedirect = null;
-=======
-    public $userForCashbox;
->>>>>>> cashbox_to_user
+    public $userForCashbox = '\common\models\User';
 
     public function init()
     {
@@ -27,13 +24,6 @@ class Module extends \yii\base\Module
         }
 
         parent::init();
-    }
-
-    public function testTrigger()
-    {
-        $event = new \halumein\cashbox\events\TestEvent;
-        $event->text = 13;
-        $this->trigger(self::EVENT_TEST, $event);
     }
 
 }

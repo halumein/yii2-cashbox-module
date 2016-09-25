@@ -40,6 +40,7 @@ halumein.paymentForm = {
 		});
 
 		$submit.on('click', function(e) {
+            console.log('click');
 			halumein.paymentForm.sendData(e);
 		});
 	},
@@ -96,9 +97,9 @@ halumein.paymentForm = {
 }
 
 // при первой загрузке запускаем инит
-$(document).ready(function() {
-	halumein.paymentForm.init();
-});
+// $(document).ready(function() {
+// 	halumein.paymentForm.init();
+// });
 
 // при последующей перерисовке, переинитим нужные блоки
 $( document ).ajaxComplete(function( event, xhr, settings ) {
