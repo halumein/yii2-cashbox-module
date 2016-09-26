@@ -35,12 +35,6 @@ class Cashbox extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getUsers()
-    {
-        $userForCashbox = Yii::$app->getModule('cashbox')->userForCashbox;
-        return $this->hasMany($userForCashbox::className(), ['id' => 'user_id'])->viaTable('cashbox_user_to_cashbox', ['cashbox_id' => 'id']);
-    }
-
     /**
      * @inheritdoc
      */
@@ -76,9 +70,16 @@ class Cashbox extends \yii\db\ActiveRecord
         return Cashbox::find()->where(['deleted' => null])->all();
     }
 
+    public function getUsers()
+    {
+        $userModel = Yii::$app->getModule('cashbox')->userModel;
+        return $this->hasMany($userModel::className(), ['id' => 'user_id'])->viaTable('cashbox_user_to_cashbox', ['cashbox_id' => 'id']);
+    }
+
     public static function getAvailable()
     {
-        return static::find()->all();
+        $userModel = Yii::$app->getModule('cashbox')->userModel;
+        return $userModel->cashboxes;
     }
 
 }

@@ -38,8 +38,8 @@ class RevisionController extends Controller
         $searchParams = Yii::$app->request->queryParams;
         $dataProvider = $searchModel->search($searchParams);
 
-        $userForCashboxModel = $this->module->userForCashbox;
-        $activeUsers = $userForCashboxModel::find()->all();
+        $userModelModel = $this->module->userModel;
+        $activeUsers = $userModelModel::find()->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,

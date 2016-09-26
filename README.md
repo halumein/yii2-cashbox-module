@@ -30,6 +30,7 @@ php yii migrate --migrationPath=vendor/halumein/yii2-cashbox-module/migrations
     'modules' => [
         'cashbox' => [
             'class' => 'halumein\cashbox\Module',
+            'userModel' => 'common\models\YourUser', // класс пользователя используемый в приложении. если не указан то Yii::$app->user->identity
             'paymentSuccessRedirect' => '/order/order/print',  //редирект после успешной оплаты
             'printRedirect' => '/order/order/print' // редирект на action печати чека после оплаты
         ],
@@ -37,26 +38,12 @@ php yii migrate --migrationPath=vendor/halumein/yii2-cashbox-module/migrations
     ]
 ```
 
-
-
-дальше обращаться по адресу cashbox/<имя_контроллера>
-
-
-компонент:
-
-```
-'CashboxOperations' => [
-    'class' => 'halumein\cashbox\CashboxOperations'
-],
-```
-
-Виджет выбора дефолтной кассы:
-Первое что потребуется - это дополнить таблицу пользователя в базе данных полем "default_cashbox", куда будет записываться id кассы по умолчанию для выбранного пользователя.
-
-Затем имплементим модель юзера используемую в приложении и добавляем необходимые методы, они могут выглядеть например так:
+В используемую модель пользователя добавить реализации необходимых методов. Например, могут выглядеть так:
 
 
 ```
+use halumein\cashbox\models\Cashbox; //модель кассы
+
 class YourUser extends ActiveRecord implements \halumein\cashbox\interfaces\User
 {
     ...
@@ -85,9 +72,25 @@ class YourUser extends ActiveRecord implements \halumein\cashbox\interfaces\User
         {
             return $this->userProfile->getFullName();
         }
+
+        // для получения доступных касс пользователю
+        public function getCashboxes()
+        {
+            return $this->hasMany(Cashbox::className(), ['id' => 'cashbox_id'])
+                        ->viaTable('cashbox_user_to_cashbox', ['user_id' => 'id']);
+        }
+
+
     ...
 }
 ```
+
+дальше обращаться по адресу cashbox/<имя_контроллера>
+
+
+Виджет выбора дефолтной кассы:
+Для использования виджета потребуется дополнить таблицу пользователя в базе данных полем "default_cashbox", куда будет записываться id кассы по умолчанию для выбранного пользователя.
+
 
 Вывод виджета
 ```

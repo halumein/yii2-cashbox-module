@@ -40,8 +40,8 @@ class ExchangeController extends Controller
         $searchParams['ExchangeSearch']['deleted'] = null;
         $dataProvider = $searchModel->search($searchParams);
 
-        $userForCashboxModel = $this->module->userForCashbox;
-        $activeUsers = $userForCashboxModel::find()->all();
+        $userModelModel = $this->module->userModel;
+        $activeUsers = $userModelModel::find()->all();
 
 //        echo "<pre>";
 //        var_dump($dataProvider);

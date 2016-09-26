@@ -54,4 +54,8 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     ?>
 
+
+    <?= halumein\cashbox\widgets\UserCashboxSelector::widget() ?>
+
+
 </div>

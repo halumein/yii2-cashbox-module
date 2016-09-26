@@ -62,7 +62,7 @@ class Revision extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        $userForCashbox = Yii::$app->getModule('cashbox')->userForCashbox;
-        return $this->hasOne($userForCashbox::className(), ['id' => 'user_id']);
+        $userModel = Yii::$app->getModule('cashbox')->userModel;
+        return $this->hasOne($userModel::className(), ['id' => 'user_id']);
     }
 }

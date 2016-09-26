@@ -125,8 +125,9 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                         ->where(['cashbox_id' => $model->cashbox_id])
                         ->andWhere('id < :id', [':id' => $model->id])
                         ->orderBy(['id' => SORT_DESC])
-                        ->one()
-                        ->date;
+                        ->one();
+
+                    $dateStart = $dateStart ? $dateStart->date : NULL;
 
                     return Html::a($model->balance_expect,
                         [

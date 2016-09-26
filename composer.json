@@ -27,5 +27,8 @@
         "psr-4": {
             "halumein\\cashbox\\": ""
         }
+    },
+    "extra": {
+        "bootstrap": "halumein\\cashbox\\Bootstrap"
     }
 }

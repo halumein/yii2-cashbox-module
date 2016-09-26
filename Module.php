@@ -12,7 +12,6 @@ class Module extends \yii\base\Module
     public $userModel = null;
     public $paymentSuccessRedirect = '/cashbox/operation/index';
     public $printRedirect = null;
-    public $userForCashbox = '\common\models\User';
 
     public function init()
     {
