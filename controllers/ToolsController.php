@@ -13,13 +13,10 @@ use halumein\cashbox\models\Operation;
 
 class ToolsController extends Controller
 {
-
-    public function actionGetIframeRedirect($id)
-    {
-        // return '<script>parent.document.location = "' . Url::to(['/cashbox/tools/payment-form', 'orderId' => $id]) . '"; </script>';
-        return '<script>console.log("getIframeRedirect")</script>';
-        // return true;
-    }
+    /**
+    * @param $id - идешник ордера
+    * @param $useAjax - использовать ajax для отправки формы
+    */
 
     public function actionPaymentForm($id, $useAjax = false)
     {

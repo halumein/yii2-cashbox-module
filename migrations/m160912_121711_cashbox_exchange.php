@@ -31,14 +31,10 @@ class m160912_121711_cashbox_exchange extends Migration
                 'deleted'=> $this->datetime()->null()->defaultValue(null),
             ],$tableOptions
         );
-        $this->createIndex('from_cashbox_id','{{%cashbox_exchange}}','from_cashbox_id',true);
-        $this->createIndex('to_cashbox_id','{{%cashbox_exchange}}','to_cashbox_id',true);
     }
 
     public function safeDown()
     {
-        $this->dropIndex('from_cashbox_id', '{{%cashbox_exchange}}');
-        $this->dropIndex('to_cashbox_id', '{{%cashbox_exchange}}');
         $this->dropTable('{{%cashbox_exchange}}');
     }
 }

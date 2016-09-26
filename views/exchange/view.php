@@ -6,22 +6,11 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Exchange */
 
-$this->title = $model->id;
+$this->title = 'Перевод номер ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Переводы', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $model->id;
 ?>
 <div class="exchange-view">
-
-    <p>
-        <?php echo Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?php echo Html::a('Удалить', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Уверены что хотите удалить перевод?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
 
     <?php echo DetailView::widget([
         'model' => $model,
@@ -35,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'rate',
             'staffer_id',
             'comment',
-            'deleted',
+            // 'deleted',
         ],
     ]) ?>
 

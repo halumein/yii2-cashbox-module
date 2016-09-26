@@ -19,7 +19,7 @@ if($dateStop = yii::$app->request->get('date_stop')) {
 }
 
 
-$this->title = 'Операции';
+$this->title = 'Транзакции';
 $this->params['breadcrumbs'][] = ['label' => 'Кассы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

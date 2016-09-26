@@ -30,30 +30,40 @@ use yii\bootstrap\Alert;
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?php
-    echo $form->field($model, 'from_cashbox_id')
-        ->widget(Select2::classname(), [
-            'data' => ArrayHelper::map($activeCashboxes, 'id', 'name'),
-            'language' => 'ru',
-            'options' => ['placeholder' => 'Выберите кассу ...'],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ]); ?>
+    <div class="row">
+        <div class="col-sm-6">
+            <?php
+            echo $form->field($model, 'from_cashbox_id')
+            ->widget(Select2::classname(), [
+                'data' => ArrayHelper::map($activeCashboxes, 'id', 'name'),
+                'language' => 'ru',
+                'options' => ['placeholder' => 'Выберите кассу ...'],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]); ?>
+        </div>
+        <div class="col-sm-6">
+            <?php echo $form->field($model, 'to_cashbox_id')
+                ->widget(Select2::classname(), [
+                    'data' => ArrayHelper::map($activeCashboxes, 'id', 'name'),
+                    'language' => 'ru',
+                    'options' => ['placeholder' => 'Выберите кассу ...'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]); ?>
+        </div>
+    </div>
 
-    <?php echo $form->field($model, 'from_sum')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
-
-    <?php echo $form->field($model, 'to_cashbox_id')
-        ->widget(Select2::classname(), [
-            'data' => ArrayHelper::map($activeCashboxes, 'id', 'name'),
-            'language' => 'ru',
-            'options' => ['placeholder' => 'Выберите кассу ...'],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ]); ?>
-
-    <?php echo $form->field($model, 'to_sum')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
+    <div class="row">
+        <div class="col-sm-6">
+            <?php echo $form->field($model, 'from_sum')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
+        </div>
+        <div class="col-sm-6">
+            <?php echo $form->field($model, 'to_sum')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
+        </div>
+    </div>
 
     <?php echo $form->field($model, 'rate')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
 

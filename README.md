@@ -86,7 +86,12 @@ class YourUser extends ActiveRecord implements \halumein\cashbox\interfaces\User
 ```
 
 дальше обращаться по адресу cashbox/<имя_контроллера>
+доуступные роуты:
 
+cashbox/cashbox - индекс касс
+cashbox/operation - индекс транзакций
+cashbox/exchange - индекс переводов между кассами
+cashbox/revision - индекс сверок
 
 Виджет выбора дефолтной кассы:
 Для использования виджета потребуется дополнить таблицу пользователя в базе данных полем "default_cashbox", куда будет записываться id кассы по умолчанию для выбранного пользователя.

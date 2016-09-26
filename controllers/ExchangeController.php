@@ -75,29 +75,42 @@ class ExchangeController extends Controller
     {
 
         $model = new Exchange();
-        $cashbox = new Cashbox();
 
         if ($model->load(Yii::$app->request->post())) {
+            $postData = Yii::$app->request->post();
             if ($model->from_cashbox_id === $model->to_cashbox_id){
                 Yii::$app->getSession()->setFlash('error', "Касса списания не может быть кассой приема!");
                 return $this->render('create', [
                     'model' => $model,
-                    'activeCashboxes' => $cashbox->activeCashboxes,
+                    'activeCashboxes' => Cashbox::getActiveCashboxes(),
                 ]);
             }
 
-
-
-
             $model->staffer_id = Yii::$app->user->identity->id;
             $model->date = date("Y-m-d H:i:s");
+
+            $model->rate =  $postData['Exchange']['rate'] ? $postData['Exchange']['rate'] : 1;
+
             if ($model->save()) {
+
+                $type = 'outcome';
+                $sum = $postData['Exchange']['from_sum'];
+                $cashbox_id = $postData['Exchange']['from_cashbox_id'];
+                $comment = $model->comment ? $model->comment : 'Перевод между кассами';
+
+                $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashbox_id, null, $comment);
+
+                $type = 'income';
+                $sum = $postData['Exchange']['to_sum'];
+                $cashbox_id = $postData['Exchange']['to_cashbox_id'];
+                $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashbox_id, null, $comment);
+
                 return $this->redirect(['index']);
             }
         } else {
                 return $this->render('create', [
                     'model' => $model,
-                    'activeCashboxes' => $cashbox->activeCashboxes,
+                    'activeCashboxes' => Cashbox::getActiveCashboxes(),
                 ]);
         }
     }

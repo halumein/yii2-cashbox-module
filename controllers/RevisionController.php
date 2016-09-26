@@ -77,7 +77,7 @@ class RevisionController extends Controller
             $model->balance_expect = Cashbox::findOne($model->cashbox_id)->balance;
 
             if ($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         }
 
@@ -93,20 +93,20 @@ class RevisionController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-        $cashbox = new Cashbox();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-                'activeCashboxes' => $cashbox->activeCashboxes,
-            ]);
-        }
-    }
+    // public function actionUpdate($id)
+    // {
+    //     $model = $this->findModel($id);
+    //     $cashbox = new Cashbox();
+    //
+    //     if ($model->load(Yii::$app->request->post()) && $model->save()) {
+    //         return $this->redirect(['index']);
+    //     } else {
+    //         return $this->render('update', [
+    //             'model' => $model,
+    //             'activeCashboxes' => $cashbox->activeCashboxes,
+    //         ]);
+    //     }
+    // }
 
     /**
      * Finds the Revision model based on its primary key value.

@@ -12,10 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="operation-view">
 
-    <p>
-        <?php echo Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-    </p>
-
     <?php echo DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -24,10 +20,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'balance',
             'sum',
             'cashbox_id',
-            'model',
+            // 'model',
             'item_id',
             'date',
-            'client_id',
+            // 'client_id',
             'staffer_id',
             'comment:ntext',
         ],

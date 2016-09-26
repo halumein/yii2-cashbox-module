@@ -158,7 +158,7 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 'filter' => false,
             ],
 
-            ['class' => 'yii\grid\ActionColumn',  'template' => '{update} {delete}'],
+            // ['class' => 'yii\grid\ActionColumn',  'template' => '{update} {delete}'],
         ],
     ]); ?>
 

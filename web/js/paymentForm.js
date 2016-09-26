@@ -79,7 +79,9 @@ halumein.paymentForm = {
                             if (response.printRedirect !== null) {
                                 $('#orderSubmitter').attr('src', response.printRedirect);
                             }
-						}
+						} else {
+                            alert('ошибка проведения операции');
+                        }
 					},
 					fail : function() {
 						console.log('fail');
