@@ -7,9 +7,6 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use halumein\cashbox\models\Cashbox;
 
-/**
- * CashboxSearch represents the model behind the search form about `common\models\Cashbox`.
- */
 class CashboxSearch extends Cashbox
 {
     /**

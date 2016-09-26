@@ -10,8 +10,6 @@ use halumein\cashbox\models\Cashbox;
 use halumein\cashbox\models\Operation;
 use halumein\cashbox\models\search\Operationsearch;
 
-use pistol88\order\models\Order;
-
 use yii\helpers\Url;
 /**
  * OperationController implements the CRUD actions for Operation model.
@@ -85,6 +83,10 @@ class OperationController extends Controller
         }
     }
 
+    /**
+    * Оплата.
+    * TODO вынести в другой модуль.
+    */
 
     public function actionPaymentConfirm()
     {
@@ -104,7 +106,6 @@ class OperationController extends Controller
 
         if ($transaction['status']) {
             return $this->redirect([$this->module->paymentSuccessRedirect]);
-            // return '<script>parent.document.location = "' . Url::to(['/service/price/order']) . '"; </script>';
         } else {
             $model = new Operation();
 
@@ -131,16 +132,16 @@ class OperationController extends Controller
 
         $nextStepAction = Url::to(['/order/order/get-order-form-light', 'useAjax' => 1]);
 
-        if ($this->module->printCheckRedirect) {
-            $printCheckRedirect = Url::to([$this->module->printCheckRedirect, 'id' => $request['Operation']['item_id']]);
+        if ($this->module->printRedirect) {
+            $printRedirect = Url::to([$this->module->printRedirect, 'id' => $request['Operation']['item_id']]);
         } else {
-            $printCheckRedirect = null;
+            $printRedirect = null;
         }
 
         return [
             'status' => 'success',
             'nextStep' => $nextStepAction,
-            'printRedirect' => $printCheckRedirect
+            'printRedirect' => $printRedirect
         ];
     }
 

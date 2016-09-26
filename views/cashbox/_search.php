@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\search\CashboxSearch */
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 

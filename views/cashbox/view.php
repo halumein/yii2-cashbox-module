@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Cashbox */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Кассы', 'url' => ['index']];
@@ -14,8 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php // TODO переделать на транслэйт ?>
-        <?php echo Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?php echo Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 // TODO переделать на транслэйт

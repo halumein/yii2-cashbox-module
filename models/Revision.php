@@ -2,7 +2,6 @@
 
 namespace halumein\cashbox\models;
 
-use common\models\User;
 use Yii;
 
 /**

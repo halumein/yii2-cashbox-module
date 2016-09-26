@@ -23,6 +23,22 @@ php yii migrate --migrationPath=vendor/halumein/yii2-cashbox-module/migrations
     ]
 ```
 
+Дополнительные параметры:
+
+
+```php
+    'modules' => [
+        'cashbox' => [
+            'class' => 'halumein\cashbox\Module',
+            'paymentSuccessRedirect' => '/order/order/print',  //редирект после успешной оплаты
+            'printRedirect' => '/order/order/print' // редирект на action печати чека после оплаты
+        ],
+        //...
+    ]
+```
+
+
+
 дальше обращаться по адресу cashbox/<имя_контроллера>
 
 

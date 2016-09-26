@@ -3,11 +3,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-use common\models\User;
 use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Cashbox */
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 
