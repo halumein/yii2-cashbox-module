@@ -1,5 +1,5 @@
 <?php
-namespace halumein\consumption;
+namespace halumein\cashbox;
 
 use yii\base\BootstrapInterface;
 use yii;
