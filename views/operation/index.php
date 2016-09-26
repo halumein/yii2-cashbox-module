@@ -107,18 +107,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' => ['income' => 'Приход', 'outcome' => 'Расход'],
             ],
-            [
-                'label' => 'Статус',
-                'attribute' => 'status',
-                'value' => function ($model) {
-                    switch ($model->status) {
-                        case 'created' : return 'Создан';
-                        case 'charged' : return 'Проведён';
-                        case 'refunded' : return 'Возврат';
-                    }
-                },
-                'filter' => ['created' => 'Создан', 'charged' => 'Проведён', 'refunded' => 'Возврат'],
-            ],
             'balance',
             'sum',
             [

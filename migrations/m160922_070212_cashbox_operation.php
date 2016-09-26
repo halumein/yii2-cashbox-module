@@ -15,7 +15,7 @@ class m160922_070212_cashbox_operation extends Migration
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
-         $this->createTable('{{%cashbox_operation}}',[
+        $this->createTable('{{%cashbox_operation}}',[
            'id'=> $this->primaryKey(11),
            'type'=> $this->string()->notNull(),
            'balance'=> $this->decimal(11, 2)->notNull(),
@@ -27,7 +27,6 @@ class m160922_070212_cashbox_operation extends Migration
            'client_id'=> $this->integer(11)->null()->defaultValue(null),
            'staffer_id'=> $this->integer(11)->notNull(),
            'comment'=> $this->text()->null()->defaultValue(null),
-           'status'=> $this->string()->notNull()->defaultValue('created'),
         ], $tableOptions);
     }
 

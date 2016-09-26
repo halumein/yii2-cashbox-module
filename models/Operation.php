@@ -17,7 +17,6 @@ use Yii;
  * @property integer $client_id
  * @property integer $staffer_id
  * @property string $comment
- * @property string $status
  */
 class Operation extends \yii\db\ActiveRecord
 {
@@ -39,7 +38,7 @@ class Operation extends \yii\db\ActiveRecord
     {
         return [
             [['type', 'balance', 'sum', 'cashbox_id', 'date', 'staffer_id'], 'required'],
-            [['type', 'comment', 'status'], 'string'],
+            [['type', 'comment'], 'string'],
             [['balance', 'sum'], 'number'],
             [['cashbox_id', 'item_id', 'client_id', 'staffer_id'], 'integer'],
             [['date'], 'safe'],
@@ -65,7 +64,6 @@ class Operation extends \yii\db\ActiveRecord
             'client_id' => 'ID клиента',
             'staffer_id' => 'ID работника',
             'comment' => 'Комментарий',
-            'status' => 'Статус',
         ];
     }
 

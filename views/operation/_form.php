@@ -24,9 +24,6 @@ use yii\bootstrap\ActiveForm;
         <div class="col-sm-5">
             <?= $form->field($model, 'type')->dropDownList(['income' => 'Приход', 'outcome' => 'Расход'], ['options' => [ 'income' => ['selected ' => true]]]) ?>
         </div>
-        <div class="col-sm-5 col-sm-offset-1">
-            <?= $form->field($model, 'status')->dropDownList(['charged' => 'Проведён', 'created' => 'Создан']) ?>
-        </div>
     </div>
 
     <div class="row">
