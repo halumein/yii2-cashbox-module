@@ -69,11 +69,11 @@ class OperationController extends Controller
 
         $type = $request['Operation']['type'];
         $sum = $request['Operation']['sum'];
-        $cashbox_id = $request['Operation']['cashbox_id'];
+        $cashboxId = $request['Operation']['cashbox_id'];
         $comment = $request['Operation']['comment'];
-        $item_id = null;
+        $itemId = null;
 
-        $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashbox_id, $item_id, $comment);
+        $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
         if ($transaction['status']) {
             return $this->redirect(['index']);
@@ -100,9 +100,10 @@ class OperationController extends Controller
         $request = Yii::$app->request->post();
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
+
         if ($request) {
             $type = 'income';
-            $item_id = $request['Operation']['item_id'];
+            $itemId = $request['Operation']['item_id'];
             $cashboxId = $request['Operation']['cashbox_id'];
             $comment = $request['Operation']['comment'];
             // ёбаный стыд, но пока так. проверяет если внесено больше денег чем стоит заказ (крупная купюра с которой сдали)
@@ -112,7 +113,7 @@ class OperationController extends Controller
             } else {
                 $sum = $request['Operation']['sum'];
             }
-            $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashbox_id, $item_id, $comment);
+            $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
             if ($transaction['status']) {
                 return $this->redirect([$this->module->paymentSuccessRedirect]);
@@ -141,7 +142,7 @@ class OperationController extends Controller
 
         if ($request) {
             $type = 'income';
-            $item_id = $request['Operation']['item_id'];
+            $itemId = $request['Operation']['item_id'];
             $cashboxId = $request['Operation']['cashbox_id'];
             $comment = $request['Operation']['comment'];
 
@@ -152,7 +153,7 @@ class OperationController extends Controller
             } else {
                 $sum = $request['Operation']['sum'];
             }
-            $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashbox_id, $item_id, $comment);
+            $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
             if ($transaction) {
 
@@ -160,7 +161,7 @@ class OperationController extends Controller
                 $nextStepAction = Url::to(['/order/order/get-order-form-light', 'useAjax' => 1]);
 
                 if ($this->module->printRedirect) {
-                    $printRedirect = Url::to([$this->module->printRedirect, 'id' => $item_id]);
+                    $printRedirect = Url::to([$this->module->printRedirect, 'id' => $itemId]);
                 } else {
                     $printRedirect = null;
                 }
