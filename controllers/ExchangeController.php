@@ -2,31 +2,30 @@
 
 namespace halumein\cashbox\controllers;
 
-use halumein\cashbox\models\Cashbox;
 use Yii;
+use yii\web\Controller;
+use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
+use halumein\cashbox\models\Cashbox;
 use halumein\cashbox\models\Exchange;
 use halumein\cashbox\models\search\ExchangeSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
-/**
- * ExchangeController implements the CRUD actions for Exchange model.
- */
 class ExchangeController extends Controller
 {
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => $this->module->adminRoles,
+                    ]
+                ]
             ],
         ];
     }
-
     /**
      * Lists all Exchange models.
      * @return mixed

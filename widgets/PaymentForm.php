@@ -40,7 +40,7 @@ class PaymentForm extends \yii\base\Widget
         $userModel = Yii::$app->getModule('cashbox')->userModel;
 
         $operationModel = new Operation();
-        $cashboxes = Cashbox::find()->All();
+        $cashboxes = Cashbox::getAvailable();
 
         $operationModel->cashbox_id = $userModel->defaultCashbox;
 

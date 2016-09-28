@@ -24,7 +24,7 @@ class OperationController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => $this->module->userRoles,
+                        'roles' => $this->module->adminRoles,
                     ]
                 ]
             ],
@@ -75,13 +75,13 @@ class OperationController extends Controller
 
         $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
-        if ($transaction['status']) {
+        if ($transaction['status'] === 'success') {
             return $this->redirect(['index']);
         } else {
             $model = new Operation();
 
             if ($request) {
-                $model->addErrors($transaction['message']);
+                $model->addErrors($transaction['error']);
             }
 
             return $this->render('create', [
@@ -98,7 +98,6 @@ class OperationController extends Controller
     public function actionPaymentConfirm()
     {
         $request = Yii::$app->request->post();
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
 
         if ($request) {
@@ -115,19 +114,16 @@ class OperationController extends Controller
             }
             $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
-            if ($transaction['status']) {
+            if ($transaction['status'] === 'success') {
                 return $this->redirect([$this->module->paymentSuccessRedirect]);
             } else {
-                $model = new Operation();
+                \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-                if ($request) {
-                    $model->addErrors($transaction['message']);
-                }
-
-                var_dump($model->errors);
-                die;
+                return $transaction['error'];
             }
         } else {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
             return [
                 'status' => 'error',
                 'message' => 'no data'
@@ -155,8 +151,7 @@ class OperationController extends Controller
             }
             $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
-            if ($transaction) {
-
+            if ($transaction['status'] === 'success') {
                 // TODO избавиться от сильной связанности
                 $nextStepAction = Url::to(['/order/order/get-order-form-light', 'useAjax' => 1]);
 
@@ -172,9 +167,7 @@ class OperationController extends Controller
                     'printRedirect' => $printRedirect
                 ];
             } else {
-                return [
-                    'status' => 'error',
-                ];
+                return $transaction['error'];
             }
         } else {
             return [

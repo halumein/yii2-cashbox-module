@@ -4,28 +4,27 @@ namespace halumein\cashbox\controllers;
 
 use yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use halumein\cashbox\models\search\CashboxSearch;
+use yii\filters\AccessControl;
 use halumein\cashbox\models\Cashbox;
+use halumein\cashbox\models\search\CashboxSearch;
 
-
-/**
- * Cashbox controller for
- */
 class CashboxController extends Controller
 {
 
     public function behaviors()
-   {
-       return [
-           'verbs' => [
-               'class' => VerbFilter::className(),
-               'actions' => [
-                   'delete' => ['post'],
-               ],
-           ],
-       ];
-   }
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => $this->module->adminRoles,
+                    ]
+                ]
+            ],
+        ];
+    }
 
    /**
     * Lists all CashboxCashbox models.

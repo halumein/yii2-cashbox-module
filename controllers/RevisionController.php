@@ -2,28 +2,28 @@
 
 namespace halumein\cashbox\controllers;
 
+use Yii;
+use yii\web\Controller;
+use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 use halumein\cashbox\models\Cashbox;
 use halumein\cashbox\models\Operation;
-use Yii;
 use halumein\cashbox\models\Revision;
 use halumein\cashbox\models\search\RevisionSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
-/**
- * RevisionController implements the CRUD actions for Revision model.
- */
 class RevisionController extends Controller
 {
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => $this->module->adminRoles,
+                    ]
+                ]
             ],
         ];
     }

@@ -1,8 +1,8 @@
 <?php
 namespace halumein\cashbox;
 
-use yii\base\BootstrapInterface;
 use yii;
+use yii\base\BootstrapInterface;
 
 class Bootstrap implements BootstrapInterface
 {

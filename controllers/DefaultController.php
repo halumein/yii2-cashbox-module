@@ -19,7 +19,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        echo "indexAction";
+        echo "index action of default controller Cashbox module";
         die;
     }
 
