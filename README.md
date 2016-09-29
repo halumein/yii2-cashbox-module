@@ -101,3 +101,10 @@ cashbox/revision - индекс сверок
 ```
     <?= halumein\cashbox\widgets\UserCashboxSelector::widget() ?>
 ```
+
+Доступные методы компонента:
+```
+    Yii::$app->cashbox->addTransaction(); 
+    Yii::$app->cashbox->getIncomeSumByPeriod();
+    Yii::$app->cashbox->getIncomeSumByPeriod();
+```

@@ -3,6 +3,7 @@ namespace halumein\cashbox\models;
 
 use Yii;
 use halumein\cashbox\models\UserToCashbox;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "cashbox_cashbox".
@@ -76,9 +77,12 @@ class Cashbox extends \yii\db\ActiveRecord
         return $this->hasMany($userModel::className(), ['id' => 'user_id'])->viaTable('cashbox_user_to_cashbox', ['cashbox_id' => 'id']);
     }
 
-    public static function getAvailable()
+    public static function getAvailable($userId = null)
     {
-        return Yii::$app->cashbox->getAvailableCashbox();
+        $userId = $userId ? $userId : \Yii::$app->user->id;
+        $cashBoxIds = UserToCashbox::find()->where(['user_id' => $userId])->all();
+        $cashboxIds = ArrayHelper::getColumn($cashBoxIds, 'cashbox_id');
+        return Cashbox::find()->where(['id' => $cashboxIds])->all();
     }
 
 }

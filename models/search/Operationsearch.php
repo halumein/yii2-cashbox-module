@@ -42,7 +42,7 @@ class OperationSearch extends Operation
      */
     public function search($params)
     {
-        $query = Operation::find()->orderBy('id DESC');
+        $query = Operation::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -67,14 +67,18 @@ class OperationSearch extends Operation
             ->andFilterWhere(['like', 'model', $this->model])
             ->andFilterWhere(['like', 'comment', $this->comment]);
 
-        if($dateStart = yii::$app->request->get('date_start')) {
-            $dateStart = date('Y-m-d', strtotime($dateStart));
-            $query->andWhere('date >= :dateStart', [':dateStart' => $dateStart]);
+        if($dateStart = $params['date_start']) {
+            $query->andWhere(['>=', 'date', date('Y-m-d', strtotime($dateStart))]);
+            // $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop ? $dateStop : $dateStart) + 86399)]);
+
+            // $dateStart = date('Y-m-d', strtotime($dateStart));
+            // $query->andWhere('date >= :dateStart', [':dateStart' => $dateStart]);
         }
 
-        if($dateStop = yii::$app->request->get('date_stop')) {
-            $dateStop = date('Y-m-d H:i:s', strtotime($dateStop)+86399);
-            $query->andWhere('date <= :dateStop', [':dateStop' => $dateStop]);
+        if($dateStop = $params['date_stop']) {
+            $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop) + 86399)]);
+            // $dateStop = date('Y-m-d H:i:s', strtotime($dateStop)+86399);
+            // $query->andWhere('date <= :dateStop', [':dateStop' => $dateStop]);
         }
 
         return $dataProvider;

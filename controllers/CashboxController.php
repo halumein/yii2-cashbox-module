@@ -32,6 +32,10 @@ class CashboxController extends Controller
     */
    public function actionIndex()
    {
+
+       var_dump(Yii::$app->cashbox->getOutcomeSumByPeriod('2016-09-25', '2016-09-26'));
+       die;
+
        $searchModel = new CashboxSearch();
 
        $searchParams = Yii::$app->request->queryParams;

@@ -101,24 +101,36 @@ $this->params['breadcrumbs'][] = $this->title;
             ],            [
                 'label' => 'Тип',
                 'attribute' => 'type',
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'type',
+                    ['income' => 'Приход', 'outcome' => 'Расход'],
+                    ['class' => 'form-control', 'prompt' => 'Тип операции']
+                ),
                 'value' => function ($model) {
                     return ($model->type === 'income') ? 'Приход' : 'Расход';
                 },
-                'filter' => ['income' => 'Приход', 'outcome' => 'Расход'],
             ],
             'balance',
             'sum',
             [
                 'label' => 'Касса',
                 'attribute' => 'cashbox_id',
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'cashbox_id',
+                    \yii\helpers\ArrayHelper::map(Cashbox::getAvailable(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => 'Касса']
+                ),
                 'value' => 'cashbox.name',
-                'filter' => \yii\helpers\ArrayHelper::map(Cashbox::getAvailable(), 'id', 'name'),
             ],
             // 'model',
             // 'item_id',
             [
                 'label' => 'Дата',
                 'attribute' => 'date',
+                'format' =>  ['date', 'HH:mm:ss dd.MM.YYYY'],
+                'filter' => false,
             ],
             // 'client_id',
             // 'staffer_id',
