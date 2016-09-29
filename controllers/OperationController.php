@@ -73,7 +73,7 @@ class OperationController extends Controller
         $comment = $request['Operation']['comment'];
         $itemId = null;
 
-        $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
+        $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
         if ($transaction['status'] === 'success') {
             return $this->redirect(['index']);
@@ -112,7 +112,7 @@ class OperationController extends Controller
             } else {
                 $sum = $request['Operation']['sum'];
             }
-            $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
+            $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
             if ($transaction['status'] === 'success') {
                 return $this->redirect([$this->module->paymentSuccessRedirect]);
@@ -149,7 +149,7 @@ class OperationController extends Controller
             } else {
                 $sum = $request['Operation']['sum'];
             }
-            $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
+            $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
             if ($transaction['status'] === 'success') {
                 // TODO избавиться от сильной связанности

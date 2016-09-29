@@ -42,7 +42,7 @@ class OperationSearch extends Operation
      */
     public function search($params)
     {
-        $query = Operation::find();
+        $query = Operation::find()->orderBy('id DESC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

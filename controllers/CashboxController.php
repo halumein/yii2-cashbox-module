@@ -69,11 +69,9 @@ class CashboxController extends Controller
        if ($model->load(Yii::$app->request->post()) && $model->save()) {
            return $this->redirect('index');
        } else {
-           $userModelModel = $this->module->userModel;
-           $activeUsers = $userModelModel::find()->active()->all();
            return $this->render('create', [
                'model' => $model,
-               'activeUsers' => $activeUsers,
+               'activeUsers' => Yii::$app->getModule('cashbox')->cashiersList,
            ]);
        }
    }
@@ -91,11 +89,11 @@ class CashboxController extends Controller
        if ($model->load(Yii::$app->request->post()) && $model->save()) {
            return $this->redirect(['index']);
        } else {
-           $userModelModel = $this->module->userModel;
-           $activeUsers = $userModelModel::find()->active()->all();
+        //    $userModelModel = $this->module->userModel;
+        //    $activeUsers = $userModelModel::find()->active()->all();
            return $this->render('update', [
                'model' => $model,
-               'activeUsers' => $activeUsers,
+               'activeUsers' => Yii::$app->getModule('cashbox')->cashiersList,
            ]);
        }
    }

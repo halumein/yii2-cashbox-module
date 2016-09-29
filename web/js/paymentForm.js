@@ -9,6 +9,7 @@ halumein.paymentForm = {
 			$paymentChange = $('[data-role=payment-change]'),
 			$submit = $('#submit-payment');
 
+        $paymentInput.focus();
 		// обработчик для поля внесённой суммы. осталвяем только цыфры и точку
 		$paymentInput.keydown(function (e) {
 	        // Allow: backspace, delete, tab, escape, enter and .
@@ -37,6 +38,10 @@ halumein.paymentForm = {
 			} else {
 				$paymentChange.html(0);
 			}
+
+            if (e.keyCode == 13) {
+                halumein.paymentForm.sendData(e);
+            }
 		});
 
 		$submit.on('click', function(e) {
@@ -70,6 +75,9 @@ halumein.paymentForm = {
 					type : 'POST',
 					url : confirmUrl,
 					data : serializedFormData,
+                    beforeSend : function(){
+                        $paymentInput.blur();
+                    },
 					success : function(response) {
 						if (response.status === 'success' && typeof response.nextStep != 'undefined' && response.nextStep != false) {
 							// console.log(response.nextStep);

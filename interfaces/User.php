@@ -8,5 +8,4 @@ interface User
     function setDefaultCashbox($cashboxId);
     function getName($id = null);
     function getFullName($id = null);
-    function getCashboxes();
 }

@@ -2,10 +2,12 @@
 namespace halumein\cashbox;
 
 use yii\base\Component;
+use yii\helpers\ArrayHelper;
 use halumein\cashbox\models\Cashbox;
+use halumein\cashbox\models\UserToCashbox;
 use halumein\cashbox\models\Operation;
 
-class CashboxOperation extends Component
+class cashbox extends Component
 {
 
     public function addTransaction($type, $sum, $cashbox_id, $item_id = null, $comment = '')
@@ -42,6 +44,14 @@ class CashboxOperation extends Component
                 'error' => $model->errors
             ];
         }
+    }
+
+    public function getAvailableCashbox($userId = null)
+    {
+        $userId = $userId ? $userId : \Yii::$app->user->id;
+        $cashBoxIds = UserToCashbox::find()->where(['user_id' => $userId])->all();
+        $cashboxIds = ArrayHelper::getColumn($cashBoxIds, 'cashbox_id');
+        return Cashbox::find()->where(['id' => $cashboxIds])->all();
     }
 
 }

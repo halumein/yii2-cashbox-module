@@ -8,8 +8,8 @@ class Bootstrap implements BootstrapInterface
 {
     public function bootstrap($app)
     {
-        if(!$app->has('cashboxOperation')) {
-            $app->set('cashboxOperation', ['class' => 'halumein\cashbox\CashboxOperation']);
+        if(!$app->has('cashbox')) {
+            $app->set('cashbox', ['class' => 'halumein\cashbox\cashbox']);
         }
     }
 }

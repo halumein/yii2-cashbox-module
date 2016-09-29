@@ -21,6 +21,14 @@ class m160905_143011_cashbox_cashbox extends Migration
             $tableOptions
         );
 
+        $this->insert('{{%cashbox_cashbox}}', [
+            'id' => '1',
+            'name' => 'Главная касса',
+            'currency' => 'рубли',
+            'balance' => 0,
+            'deleted' => null,
+        ]);
+
     }
 
     public function safeDown()

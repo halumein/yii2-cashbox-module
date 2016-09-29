@@ -6,10 +6,11 @@ use Yii;
 
 class Module extends \yii\base\Module
 {
-    public $adminRoles = ['admin', 'superadmin'];
+    public $adminRoles = ['superadmin', 'admin'];
     public $userRoles = ['@'];
     public $orderModel = 'pistol88\order\models\Order';
     public $userModel = null;
+    public $cashiersList = null;
     public $paymentSuccessRedirect = '/cashbox/operation/index';
     public $printRedirect = null;
 
@@ -20,6 +21,14 @@ class Module extends \yii\base\Module
         } elseif (is_callable($this->userModel)) {
             $userModel = $this->userModel;
             $this->userModel = $userModel();
+        }
+
+        if ($this->cashiersList === null) {
+            $userModel = $this->userModel;
+            $this->cashiersList = $userModel::find()->all();
+        } elseif (is_callable($this->cashiersList)) {
+            $cashiersList = $this->cashiersList;
+            $this->cashiersList = $cashiersList();
         }
 
         parent::init();

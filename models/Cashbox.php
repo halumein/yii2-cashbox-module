@@ -1,8 +1,8 @@
 <?php
 namespace halumein\cashbox\models;
 
-use common\models\User;
 use Yii;
+use halumein\cashbox\models\UserToCashbox;
 
 /**
  * This is the model class for table "cashbox_cashbox".
@@ -78,8 +78,7 @@ class Cashbox extends \yii\db\ActiveRecord
 
     public static function getAvailable()
     {
-        $userModel = Yii::$app->getModule('cashbox')->userModel;
-        return $userModel->cashboxes;
+        return Yii::$app->cashbox->getAvailableCashbox();
     }
 
 }

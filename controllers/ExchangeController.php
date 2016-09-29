@@ -97,12 +97,12 @@ class ExchangeController extends Controller
                 $cashbox_id = $postData['Exchange']['from_cashbox_id'];
                 $comment = $model->comment ? $model->comment : 'Перевод между кассами';
 
-                $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashbox_id, null, $comment);
+                $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashbox_id, null, $comment);
 
                 $type = 'income';
                 $sum = $postData['Exchange']['to_sum'];
                 $cashbox_id = $postData['Exchange']['to_cashbox_id'];
-                $transaction = Yii::$app->cashboxOperation->addTransaction($type, $sum, $cashbox_id, null, $comment);
+                $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashbox_id, null, $comment);
 
                 return $this->redirect(['index']);
             }
