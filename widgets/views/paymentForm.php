@@ -68,17 +68,10 @@ use yii\bootstrap\ActiveForm;
     <div class="row row-centered">
         <div class="col-xs-12 col-centered col-fixed text-right">
             <div class="form-group">
-                <?= Html::submitButton('Провести оплату', [
-                    'class' => 'btn btn-success',
-                    'style' => 'width: 100%',
-                    'id' => 'submit-payment'
-                    ]) ?>
+                <?= Html::button('Провести оплату', ['class' => 'btn btn-success', 'id' => 'submit-payment', 'style' => 'width: 100%']); ?>
             </div>
         </div>
     </div>
-
-
-
 
     <?php ActiveForm::end(); ?>
 </div>

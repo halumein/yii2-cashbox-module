@@ -3,7 +3,7 @@ Yii2-cashbox-module
 
 
 ```
-php composer require halumein/yii2-cashbox-module "*"
+composer require halumein/yii2-cashbox-module "*"
 ```
 
 миграции:
@@ -104,7 +104,7 @@ cashbox/revision - индекс сверок
 
 Доступные методы компонента:
 ```
-    Yii::$app->cashbox->addTransaction(); 
+    Yii::$app->cashbox->addTransaction();
     Yii::$app->cashbox->getIncomeSumByPeriod();
     Yii::$app->cashbox->getIncomeSumByPeriod();
 ```

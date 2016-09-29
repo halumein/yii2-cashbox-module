@@ -68,6 +68,7 @@ halumein.paymentForm = {
 		} else {
 			$notify.slideUp();
 			$notify.html();
+
 			if (useAjax === true) {
 				var serializedFormData = $form.serialize();
 
