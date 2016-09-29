@@ -75,13 +75,26 @@ class ExchangeController extends Controller
 
         $model = new Exchange();
 
+        \halumein\cashbox\assets\ExchangeAsset::register($this->getView());
+
         if ($model->load(Yii::$app->request->post())) {
             $postData = Yii::$app->request->post();
+
+            $fromCashboxModel = Cashbox::find($postData['Exchange']['from_cashbox_id'])->one();
+
+            if ($postData['Exchange']['from_sum'] > $fromCashboxModel->balance) {
+                Yii::$app->getSession()->setFlash('error', "Сумма списания не может быть больше суммы в кассе");
+                return $this->render('create', [
+                    'model' => $model,
+                    'activeCashboxes' => Cashbox::getAvailable(),
+                ]);
+            }
+
             if ($model->from_cashbox_id === $model->to_cashbox_id){
                 Yii::$app->getSession()->setFlash('error', "Касса списания не может быть кассой приема!");
                 return $this->render('create', [
                     'model' => $model,
-                    'activeCashboxes' => Cashbox::getActiveCashboxes(),
+                    'activeCashboxes' => Cashbox::getAvailable(),
                 ]);
             }
 
@@ -94,22 +107,21 @@ class ExchangeController extends Controller
 
                 $type = 'outcome';
                 $sum = $postData['Exchange']['from_sum'];
-                $cashbox_id = $postData['Exchange']['from_cashbox_id'];
+                $cashboxId = $postData['Exchange']['from_cashbox_id'];
                 $comment = $model->comment ? $model->comment : 'Перевод между кассами';
-
-                $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashbox_id, null, $comment);
+                $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, null, $comment);
 
                 $type = 'income';
                 $sum = $postData['Exchange']['to_sum'];
-                $cashbox_id = $postData['Exchange']['to_cashbox_id'];
-                $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashbox_id, null, $comment);
+                $cashboxId = $postData['Exchange']['to_cashbox_id'];
+                $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, null, $comment);
 
                 return $this->redirect(['index']);
             }
         } else {
                 return $this->render('create', [
                     'model' => $model,
-                    'activeCashboxes' => Cashbox::getActiveCashboxes(),
+                    'activeCashboxes' => Cashbox::getAvailable(),
                 ]);
         }
     }
