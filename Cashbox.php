@@ -29,7 +29,7 @@ class Cashbox extends Component
         $model->comment = $comment;
         $model->item_id = $itemId;
 
-        $cashBox = CashboxModel::findOne($cashbox_id);
+        $cashBox = CashboxModel::findOne($cashboxId);
 
         if ($type === 'income') {
             $model->balance =  $cashBox->balance + $model->sum;
