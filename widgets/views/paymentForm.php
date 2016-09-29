@@ -53,6 +53,11 @@ use yii\bootstrap\ActiveForm;
                 ]) ?>
         </div>
     </div>
+    <div class="row row-centered">
+        <div class="col-xs-12 col-centered col-fixed text-left">
+            <span id="payment-notify"class="payment-form-notify"></span>
+        </div>
+    </div>
 
     <div class="row row-centered">
         <div class="col-xs-12 col-centered col-fixed text-right">
@@ -72,11 +77,7 @@ use yii\bootstrap\ActiveForm;
         </div>
     </div>
 
-    <div class="row row-centered">
-        <div class="col-xs-12 col-centered col-fixed text-left">
-            <span id="payment-notify"class="payment-form-notify"></span>
-        </div>
-    </div>
+
 
 
     <?php ActiveForm::end(); ?>

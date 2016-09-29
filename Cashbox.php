@@ -65,7 +65,7 @@ class Cashbox extends Component
     }
 
     /**
-    *   Получить доступные пользователю кассы
+    *   Получить общую сумму поступлений по всем кассам
     *  @property integer $userId - id пользователя
     */
     public function getIncomeSumByPeriod($dateStart, $dateStop = null)
@@ -74,7 +74,7 @@ class Cashbox extends Component
     }
 
     /**
-    *   Получить доступные пользователю кассы
+    *   Получить общую сумму расходов по всем кассам
     *  @property integer $userId - id пользователя
     */
     public function getOutcomeSumByPeriod($dateStart, $dateStop = null)

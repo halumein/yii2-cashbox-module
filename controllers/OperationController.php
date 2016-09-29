@@ -65,25 +65,30 @@ class OperationController extends Controller
      */
     public function actionCreate()
     {
-        $request = Yii::$app->request->post();
+        if ($request = Yii::$app->request->post()) {
+            $type = $request['Operation']['type'];
+            $sum = $request['Operation']['sum'];
+            $cashboxId = $request['Operation']['cashbox_id'];
+            $comment = $request['Operation']['comment'];
+            $itemId = null;
 
-        $type = $request['Operation']['type'];
-        $sum = $request['Operation']['sum'];
-        $cashboxId = $request['Operation']['cashbox_id'];
-        $comment = $request['Operation']['comment'];
-        $itemId = null;
+            $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
-        $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
+            if ($transaction['status'] === 'success') {
+                return $this->redirect(['index']);
+            } else {
+                $model = new Operation();
 
-        if ($transaction['status'] === 'success') {
-            return $this->redirect(['index']);
+                if ($request) {
+                    $model->addErrors($transaction['error']);
+                }
+
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             $model = new Operation();
-
-            if ($request) {
-                $model->addErrors($transaction['error']);
-            }
-
             return $this->render('create', [
                 'model' => $model,
             ]);

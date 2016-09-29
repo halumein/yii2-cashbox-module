@@ -35,7 +35,7 @@ use yii\bootstrap\Alert;
             <?php
             echo $form->field($model, 'from_cashbox_id')
             ->widget(Select2::classname(), [
-                'data' => ArrayHelper::map($activeCashboxes, 'id', 'name'),
+                'data' => ArrayHelper::map($activeCashboxes, 'id', 'nameWithCurrentBalance'),
                 'language' => 'ru',
                 'options' => ['placeholder' => 'Выберите кассу ...'],
                 'pluginOptions' => [
@@ -46,7 +46,7 @@ use yii\bootstrap\Alert;
         <div class="col-sm-6">
             <?php echo $form->field($model, 'to_cashbox_id')
                 ->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map($activeCashboxes, 'id', 'name'),
+                    'data' => ArrayHelper::map($activeCashboxes, 'id', 'nameWithCurrentBalance'),
                     'language' => 'ru',
                     'options' => ['placeholder' => 'Выберите кассу ...'],
                     'pluginOptions' => [

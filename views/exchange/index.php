@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
@@ -83,8 +84,13 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 </div>
 
                 <div class="col-md-2">
-                    <input class="form-control" type="submit" value="<?=Yii::t('order', 'Search');?>" class="btn btn-success" />
+                    <input class="form-control" type="submit" value="<?=Yii::t('order', 'Search');?>"/>
                 </div>
+
+                <div class="col-md-2">
+                    <a href="<?= Url::to(['/cashbox/exchange/index']) ?>" /><div class="form-control text-center">Cбросить все фильтры</div></a>
+                </div>
+
             </form>
         </div>
     </div>

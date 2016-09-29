@@ -82,7 +82,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
 
                 <div class="col-md-2">
-                    <input class="form-control" type="submit" value="<?=Yii::t('order', 'Search');?>" class="btn btn-success" />
+                    <input class="form-control" type="submit" value="<?=Yii::t('order', 'Search');?>" />
+                </div>
+                <div class="col-md-2">
+                    <a href="<?= Url::to(['/cashbox/operation/index']) ?>" /><div class="form-control text-center">Cбросить все фильтры</div></a>
                 </div>
             </form>
         </div>
@@ -91,6 +94,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => ['class' => 'table'],
+        'rowOptions' => function ($model, $key, $index, $grid) {
+            if($model->type === 'income') {
+                return ['class' => 'success'];
+            } elseif ($model->type === 'outcome') {
+                return ['class' => 'danger'];
+            }
+        },
         'columns' => [
             [
                 'attribute' => 'id',
@@ -111,8 +122,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     return ($model->type === 'income') ? 'Приход' : 'Расход';
                 },
             ],
-            'balance',
             'sum',
+            'balance',
             [
                 'label' => 'Касса',
                 'attribute' => 'cashbox_id',
@@ -136,7 +147,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'staffer_id',
             // 'comment:ntext',
 
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 65px;']],
+            // ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 65px;']],
         ],
     ]); ?>
 

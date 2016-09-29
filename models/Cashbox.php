@@ -85,4 +85,8 @@ class Cashbox extends \yii\db\ActiveRecord
         return Cashbox::find()->where(['id' => $cashboxIds])->all();
     }
 
+    public function getNameWithCurrentBalance()
+    {
+        return $this->name.' ('.$this->balance.')';
+    }
 }

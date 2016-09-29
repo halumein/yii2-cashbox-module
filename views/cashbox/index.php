@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -11,13 +11,11 @@ $this->title = 'Кассы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cashbox-index">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?php echo Html::a('Добавить кассу', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить кассу', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php echo GridView::widget([
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [

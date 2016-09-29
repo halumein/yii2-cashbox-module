@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model halumein\cashbox\models\Operation */
@@ -15,34 +16,36 @@ use yii\bootstrap\ActiveForm;
     ]); ?>
 
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12 col-md-6">
             <?= $form->errorSummary($model); ?>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-12 col-md-6">
             <?= $form->field($model, 'type')->dropDownList(['income' => 'Приход', 'outcome' => 'Расход'], ['options' => [ 'income' => ['selected ' => true]]]) ?>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-12 col-md-6">
             <?= $form->field($model, 'sum')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-sm-5 col-sm-offset-1">
-            <?= $form->field($model, 'cashbox_id')->dropDownList(\yii\helpers\ArrayHelper::map(\halumein\cashbox\models\Cashbox::getAvailable(), 'id', 'name')) ?>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <?= $form->field($model, 'cashbox_id')->dropDownList(ArrayHelper::map(Yii::$app->cashbox->getAvailableCashbox(), 'id', 'name')) ?>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-11">
+        <div class="col-sm-12 col-md-6">
             <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-11">
+        <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <?= Html::submitButton('Провести', ['class' => 'btn btn-success']) ?>
             </div>
