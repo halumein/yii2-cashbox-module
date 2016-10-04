@@ -100,8 +100,9 @@ class ExchangeController extends Controller
 
             $model->staffer_id = Yii::$app->user->identity->id;
             $model->date = date("Y-m-d H:i:s");
+            // $model->rate =  $postData['Exchange']['rate'] ? $postData['Exchange']['rate'] : 1;
+            $model->rate = $model->from_sum > $model->to_sum ? round($model->from_sum / $model->to_sum, 2) :  round($model->to_sum / $model->from_sum, 2);
 
-            $model->rate =  $postData['Exchange']['rate'] ? $postData['Exchange']['rate'] : 1;
 
             if ($model->save()) {
 
@@ -137,8 +138,14 @@ class ExchangeController extends Controller
         $model = $this->findModel($id);
         $cashbox = new Cashbox();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->rate = $model->from_sum > $model->to_sum ? round($model->from_sum / $model->to_sum, 2) :  round($model->to_sum / $model->from_sum, 2);
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         } else {
             return $this->render('update', [
                 'model' => $model,

@@ -65,7 +65,7 @@ use yii\bootstrap\Alert;
         </div>
     </div>
 
-    <?php echo $form->field($model, 'rate')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
+    <?php // echo $form->field($model, 'rate')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
 
     <?php echo $form->field($model, 'comment')->textInput(['maxlength' => true]) ?>
 
