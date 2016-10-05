@@ -21,8 +21,8 @@ class m160922_114111_cashbox_revision extends Migration
             [
                 'id'=> $this->primaryKey(11),
                 'cashbox_id'=> $this->integer(11)->notNull(),
-                'balance_fact'=> $this->decimal(10, 2)->notNull()->defaultValue('0.00'),
-                'balance_expect'=> $this->decimal(10, 2)->notNull()->defaultValue('0.00'),
+                'balance_fact'=> $this->decimal(19, 2)->notNull()->defaultValue('0.00'),
+                'balance_expect'=> $this->decimal(19, 2)->notNull()->defaultValue('0.00'),
                 'date'=> $this->datetime()->notNull(),
                 'user_id'=> $this->integer(11)->notNull(),
                 'comment'=> $this->text()->null()->defaultValue(null),

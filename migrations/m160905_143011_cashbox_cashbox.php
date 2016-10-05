@@ -15,7 +15,7 @@ class m160905_143011_cashbox_cashbox extends Migration
                 'id'=> Schema::TYPE_PK."",
                 'name'=> Schema::TYPE_STRING."(255) NOT NULL",
                 'currency'=> Schema::TYPE_STRING."(100)",
-                'balance'=> Schema::TYPE_DECIMAL."(10,2) NOT NULL DEFAULT '0.00'",
+                'balance'=> Schema::TYPE_DECIMAL."(19,2) NOT NULL DEFAULT '0.00'",
                 'deleted'=> Schema::TYPE_DATETIME."",
                 ],
             $tableOptions

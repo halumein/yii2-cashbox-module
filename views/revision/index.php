@@ -22,8 +22,6 @@ if($dateStop = yii::$app->request->get('date_stop')) {
 ?>
 <div class="revision-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
         <?php echo Html::a('Добавить инкассацию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -160,7 +158,7 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 'filter' => false,
             ],
 
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 65px;']],
+            // ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 65px;']],
         ],
     ]); ?>
 

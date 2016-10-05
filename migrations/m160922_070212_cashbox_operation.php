@@ -18,8 +18,8 @@ class m160922_070212_cashbox_operation extends Migration
         $this->createTable('{{%cashbox_operation}}',[
            'id'=> $this->primaryKey(11),
            'type'=> $this->string()->notNull(),
-           'balance'=> $this->decimal(11, 2)->notNull(),
-           'sum'=> $this->decimal(11, 2)->notNull(),
+           'balance'=> $this->decimal(19, 2)->notNull(),
+           'sum'=> $this->decimal(19, 2)->notNull(),
            'cashbox_id'=> $this->integer(11)->notNull(),
            'model'=> $this->string(255)->null()->defaultValue(null),
            'item_id'=> $this->integer(11)->null()->defaultValue(null),

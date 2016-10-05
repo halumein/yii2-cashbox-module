@@ -58,14 +58,14 @@ use yii\bootstrap\Alert;
 
     <div class="row">
         <div class="col-sm-6">
-            <?php echo $form->field($model, 'from_sum')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
+            <?php echo $form->field($model, 'from_sum')->textInput(['maxlength' => true, 'placeholder' => '0.00', 'data-role' => 'exchange-from_sum']) ?>
         </div>
         <div class="col-sm-6">
-            <?php echo $form->field($model, 'to_sum')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
+            <?php echo $form->field($model, 'to_sum')->textInput(['maxlength' => true, 'placeholder' => '0.00', 'data-role' => 'exchange-to_sum']) ?>
         </div>
     </div>
 
-    <?php echo $form->field($model, 'rate')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
+    <?php // echo $form->field($model, 'rate')->textInput(['maxlength' => true, 'placeholder' => '0.00']) ?>
 
     <?php echo $form->field($model, 'comment')->textInput(['maxlength' => true]) ?>
 
