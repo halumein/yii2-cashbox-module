@@ -17,11 +17,9 @@ class PaymentForm extends \yii\base\Widget
 
     public function init()
     {
-
         if ($this->actionUrl === null) {
             $this->actionUrl = '/cashbox/operation/payment-confirm';
         }
-
 
         parent::init();
 
@@ -32,7 +30,6 @@ class PaymentForm extends \yii\base\Widget
 
     public function run()
     {
-
         if ($this->order === null) {
             return false;
         }
@@ -50,8 +47,5 @@ class PaymentForm extends \yii\base\Widget
             'cashboxes' => $cashboxes,
             'useAjax' => $this->useAjax,
         ]);
-
-
-
     }
 }

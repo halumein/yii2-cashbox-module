@@ -23,7 +23,7 @@ use yii\bootstrap\ActiveForm;
 
     <div class="row row-centered">
         <div class="col-xs-12 col-centered col-fixed">
-            <h1>Сумма к оплате: <span data-role="payment-cost"><?= $order->cost ?></h1>
+            <h3>Сумма к оплате: <span data-role="payment-cost"><?= $order->cost ?></h3>
         </div>
     </div>
 
@@ -34,7 +34,7 @@ use yii\bootstrap\ActiveForm;
     </div>
 
     <div class="row row-centered">
-        <div class="col-xs-12 col-centered col-fixed text-left">
+        <div class="col-xs-6 col-centered col-fixed text-left">
             <?= $form->field($model, 'sum')->textInput([
                 'maxlength' => true,
                 'data-role' => 'payment-sum',
@@ -42,6 +42,10 @@ use yii\bootstrap\ActiveForm;
                 'class' => "form-control"
                 ]) ?>
         </div>
+		<div class="col-xs-6 col-centered col-fixed text-left">
+			<p><label>Сдача:</label>:</p>
+			<div class="delivery"><strong data-role="payment-change">0</strong></div>
+		</div>
     </div>
 
     <div class="row row-centered">
@@ -53,16 +57,8 @@ use yii\bootstrap\ActiveForm;
                 ]) ?>
         </div>
     </div>
-    <div class="row row-centered">
-        <div class="col-xs-12 col-centered col-fixed text-left">
-            <span id="payment-notify"class="payment-form-notify"></span>
-        </div>
-    </div>
-
-    <div class="row row-centered">
-        <div class="col-xs-12 col-centered col-fixed text-right">
-            <h1>Сдача: <span data-role="payment-change">0</span></h1>
-        </div>
+    <div>
+		<p><span id="payment-notify"class="payment-form-notify"></span></p>
     </div>
 
     <div class="row row-centered">
@@ -77,8 +73,16 @@ use yii\bootstrap\ActiveForm;
         </div>
     </div>
 
-
-
-
     <?php ActiveForm::end(); ?>
 </div>
+
+<style>
+.payment-form .delivery {
+	font-size: 13px;
+}
+
+.payment-form .text-danger {
+	position: absolute;
+	line-height: 14px;
+}
+</style>
