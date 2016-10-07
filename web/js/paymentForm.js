@@ -80,11 +80,12 @@ halumein.paymentForm = {
                         $paymentInput.blur();
                     },
 					success : function(response) {
+						pistol88.service.clearServiceOrder();
 						if (response.status === 'success' && typeof response.nextStep != 'undefined' && response.nextStep != false) {
 							// console.log(response.nextStep);
 							$form.parent().animate({width:'toggle'},350);
 							$form.parent().parent().load(response.nextStep);
-							pistol88.service.clearServiceOrder();
+							
                             if (response.printRedirect !== null) {
                                 $('#orderSubmitter').attr('src', response.printRedirect);
                             }
