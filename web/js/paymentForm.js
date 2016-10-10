@@ -4,10 +4,12 @@ if (typeof halumein == "undefined" || !halumein) {
 
 halumein.paymentForm = {
 	init : function() {
-		var $paymentInput = $('[data-role=payment-sum]');
-			paymentCost = +$('[data-role=payment-cost]').html();
+		var $paymentInput = $('[data-role=payment-sum]'),
+			paymentCost = +$('[data-role=payment-cost]').html(),
 			$paymentChange = $('[data-role=payment-change]'),
-			$submit = $('#submit-payment');
+            $submit = $('#submit-payment'),
+			$cancel = $('#cancel-payment');
+
 
         $paymentInput.focus();
 		// обработчик для поля внесённой суммы. осталвяем только цыфры и точку
@@ -47,6 +49,10 @@ halumein.paymentForm = {
 		$submit.on('click', function(e) {
 			halumein.paymentForm.sendData(e);
 		});
+
+        $cancel.on('click', function() {
+            halumein.paymentForm.cancel();
+        });
 	},
 
 	sendData: function(e) {
@@ -85,7 +91,7 @@ halumein.paymentForm = {
 							// console.log(response.nextStep);
 							$form.parent().animate({width:'toggle'},350);
 							$form.parent().parent().load(response.nextStep);
-							
+
                             if (response.printRedirect !== null) {
                                 $('#orderSubmitter').attr('src', response.printRedirect);
                             }
@@ -104,7 +110,14 @@ halumein.paymentForm = {
 			}
 			return false;
 		}
-	}
+	},
+    cancel : function () {
+        var $form = $('[data-role=payment-form]'),
+            nextStep = $form.data('next-step');
+            $form.parent().animate({width:'toggle'},350);
+            $form.parent().parent().load(nextStep);
+            pistol88.service.clearServiceOrder();
+    }
 }
 
 // при первой загрузке запускаем инит

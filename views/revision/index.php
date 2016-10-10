@@ -9,7 +9,7 @@ use nex\datepicker\DatePicker;
 /* @var $searchModel halumein\cashbox\models\search\RevisionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Инкассации';
+$this->title = 'Сверки';
 $this->params['breadcrumbs'][] = $this->title;
 
 if($dateStart = yii::$app->request->get('date_start')) {
@@ -23,7 +23,7 @@ if($dateStop = yii::$app->request->get('date_stop')) {
 <div class="revision-index">
 
     <p>
-        <?php echo Html::a('Добавить инкассацию', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php echo Html::a('Провести сверку', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <div class="panel panel-primary">

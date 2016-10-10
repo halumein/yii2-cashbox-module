@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model halumein\cashbox\models\Revision */
 
-$this->title = 'Просмотр инкассации';
-$this->params['breadcrumbs'][] = ['label' => 'Инкассации', 'url' => ['index']];
+$this->title = 'Просмотр сверки';
+$this->params['breadcrumbs'][] = ['label' => 'Сверки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->id;
 ?>
 <div class="revision-view">

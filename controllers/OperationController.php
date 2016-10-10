@@ -117,6 +117,23 @@ class OperationController extends Controller
             } else {
                 $sum = $request['Operation']['sum'];
             }
+
+            $status = false;
+            if ($request['Operation']['sum'] < $request['Operation']['itemCost']) {
+                if (\Yii::$app->getModule('cashbox')->halfpayedStatus) {
+                    $status = \Yii::$app->getModule('cashbox')->halfpayedStatus;
+                }
+            } else {
+                if (\Yii::$app->getModule('cashbox')->payedStatus) {
+                    $status = \Yii::$app->getModule('cashbox')->payedStatus;
+                }
+            }
+
+            if ($status) {
+                // TODO избавиться от сильной связанности
+                Yii::$app->order->setStatus($itemId, $status);
+            }
+
             $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
             if ($transaction['status'] === 'success') {
@@ -149,14 +166,34 @@ class OperationController extends Controller
 
             // проверяет если внесено больше денег чем стоит заказ (крупная купюра с которой сдали)
             // то присваиваем входящую сумму равной стоимости заказа.
-            if ($request['Operation']['sum'] > $request['Operation']['itemCost'] ) {
+            if ($request['Operation']['sum'] > $request['Operation']['itemCost']) {
                 $sum = $request['Operation']['itemCost'];
             } else {
                 $sum = $request['Operation']['sum'];
             }
+
+
+
             $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
 
             if ($transaction['status'] === 'success') {
+
+                $status = false;
+                if ($request['Operation']['sum'] < $request['Operation']['itemCost']) {
+                    if (\Yii::$app->getModule('cashbox')->halfpayedStatus) {
+                        $status = \Yii::$app->getModule('cashbox')->halfpayedStatus;
+                    }
+                } else {
+                    if (\Yii::$app->getModule('cashbox')->payedStatus) {
+                        $status = \Yii::$app->getModule('cashbox')->payedStatus;
+                    }
+                }
+
+                if ($status) {
+                    // TODO избавиться от сильной связанности
+                    Yii::$app->order->setStatus($itemId, $status);
+                }
+
                 // TODO избавиться от сильной связанности
                 $nextStepAction = Url::to(['/order/order/get-order-form-light', 'useAjax' => 1]);
 

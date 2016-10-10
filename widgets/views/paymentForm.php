@@ -13,6 +13,7 @@ use yii\bootstrap\ActiveForm;
         'options' => [
             'data-role' => 'payment-form',
             'data-ajax' => $useAjax ? 'true' : 'false',
+            'data-next-step' =>  Url::to(['/order/order/get-order-form-light', 'useAjax' => $useAjax ? 1 : 0,]),
         ]
     ]); ?>
 
@@ -65,6 +66,14 @@ use yii\bootstrap\ActiveForm;
         <div class="col-xs-12 col-centered col-fixed text-right">
             <div class="form-group">
                 <?= Html::button('Провести оплату', ['class' => 'btn btn-success', 'id' => 'submit-payment', 'style' => 'width: 100%']); ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-centered">
+        <div class="col-xs-12 col-centered col-fixed text-right">
+            <div class="form-group">
+                <?= Html::button('Без оплаты', ['class' => 'btn btn-danger', 'id' => 'cancel-payment', 'style' => 'width: 100%']); ?>
             </div>
         </div>
     </div>

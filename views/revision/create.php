@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model halumein\cashbox\models\Revision */
 
-$this->title = 'Добавить инкассацию';
-$this->params['breadcrumbs'][] = ['label' => 'Инкассации', 'url' => ['index']];
+$this->title = 'Провести сверку';
+$this->params['breadcrumbs'][] = ['label' => 'Сверки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="revision-create">

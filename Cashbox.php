@@ -58,7 +58,6 @@ class Cashbox extends Component
     *   Получить доступные пользователю кассы
     *  @property integer $userId - id пользователя
     */
-
     public function getAvailableCashbox($userId = null)
     {
         return CashboxModel::getAvailable($userId);
@@ -80,6 +79,22 @@ class Cashbox extends Component
     public function getOutcomeSumByPeriod($dateStart, $dateStop = null)
     {
         return Operation::getOutcomeSumByPeriod($dateStart, $dateStop);
+    }
+
+    /**
+    * Отменят все транзакции по ордеру
+    *  @property integer $orderId - id заказа
+    */
+    public function rollbackOrderPayment($orderId)
+    {
+        $operations = Operation::find()->where(['item_id' => $orderId])->all();
+
+        if ($operations) {
+            foreach ($operations as $key => $transaction) {
+                $this->addTransaction('outcome', $transaction->sum, $transaction->cashbox_id, $transaction->item_id, 'Отмена заказа '.$orderId);
+            }
+        }
+        return true;
     }
 
 }

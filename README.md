@@ -33,6 +33,8 @@ php yii migrate --migrationPath=vendor/halumein/yii2-cashbox-module/migrations
             'userModel' => 'common\models\YourUser', // класс пользователя используемый в приложении. если не указан то Yii::$app->user->identity
             'paymentSuccessRedirect' => '/order/order/print',  //редирект после успешной оплаты
             'printRedirect' => '/order/order/print' // редирект на action печати чека после оплаты
+            'payedStatus' => 'payed', // для простановки статусов в ордере "оплачен"
+            'halfpayedStatus' => 'halfpayed', // для простановки статусов в ордере "частично оплачен"
         ],
         //...
     ]

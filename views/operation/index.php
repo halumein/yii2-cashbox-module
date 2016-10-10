@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-md-2">
                     <input class="form-control" type="submit" value="<?=Yii::t('order', 'Search');?>" />
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <a href="<?= Url::to(['/cashbox/operation/index']) ?>" /><div class="form-control text-center">Cбросить все фильтры</div></a>
                 </div>
             </form>
@@ -109,7 +109,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => [
                     'width' => 35
                 ]
-            ],            [
+            ],
+            [
                 'label' => 'Тип',
                 'attribute' => 'type',
                 'filter' => Html::activeDropDownList(
@@ -121,6 +122,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     return ($model->type === 'income') ? 'Приход' : 'Расход';
                 },
+            ],
+            [
+                'label' => 'Заказ',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return '<a href="'. Url::to([Yii::$app->getModule('cashbox')->orderViewAction, 'id' => $model->item_id]) .'">'. $model->item_id .'</a>';
+                }
             ],
             'sum',
             'balance',
