@@ -87,7 +87,7 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                     <input class="form-control" type="submit" value="<?=Yii::t('order', 'Search');?>"/>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <a href="<?= Url::to(['/cashbox/exchange/index']) ?>" /><div class="form-control text-center">Cбросить все фильтры</div></a>
                 </div>
 

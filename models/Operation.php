@@ -85,12 +85,15 @@ class Operation extends \yii\db\ActiveRecord
           $this->staffer_id = \Yii::$app->user->id;
     }
 
-    public static function getIncomeSumByPeriod($dateStart, $dateStop = null)
+    public static function getIncomeSumByPeriod($dateStart, $dateStop = null, $cashboxId = null)
     {
         $query = Operation::find();
         $query->where(['type' => 'income']);
         $query->andWhere(['>=', 'date', date('Y-m-d H:i:s', strtotime($dateStart))]);
         $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop ? $dateStop : $dateStart) + 86399)]);
+        if ($cashboxId) {
+            $query->andWhere(['cashbox_id' => $cashboxId]);
+        }
         return $query->sum('sum');
     }
 

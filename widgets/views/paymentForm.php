@@ -44,7 +44,7 @@ use yii\bootstrap\ActiveForm;
                 ]) ?>
         </div>
 		<div class="col-xs-6 col-centered col-fixed text-left">
-			<p><label>Сдача:</label>:</p>
+			<p><label>Сдача:</label></p>
 			<div class="delivery"><strong data-role="payment-change">0</strong></div>
 		</div>
     </div>

@@ -16,6 +16,7 @@ class Module extends \yii\base\Module
     public $halfpayedStatus = null;
     public $paymentSuccessRedirect = '/cashbox/operation/index';
     public $printRedirect = null;
+    public $paymentTypeToCashbox = null;
 
     public function init()
     {

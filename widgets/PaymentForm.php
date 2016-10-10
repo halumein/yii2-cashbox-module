@@ -41,6 +41,12 @@ class PaymentForm extends \yii\base\Widget
 
         $operationModel->cashbox_id = $userModel->defaultCashbox;
 
+        if ($paymentTypeToCashbox = Yii::$app->getModule('cashbox')->paymentTypeToCashbox) {
+            if (isset($paymentTypeToCashbox[$this->order->payment_type_id])) {
+                $operationModel->cashbox_id = $paymentTypeToCashbox[$this->order->payment_type_id];
+            }
+        }
+
         return $this->render('paymentForm', [
             'model' => $operationModel,
             'order' => $this->order,

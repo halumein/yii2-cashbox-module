@@ -67,9 +67,9 @@ class Cashbox extends Component
     *   Получить общую сумму поступлений по всем кассам
     *  @property integer $userId - id пользователя
     */
-    public function getIncomeSumByPeriod($dateStart, $dateStop = null)
+    public function getIncomeSumByPeriod($dateStart, $dateStop = null, $cashboxId = null)
     {
-        return Operation::getIncomeSumByPeriod($dateStart, $dateStop);
+        return Operation::getIncomeSumByPeriod($dateStart, $dateStop, $cashboxId);
     }
 
     /**
