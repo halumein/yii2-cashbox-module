@@ -14,6 +14,8 @@ class PaymentForm extends \yii\base\Widget
     public $order = null;
     public $cost = null;
     public $useAjax = null;
+    public $lessSum = false;
+
 
     public function init()
     {
@@ -52,6 +54,7 @@ class PaymentForm extends \yii\base\Widget
             'order' => $this->order,
             'cashboxes' => $cashboxes,
             'useAjax' => $this->useAjax,
+            'lessSum' => $this->lessSum
         ]);
     }
 }

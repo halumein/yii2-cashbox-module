@@ -35,14 +35,20 @@ class ToolsController extends Controller
     {
         $orderModel = $this->module->orderModel;
         $order = $orderModel::findOne($id);
+        $lessSum = false;
 
         if ($order) {
             $model = new Operation();
             $cashboxes = Cashbox::getActiveCashboxes();
 
+            if ($this->module->lessSumPaymentTypes) {
+                $lessSum = in_array($order->payment_type_id, $this->module->lessSumPaymentTypes);
+            }
+
             return $this->renderAjax('paymentForm', [
                 'order' => $order,
                 'useAjax' => $useAjax,
+                'lessSum' => $lessSum
             ]);
         }
     }

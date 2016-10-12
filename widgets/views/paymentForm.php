@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
@@ -17,7 +16,7 @@ use yii\bootstrap\ActiveForm;
         ]
     ]); ?>
 
-    <div class="hidden">
+    <div class="hidden" data-role="tools" data-less-sum=<?= $lessSum ?>>
         <?= $form->field($model, 'item_id')->textInput(['value' => $order->id])?>
         <?= $form->field($model, 'itemCost')->textInput(['value' => $order->cost])?>
     </div>

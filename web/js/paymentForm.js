@@ -1,4 +1,4 @@
-if (typeof halumein == "undefined" || !halumein) {
+if (typeof halumein === "undefined" || !halumein) {
     var halumein = {};
 }
 
@@ -9,7 +9,6 @@ halumein.paymentForm = {
 			$paymentChange = $('[data-role=payment-change]'),
             $submit = $('#submit-payment'),
 			$cancel = $('#cancel-payment');
-
 
         $paymentInput.focus();
 		// обработчик для поля внесённой суммы. осталвяем только цыфры и точку
@@ -67,9 +66,11 @@ halumein.paymentForm = {
 			csrfToken = $form.find('[name="_csrf"]').val(),
 			useAjax = $form.data('ajax'),
 			nextStep = $form.data('next-step'),
-			confirmUrl = $form.attr('action');
+			confirmUrl = $form.attr('action'),
+            $tools = $('[data-role=tools]');
+            
 
-		if ((income < paymentCost) && $comment.val() === '') {
+		if ((income < paymentCost) && $comment.val() === '' && !$tools.data('less-sum')) {
 			$notify.html('Внимание! Укажите в комментарии, почему сумма платежа меньше суммы заказа.').slideDown();
 		} else {
 			$notify.slideUp();

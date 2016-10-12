@@ -17,6 +17,8 @@ class Module extends \yii\base\Module
     public $paymentSuccessRedirect = '/cashbox/operation/index';
     public $printRedirect = null;
     public $paymentTypeToCashbox = null;
+    public $lessSumPaymentTypes = null; // типы оплаты, при которых внесённая сумма может быть меньше стоимости
+
 
     public function init()
     {
@@ -37,5 +39,4 @@ class Module extends \yii\base\Module
 
         parent::init();
     }
-
 }
