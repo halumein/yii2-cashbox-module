@@ -127,7 +127,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Заказ',
                 'format' => 'raw',
                 'value' => function($model) {
-                    return '<a href="'. Url::to([Yii::$app->getModule('cashbox')->orderViewAction, 'id' => $model->item_id]) .'">'. $model->item_id .'</a>';
+
+                    if (Yii::$app->getModule('cashbox')->orderModel === $model->model) {
+                        return '<a href="'. Url::to([Yii::$app->getModule('cashbox')->orderViewAction, 'id' => $model->item_id]) .'">'. $model->item_id .'</a>';
+                    } else {
+                        return $model->item_id;
+                    }
                 }
             ],
             'sum',

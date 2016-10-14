@@ -66,13 +66,13 @@ class OperationController extends Controller
     public function actionCreate()
     {
         if ($request = Yii::$app->request->post()) {
+            $params = [];
             $type = $request['Operation']['type'];
             $sum = $request['Operation']['sum'];
             $cashboxId = $request['Operation']['cashbox_id'];
-            $comment = $request['Operation']['comment'];
-            $itemId = null;
+            $params['comment'] = $request['Operation']['comment'];
 
-            $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
+            $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $params);
 
             if ($transaction['status'] === 'success') {
                 return $this->redirect(['index']);
@@ -106,10 +106,12 @@ class OperationController extends Controller
 
 
         if ($request) {
+            $params = [];
             $type = 'income';
-            $itemId = $request['Operation']['item_id'];
             $cashboxId = $request['Operation']['cashbox_id'];
-            $comment = $request['Operation']['comment'];
+            $params['model'] = Yii::$app->getModule('cashbox')->orderModel;
+            $params['comment'] = $request['Operation']['comment'];
+            $params['itemId'] = $request['Operation']['item_id'];
             // ёбаный стыд, но пока так. проверяет если внесено больше денег чем стоит заказ (крупная купюра с которой сдали)
             // то присваиваем входящую сумму равной стоимости заказа.
             if ($request['Operation']['sum'] > $request['Operation']['itemCost'] ) {
@@ -134,7 +136,7 @@ class OperationController extends Controller
                 Yii::$app->order->setStatus($itemId, $status);
             }
 
-            $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
+            $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $params);
 
             if ($transaction['status'] === 'success') {
                 return $this->redirect([$this->module->paymentSuccessRedirect]);
@@ -160,9 +162,10 @@ class OperationController extends Controller
 
         if ($request) {
             $type = 'income';
-            $itemId = $request['Operation']['item_id'];
             $cashboxId = $request['Operation']['cashbox_id'];
-            $comment = $request['Operation']['comment'];
+            $params['model'] = Yii::$app->getModule('cashbox')->orderModel;
+            $params['comment'] = $request['Operation']['comment'];
+            $params['itemId'] = $request['Operation']['item_id'];
 
             // проверяет если внесено больше денег чем стоит заказ (крупная купюра с которой сдали)
             // то присваиваем входящую сумму равной стоимости заказа.
@@ -174,7 +177,7 @@ class OperationController extends Controller
 
 
 
-            $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $itemId, $comment);
+            $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $params);
 
             if ($transaction['status'] === 'success') {
 
@@ -191,14 +194,14 @@ class OperationController extends Controller
 
                 if ($status) {
                     // TODO избавиться от сильной связанности
-                    Yii::$app->order->setStatus($itemId, $status);
+                    Yii::$app->order->setStatus($params['itemId'], $status);
                 }
 
                 // TODO избавиться от сильной связанности
                 $nextStepAction = Url::to(['/order/order/get-order-form-light', 'useAjax' => 1]);
 
                 if ($this->module->printRedirect) {
-                    $printRedirect = Url::to([$this->module->printRedirect, 'id' => $itemId]);
+                    $printRedirect = Url::to([$this->module->printRedirect, 'id' => $params['itemId']]);
                 } else {
                     $printRedirect = null;
                 }

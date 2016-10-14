@@ -18,7 +18,7 @@ class Cashbox extends Component
     *  @property intger $itemId - id заказа/товара/услуги
     *  @property string $comment - комментарий
     */
-    public function addTransaction($type, $sum, $cashboxId, $itemId = null, $comment = '')
+    public function addTransaction($type, $sum, $cashboxId, $params = [])
     {
         $model = new Operation();
         $model->type = $type;
@@ -26,8 +26,22 @@ class Cashbox extends Component
         $model->cashbox_id = $cashboxId;
         $model->staffer_id = \Yii::$app->user->id;
         $model->date = date('Y:m:d H:i:s');
-        $model->comment = $comment;
-        $model->item_id = $itemId;
+        $model->comment = '';
+        $model->item_id = null;
+        $model->model = null;
+
+        if (isset($params['itemId'])) {
+            $model->item_id = $params['itemId'];
+        }
+
+        if (isset($params['model'])) {
+            $model->model = $params['model'];
+        }
+
+        if (isset($params['comment'])) {
+            $model->comment = $params['comment'];
+        }
+
 
         $cashBox = CashboxModel::findOne($cashboxId);
 
@@ -91,7 +105,10 @@ class Cashbox extends Component
 
         if ($operations) {
             foreach ($operations as $key => $transaction) {
-                $this->addTransaction('outcome', $transaction->sum, $transaction->cashbox_id, $transaction->item_id, 'Отмена заказа '.$orderId);
+                $params = [];
+                $params['comment'] = 'Отмена заказа '.$orderId;
+                $params['itemId'] = $transaction->item_id;
+                $this->addTransaction('outcome', $transaction->sum, $transaction->cashbox_id, $params);
             }
         }
         return true;
