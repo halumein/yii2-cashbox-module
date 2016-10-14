@@ -153,7 +153,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Дата',
                 'attribute' => 'date',
-                'format' =>  ['date', 'HH:mm:ss dd.MM.YYYY'],
+                //'format' =>  ['date', 'HH:mm:ss dd.MM.YYYY'],
                 'filter' => false,
             ],
             // 'client_id',
