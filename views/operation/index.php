@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
 
                 <div class="col-md-2">
-                    <input class="form-control" type="submit" value="<?=Yii::t('order', 'Search');?>" />
+                    <input class="form-control btn-success" type="submit" value="<?=Yii::t('order', 'Search');?>" />
                 </div>
                 <div class="col-md-3">
                     <a href="<?= Url::to(['/cashbox/operation/index']) ?>" /><div class="form-control text-center">Cбросить все фильтры</div></a>

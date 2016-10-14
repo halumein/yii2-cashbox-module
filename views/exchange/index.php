@@ -84,7 +84,7 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 </div>
 
                 <div class="col-md-2">
-                    <input class="form-control" type="submit" value="<?=Yii::t('order', 'Search');?>"/>
+                    <input class="form-control btn-success" type="submit" value="<?=Yii::t('order', 'Search');?>"/>
                 </div>
 
                 <div class="col-md-3">
