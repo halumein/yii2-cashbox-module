@@ -19,7 +19,12 @@
                             <?= $cashbox->name ?>
                         </td>
                         <td>
-                            <?= \Yii::$app->cashbox->getIncomeSumByPeriod($dateStart, $dateStop, $cashbox->id) ?>
+                            <?php
+                                $income = \Yii::$app->cashbox->getIncomeSumByPeriod($dateStart, $dateStop, $cashbox->id);
+                                $outcome = \Yii::$app->cashbox->getOutcomeSumByPeriod($dateStart, $dateStop, $cashbox->id);
+
+                                echo $income - $outcome;
+                                ?>
                         </td>
                         <td>
                             <?= $cashbox->balance ?>
