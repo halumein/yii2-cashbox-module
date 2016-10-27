@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
@@ -10,6 +11,7 @@ use nex\datepicker\DatePicker;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Сверки';
+$this->params['breadcrumbs'][] = ['label' => 'Кассы', 'url' => ['cashbox/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 if($dateStart = yii::$app->request->get('date_start')) {
@@ -22,9 +24,18 @@ if($dateStop = yii::$app->request->get('date_stop')) {
 ?>
 <div class="revision-index">
 
-    <p>
-        <?php echo Html::a('Провести сверку', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <div class="row">
+        <div class="col-sm-3">
+            <p>
+                <?php echo Html::a('Провести сверку', ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
+        </div>
+        <div class="col-sm-9">
+                <div class="service-menu">
+                    <?=$this->render('../_common/menu');?>
+                </div>
+        </div>
+    </div>
 
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -80,6 +91,10 @@ if($dateStop = yii::$app->request->get('date_stop')) {
 
                 <div class="col-md-2">
                     <input class="form-control btn-success" type="submit" value="<?=Yii::t('order', 'Search');?>" class="btn btn-success" />
+                </div>
+
+                <div class="col-md-3">
+                    <a class="btn btn-default" href="<?= Url::to(['/cashbox/revision/index']) ?>" />Cбросить все фильтры</a>
                 </div>
             </form>
         </div>

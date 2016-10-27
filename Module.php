@@ -18,6 +18,25 @@ class Module extends \yii\base\Module
     public $printRedirect = null;
     public $paymentTypeToCashbox = null;
     public $lessSumPaymentTypes = null; // типы оплаты, при которых внесённая сумма может быть меньше стоимости
+    public $linksToViews = [];
+    public $menu = [
+            [
+                'label' => 'Кассы',
+                'url' => ['/cashbox/cashbox/index'],
+            ],
+            [
+                'label' => 'Переводы',
+                'url' => ['/cashbox/exchange/index'],
+            ],
+            [
+                'label' => 'Сверки',
+                'url' => ['/cashbox/revision/index'],
+            ],
+            [
+                'label' => 'Операции',
+                'url' => ['/cashbox/operation/index'],
+            ],
+        ];
 
 
     public function init()

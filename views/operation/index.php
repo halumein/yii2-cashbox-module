@@ -18,15 +18,26 @@ if($dateStop = yii::$app->request->get('date_stop')) {
     $dateStop = date('d.m.Y', strtotime($dateStop));
 }
 
-$this->title = 'Транзакции';
+$this->title = 'Операции';
 $this->params['breadcrumbs'][] = ['label' => 'Кассы', 'url' => ['cashbox/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="operation-index">
 
-    <p>
-        <?php echo Html::a('Провести операцию', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <div class="row">
+        <div class="col-sm-3">
+            <p>
+                <?php echo Html::a('Провести операцию', ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
+        </div>
+        <div class="col-sm-9">
+                <div class="service-menu">
+                    <?=$this->render('../_common/menu');?>
+                </div>
+        </div>
+    </div>
+
+
 
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -85,16 +96,32 @@ $this->params['breadcrumbs'][] = $this->title;
                     <input class="form-control btn-success" type="submit" value="<?=Yii::t('order', 'Search');?>" />
                 </div>
                 <div class="col-md-3">
-                    <a href="<?= Url::to(['/cashbox/operation/index']) ?>" /><div class="form-control text-center">Cбросить все фильтры</div></a>
+                    <a class="btn btn-default" href="<?= Url::to(['/cashbox/operation/index']) ?>" />Cбросить все фильтры</a>
                 </div>
             </form>
         </div>
     </div>
 
-    <?php echo GridView::widget([
+    <?php
+
+        $totalSum = 0;
+        $dataProviderClone = clone $dataProvider;
+        if (!empty($dataProviderClone->getModels())) {
+            foreach ($dataProviderClone->getModels() as $key => $model) {
+                if ($model->type = 'income') {
+                    $totalSum += $model->sum;
+                } else {
+                    $totalSum -= $model->sum;
+                }
+            }
+        }
+        unset($dataProviderClone);
+
+        echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'tableOptions' => ['class' => 'table'],
+        'showFooter' => true,
         'rowOptions' => function ($model, $key, $index, $grid) {
             if($model->type === 'income') {
                 return ['class' => 'success'];
@@ -128,14 +155,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function($model) {
 
-                    if (Yii::$app->getModule('cashbox')->orderModel === $model->model) {
-                        return '<a href="'. Url::to([Yii::$app->getModule('cashbox')->orderViewAction, 'id' => $model->item_id]) .'">'. $model->item_id .'</a>';
+                    if (!is_null(Yii::$app->getModule('cashbox')->linksToViews)) {
+                        $array = Yii::$app->getModule('cashbox')->linksToViews;
+                        if (isset($array[$model->model])) {
+                            return '<a href="'. Url::to([$array[$model->model]['viewUrl'], $array[$model->model]['itemIdField']  => $model->item_id]) .'">'. $model->item_id .'</a>';
+                        } else {
+                            return $model->item_id;
+                        }
                     } else {
                         return $model->item_id;
                     }
                 }
             ],
-            'sum',
+            [
+                'attribute' => 'sum',
+                'footer' => $totalSum,
+            ],
             'balance',
             [
                 'label' => 'Касса',
@@ -158,7 +193,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             // 'client_id',
             // 'staffer_id',
-            // 'comment:ntext',
+            'comment:ntext',
 
             // ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 65px;']],
         ],

@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model halumein\cashbox\models\Operation */
 
 $this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Кассы', 'url' => ['/cashbox/cashbox/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Операции', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

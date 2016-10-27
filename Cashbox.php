@@ -96,7 +96,7 @@ class Cashbox extends Component
     }
 
     /**
-    * Отменят все транзакции по ордеру
+    * Отменяет все транзакции по ордеру
     *  @property integer $orderId - id заказа
     */
     public function rollbackOrderPayment($orderId)

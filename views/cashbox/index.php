@@ -11,9 +11,19 @@ $this->title = 'Кассы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cashbox-index">
-    <p>
-        <?= Html::a('Добавить кассу', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    
+    <div class="row">
+        <div class="col-sm-3">
+            <p>
+                <?= Html::a('Добавить кассу', ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
+        </div>
+        <div class="col-sm-9">
+                <div class="service-menu">
+                    <?=$this->render('../_common/menu');?>
+                </div>
+        </div>
+    </div>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -47,7 +57,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             // 'deleted',
-            // ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'visible' => Yii::$app->user->can('superadmin'),
+                'buttonOptions' => ['class' => 'btn btn-default'],
+                'options' => ['style' => 'width: 125px;']
+            ],
         ],
     ]);
     ?>

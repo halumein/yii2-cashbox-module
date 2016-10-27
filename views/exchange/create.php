@@ -7,6 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Exchange */
 
 $this->title = 'Добавить перевод';
+$this->params['breadcrumbs'][] = ['label' => 'Кассы', 'url' => ['/cashbox/cashbox/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Переводы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -7,6 +7,7 @@ use yii\helpers\Html;
 /* @var $model halumein\cashbox\models\Operation */
 
 $this->title = 'Проведение операции';
+$this->params['breadcrumbs'][] = ['label' => 'Кассы', 'url' => ['/cashbox/cashbox/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Операции', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

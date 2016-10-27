@@ -25,11 +25,18 @@ if($dateStop = yii::$app->request->get('date_stop')) {
 ?>
 <div class="exchange-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]);?>
-
-    <p>
-        <?php echo Html::a('Добавить перевод', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <div class="row">
+        <div class="col-sm-3">
+            <p>
+                <?php echo Html::a('Добавить перевод', ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
+        </div>
+        <div class="col-sm-9">
+                <div class="service-menu">
+                    <?=$this->render('../_common/menu');?>
+                </div>
+        </div>
+    </div>
 
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -88,7 +95,7 @@ if($dateStop = yii::$app->request->get('date_stop')) {
                 </div>
 
                 <div class="col-md-3">
-                    <a href="<?= Url::to(['/cashbox/exchange/index']) ?>" /><div class="form-control text-center">Cбросить все фильтры</div></a>
+                    <a class="btn btn-default" href="<?= Url::to(['/cashbox/exchange/index']) ?>" />Cбросить все фильтры</a>
                 </div>
 
             </form>
