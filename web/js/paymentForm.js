@@ -4,13 +4,15 @@ if (typeof halumein === "undefined" || !halumein) {
 
 halumein.paymentForm = {
 	init : function() {
-		var $paymentInput = $('[data-role=payment-sum]'),
-			paymentCost = +$('[data-role=payment-cost]').html(),
-			$paymentChange = $('[data-role=payment-change]'),
-            $submit = $('#submit-payment'),
-			$cancel = $('#cancel-payment');
+		$paymentInput = $('[data-role=payment-sum]');
+		paymentCost = +$('[data-role=payment-cost]').html();
+		$paymentChange = $('[data-role=payment-change]');
+        $submit = $('#submit-payment');
+		$cancel = $('#cancel-payment');
 
         $paymentInput.focus();
+        $paymentInput.val(paymentCost);
+        $paymentInput.select();
 		// обработчик для поля внесённой суммы. осталвяем только цыфры и точку
 		$paymentInput.keydown(function (e) {
 	        // Allow: backspace, delete, tab, escape, enter and .
@@ -68,7 +70,7 @@ halumein.paymentForm = {
 			nextStep = $form.data('next-step'),
 			confirmUrl = $form.attr('action'),
             $tools = $('[data-role=tools]');
-            
+
 
 		if ((income < paymentCost) && $comment.val() === '' && !$tools.data('less-sum')) {
 			$notify.html('Внимание! Укажите в комментарии, почему сумма платежа меньше суммы заказа.').slideDown();
