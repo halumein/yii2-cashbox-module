@@ -104,18 +104,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
 
-        $totalSum = 0;
-        $dataProviderClone = clone $dataProvider;
-        if (!empty($dataProviderClone->getModels())) {
-            foreach ($dataProviderClone->getModels() as $key => $model) {
-                if ($model->type = 'income') {
-                    $totalSum += $model->sum;
-                } else {
-                    $totalSum -= $model->sum;
-                }
-            }
-        }
-        unset($dataProviderClone);
+        // $totalSum = 0;
+        // $dataProviderClone = clone $dataProvider;
+        // if (count($dataProviderClone->getModels()) > 0) {
+        //     foreach ($dataProviderClone->getModels() as $key => $model) {
+        //         if ($model->type = 'income') {
+        //             $totalSum += $model->sum;
+        //         } else {
+        //             $totalSum -= $model->sum;
+        //         }
+        //     }
+        // }
+        // unset($dataProviderClone);
 
         echo GridView::widget([
         'dataProvider' => $dataProvider,
@@ -169,7 +169,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'sum',
-                'footer' => $totalSum,
+                // 'footer' => $totalSum,
             ],
             'balance',
             [
