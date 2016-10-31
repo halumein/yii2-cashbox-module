@@ -35,6 +35,7 @@ php yii migrate --migrationPath=vendor/halumein/yii2-cashbox-module/migrations
             'printRedirect' => '/order/order/print' // редирект на action печати чека после оплаты
             'payedStatus' => 'payed', // для простановки статусов в ордере "оплачен"
             'halfpayedStatus' => 'halfpayed', // для простановки статусов в ордере "частично оплачен"
+            'lessSumPaymentTypes' => [5], // тип оплаты в котором сумма платжа допустима быть меньше суммы заказа
         ],
         //...
     ]
@@ -90,11 +91,12 @@ class YourUser extends ActiveRecord implements \halumein\cashbox\interfaces\User
 дальше обращаться по адресу cashbox/<имя_контроллера>
 доуступные роуты:
 
+```
 cashbox/cashbox - индекс касс
 cashbox/operation - индекс транзакций
 cashbox/exchange - индекс переводов между кассами
 cashbox/revision - индекс сверок
-
+```
 Виджет выбора дефолтной кассы:
 Для использования виджета потребуется дополнить таблицу пользователя в базе данных полем "default_cashbox", куда будет записываться id кассы по умолчанию для выбранного пользователя.
 
