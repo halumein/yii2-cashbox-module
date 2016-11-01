@@ -2,7 +2,7 @@
 
 use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -11,7 +11,7 @@ $this->title = 'Кассы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cashbox-index">
-    
+
     <div class="row">
         <div class="col-sm-3">
             <p>
