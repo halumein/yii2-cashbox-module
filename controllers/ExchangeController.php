@@ -103,19 +103,21 @@ class ExchangeController extends Controller
             // $model->rate =  $postData['Exchange']['rate'] ? $postData['Exchange']['rate'] : 1;
             $model->rate = $model->from_sum > $model->to_sum ? round($model->from_sum / $model->to_sum, 2) :  round($model->to_sum / $model->from_sum, 2);
 
-
             if ($model->save()) {
 
                 $type = 'outcome';
                 $sum = $postData['Exchange']['from_sum'];
                 $cashboxId = $postData['Exchange']['from_cashbox_id'];
-                $comment = $model->comment ? $model->comment : 'Перевод между кассами';
-                $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, null, $comment);
+
+                $params['itemId'] = $model->id;
+                $params['model'] = $model::className();
+                $params['comment'] = ($model->comment && $model->comment !== '') ? $model->comment : 'Перевод между кассами';
+                $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $params);
 
                 $type = 'income';
                 $sum = $postData['Exchange']['to_sum'];
                 $cashboxId = $postData['Exchange']['to_cashbox_id'];
-                $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, null, $comment);
+                $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $params);
 
                 return $this->redirect(['index']);
             }
