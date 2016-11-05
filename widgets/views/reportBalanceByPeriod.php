@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Url;
+?>
 <div class="row">
     <div class="col-sm-12">
         <table class="table">
@@ -23,7 +26,7 @@
                                 $income = \Yii::$app->cashbox->getIncomeSumByPeriod($dateStart, $dateStop, $cashbox->id);
                                 $outcome = \Yii::$app->cashbox->getOutcomeSumByPeriod($dateStart, $dateStop, $cashbox->id);
 
-                                echo "<span title=\"приход-расход\">" . (int)$income . "-" . (int)$outcome . "=" . ($income - $outcome) . "</span>";
+                                echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', ['OperationSearch' => ['date_start' => $dateStart, 'date_stop' => $dateStop]]]) . " title=\"приход-расход\">" . (int)$income . "-" . (int)$outcome . "=" . ($income - $outcome) . "</a>";
                                 ?>
                         </td>
                         <td>

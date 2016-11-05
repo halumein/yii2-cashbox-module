@@ -37,8 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-
-
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title"><?=yii::t('order', 'Search');?></h3>
@@ -100,6 +98,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </form>
         </div>
+    </div>
+    
+    <div class="total">
+        <h3>Итого</h3>
+        <p>
+            <?php $incomingQuery = clone $dataProvider->query; ?>
+            Входящие: <?=number_format($incomingQuery->where(['type' => 'income'])->sum('sum'), 2, ',', '.');?>
+        </p>
+        <p>
+            <?php $outcomingQuery = clone $dataProvider->query; ?>
+            Исходящие: <?=number_format($outcomingQuery->where(['type' => 'outcome'])->sum('sum'), 2, ',', '.');?>
+        </p>
     </div>
 
     <?php
