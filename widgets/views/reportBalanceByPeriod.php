@@ -9,7 +9,7 @@
                     Сумма по операциям за период
                 </th>
                 <th>
-                    Остаток по кассе на текущий момент
+                    Остаток на конец периода
                 </th>
             </thead>
             <tbody>
@@ -23,11 +23,17 @@
                                 $income = \Yii::$app->cashbox->getIncomeSumByPeriod($dateStart, $dateStop, $cashbox->id);
                                 $outcome = \Yii::$app->cashbox->getOutcomeSumByPeriod($dateStart, $dateStop, $cashbox->id);
 
-                                echo $income - $outcome;
+                                echo "<span title=\"приход-расход\">" . (int)$income . "-" . (int)$outcome . "=" . ($income - $outcome) . "</span>";
                                 ?>
                         </td>
                         <td>
-                            <?= $cashbox->balance ?>
+                            <?php
+                            $date = $dateStop; 
+                            if(!$date) {
+                                $date = date('Y-m-d H:i:s');
+                            }
+                            ?>
+                            <?= \Yii::$app->cashbox->getBalanceByDate($date, $cashbox->id); ?>
                         </td>
                     </tr>
                 <?php } ?>

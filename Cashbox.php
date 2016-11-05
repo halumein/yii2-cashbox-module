@@ -79,7 +79,6 @@ class Cashbox extends Component
 
     /**
     *   Получить общую сумму поступлений по всем кассам
-    *  @property integer $userId - id пользователя
     */
     public function getIncomeSumByPeriod($dateStart, $dateStop = null, $cashboxId = null)
     {
@@ -88,7 +87,6 @@ class Cashbox extends Component
 
     /**
     *   Получить общую сумму расходов по всем кассам
-    *  @property integer $userId - id пользователя
     */
     public function getOutcomeSumByPeriod($dateStart, $dateStop = null)
     {
@@ -113,5 +111,30 @@ class Cashbox extends Component
         }
         return true;
     }
+   
+    /**
+    *   Баланс кассы
+    */
+    public function getBalance($cashboxId = null)
+    {
+        return Cashbox::findOne($cashboxId)->balance;
+    }
+   
+    /**
+    *   Баланс в указанное время
+    */
+    public function getBalanceByDate($date, $cashboxId = null)
+    {
+        $lastOperation = Operation::find()
+            ->where('date < :date AND cashbox_id = :cashboxId', [':date' => $date, ':cashboxId' => $cashboxId])
+            ->limit(1)
+            ->orderBy('id DESC')
+            ->one();
 
+        if($lastOperation) {
+            return $lastOperation->balance;
+        }
+        
+        return false;
+    }
 }
