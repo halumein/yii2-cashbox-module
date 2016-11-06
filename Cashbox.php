@@ -99,7 +99,11 @@ class Cashbox extends Component
     */
     public function rollbackOrderPayment($orderId)
     {
-        $operations = Operation::find()->where(['item_id' => $orderId])->all();
+        $operations = Operation::find()->where([
+            'model' => \Yii::$app->getModule('cashbox')->orderModel,
+            'item_id' => $orderId
+            ])->all();
+
 
         if ($operations) {
             foreach ($operations as $key => $transaction) {
@@ -111,7 +115,7 @@ class Cashbox extends Component
         }
         return true;
     }
-   
+
     /**
     *   Баланс кассы
     */
@@ -119,7 +123,7 @@ class Cashbox extends Component
     {
         return Cashbox::findOne($cashboxId)->balance;
     }
-   
+
     /**
     *   Баланс в указанное время
     */
@@ -134,7 +138,20 @@ class Cashbox extends Component
         if($lastOperation) {
             return $lastOperation->balance;
         }
-        
+
         return false;
     }
+
+    /**
+    *  Все оплаты по заказу (если размазаны по времени)
+    */
+
+    public function getPaymentsSumByOrder($orderId)
+    {
+        return $sum = Operation::find()->where([
+            'model' => \Yii::$app->getModule('cashbox')->orderModel,
+            'item_id' => $orderId
+            ])->sum('sum');
+    }
+
 }

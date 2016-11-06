@@ -175,14 +175,16 @@ class OperationController extends Controller
                 $sum = $request['Operation']['sum'];
             }
 
-
-
             $transaction = Yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $params);
 
             if ($transaction['status'] === 'success') {
 
                 $status = false;
-                if ($request['Operation']['sum'] < $request['Operation']['itemCost']) {
+
+                // общая сумма всех платежей вместе с текущим
+                $totalPaymentSum = Yii::$app->cashbox->getPaymentsSumByOrder($params['itemId']);
+
+                if ($totalPaymentSum < $request['Operation']['itemCost']) {
                     if (\Yii::$app->getModule('cashbox')->halfpayedStatus) {
                         $status = \Yii::$app->getModule('cashbox')->halfpayedStatus;
                     }
