@@ -28,10 +28,10 @@ class Module extends \yii\base\Module
                 'label' => 'Переводы',
                 'url' => ['/cashbox/exchange/index'],
             ],
-            [
-                'label' => 'Сверки',
-                'url' => ['/cashbox/revision/index'],
-            ],
+            // [
+            //     'label' => 'Сверки',
+            //     'url' => ['/cashbox/revision/index'],
+            // ],
             [
                 'label' => 'Операции',
                 'url' => ['/cashbox/operation/index'],

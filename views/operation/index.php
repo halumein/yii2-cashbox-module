@@ -99,16 +99,19 @@ $this->params['breadcrumbs'][] = $this->title;
             </form>
         </div>
     </div>
-    
+
     <div class="total">
         <h3>Итого</h3>
         <p>
             <?php $incomingQuery = clone $dataProvider->query; ?>
-            Входящие: <?=number_format($incomingQuery->where(['type' => 'income'])->sum('sum'), 2, ',', '.');?>
+            Входящие: <?=number_format($income = $incomingQuery->andWhere(['type' => 'income'])->sum('sum'), 2, ',', '.');?>
         </p>
         <p>
             <?php $outcomingQuery = clone $dataProvider->query; ?>
-            Исходящие: <?=number_format($outcomingQuery->where(['type' => 'outcome'])->sum('sum'), 2, ',', '.');?>
+            Исходящие: <?=number_format($outcome = $outcomingQuery->andWhere(['type' => 'outcome'])->sum('sum'), 2, ',', '.');?>
+        </p>
+        <p>
+            <strong>Сальдо: <?= $income - $outcome ?></strong>
         </p>
     </div>
 
