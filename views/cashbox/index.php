@@ -2,10 +2,20 @@
 
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+
+if(yii::$app->has('organization')) {
+    $organizations = yii::$app->organization->getList();
+    $organizations = ArrayHelper::map($organizations, 'id', 'name');
+} else {
+    $organizations = [];
+}
+
+
 
 $this->title = 'Кассы';
 $this->params['breadcrumbs'][] = $this->title;
@@ -38,6 +48,24 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'currency',
                 'filter' => false,
+            ],
+            [
+                'attribute' => 'organization_id',
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'organization_id',
+                    $organizations,
+                    ['class' => 'form-control', 'prompt' => 'Организация']
+                ),
+                'content' => function($model) use ($organizations) {
+                    foreach($organizations as $id => $name) {
+                        if($id == $model->organization_id) {
+                            return $name;
+                        }
+                    }
+
+                    return '';
+                }
             ],
             [
                 'attribute' => 'user_ids',

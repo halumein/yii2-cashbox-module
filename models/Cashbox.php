@@ -47,6 +47,7 @@ class Cashbox extends \yii\db\ActiveRecord
             [['deleted'], 'safe'],
             [['name'], 'string', 'max' => 255],
             [['currency'], 'string', 'max' => 100],
+            [['organization_id'], 'integer'],
             [['user_ids'], 'each', 'rule' => ['integer']],
         ];
     }
@@ -62,6 +63,7 @@ class Cashbox extends \yii\db\ActiveRecord
             'currency' => 'Валюта',
             'balance' => 'Баланс',
             'user_ids' => 'Операторы кассы',
+            'organization_id' => 'Организация',
             'deleted' => 'Удалена',
         ];
     }
@@ -82,7 +84,14 @@ class Cashbox extends \yii\db\ActiveRecord
         $userId = $userId ? $userId : \Yii::$app->user->id;
         $cashBoxIds = UserToCashbox::find()->where(['user_id' => $userId])->all();
         $cashboxIds = ArrayHelper::getColumn($cashBoxIds, 'cashbox_id');
-        return Cashbox::find()->where(['id' => $cashboxIds])->all();
+        $cashboxes = Cashbox::find()->where(['id' => $cashboxIds]);
+
+        if (\Yii::$app->has('organization') && $organization = \Yii::$app->get('organization')) {
+            $organization = \Yii::$app->organization->get();
+            $cashboxes->andWhere(['organization_id' => $organization->id]);
+        }
+
+        return $cashboxes->all();
     }
 
     public function getNameWithCurrentBalance()

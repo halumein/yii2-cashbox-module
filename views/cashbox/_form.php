@@ -26,6 +26,14 @@ use kartik\select2\Select2;
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-3 col-xs-6">
+            <?php if(yii::$app->has('organization') && $organization = yii::$app->get('organization')) { ?>
+                <?php echo $form->field($model, 'organization_id')->dropDownList(array_merge(['0' => 'Нет'], ArrayHelper::map($organization->getList(), 'id', 'name'))) ?>
+            <?php } ?>
+        </div>
+    </div>
+
     <?php
     //на dropDownList c мультивыбором
     //echo $form->field($model, 'user_ids')->label('Пользователи, которые имеют доступ')->dropDownList(ArrayHelper::map($activeUsers,'id','username'), ['multiple' => true]);
