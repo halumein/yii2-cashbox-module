@@ -88,7 +88,9 @@ class Cashbox extends \yii\db\ActiveRecord
 
         if (\Yii::$app->has('organization') && $organization = \Yii::$app->get('organization')) {
             $organization = \Yii::$app->organization->get();
-            $cashboxes->andWhere(['organization_id' => $organization->id]);
+            if ($organization) {
+                $cashboxes->andWhere(['organization_id' => $organization->id]);
+            }
         }
 
         return $cashboxes->all();
