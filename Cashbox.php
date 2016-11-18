@@ -88,9 +88,9 @@ class Cashbox extends Component
     /**
     *   Получить общую сумму расходов по всем кассам
     */
-    public function getOutcomeSumByPeriod($dateStart, $dateStop = null)
+    public function getOutcomeSumByPeriod($dateStart, $dateStop = null, $cashboxId = null)
     {
-        return Operation::getOutcomeSumByPeriod($dateStart, $dateStop);
+        return Operation::getOutcomeSumByPeriod($dateStart, $dateStop, $cashboxId);
     }
 
     /**
