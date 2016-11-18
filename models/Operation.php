@@ -22,6 +22,7 @@ class Operation extends \yii\db\ActiveRecord
 {
 
     public $itemCost;
+    public $paymentTypeId;
 
     /**
      * @inheritdoc

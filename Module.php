@@ -19,6 +19,7 @@ class Module extends \yii\base\Module
     public $paymentTypeToCashbox = null;
     public $lessSumPaymentTypes = null; // типы оплаты, при которых внесённая сумма может быть меньше стоимости
     public $linksToViews = [];
+    public $splitPaymentTypes = []; // id типа оплаты с распределёнными кассами
     public $menu = [
             [
                 'label' => 'Кассы',

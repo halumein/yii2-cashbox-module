@@ -112,7 +112,9 @@ class OperationController extends Controller
             $params['model'] = Yii::$app->getModule('cashbox')->orderModel;
             $params['comment'] = $request['Operation']['comment'];
             $params['itemId'] = $request['Operation']['item_id'];
-            // ёбаный стыд, но пока так. проверяет если внесено больше денег чем стоит заказ (крупная купюра с которой сдали)
+
+            // ёбаный стыд, но пока так. проверяет если внесено больше денег
+            // чем стоит заказ (крупная купюра с которой сдали)
             // то присваиваем входящую сумму равной стоимости заказа.
             if ($request['Operation']['sum'] > $request['Operation']['itemCost'] ) {
                 $sum = $request['Operation']['itemCost'];
@@ -121,11 +123,13 @@ class OperationController extends Controller
             }
 
             $status = false;
+            // частично оплачен
             if ($request['Operation']['sum'] < $request['Operation']['itemCost']) {
                 if (\Yii::$app->getModule('cashbox')->halfpayedStatus) {
                     $status = \Yii::$app->getModule('cashbox')->halfpayedStatus;
                 }
             } else {
+                // полностью оплачен
                 if (\Yii::$app->getModule('cashbox')->payedStatus) {
                     $status = \Yii::$app->getModule('cashbox')->payedStatus;
                 }
@@ -166,6 +170,7 @@ class OperationController extends Controller
             $params['model'] = Yii::$app->getModule('cashbox')->orderModel;
             $params['comment'] = $request['Operation']['comment'];
             $params['itemId'] = $request['Operation']['item_id'];
+            $paymentTypeId = $request['Operation']['paymentTypeId'];
 
             // проверяет если внесено больше денег чем стоит заказ (крупная купюра с которой сдали)
             // то присваиваем входящую сумму равной стоимости заказа.
@@ -184,6 +189,8 @@ class OperationController extends Controller
                 // общая сумма всех платежей вместе с текущим
                 $totalPaymentSum = Yii::$app->cashbox->getPaymentsSumByOrder($params['itemId']);
 
+                $splitPaymentTypes = \Yii::$app->getModule('cashbox')->splitPaymentTypes;
+
                 if ($totalPaymentSum < $request['Operation']['itemCost']) {
                     if (\Yii::$app->getModule('cashbox')->halfpayedStatus) {
                         $status = \Yii::$app->getModule('cashbox')->halfpayedStatus;
@@ -192,6 +199,15 @@ class OperationController extends Controller
                     if (\Yii::$app->getModule('cashbox')->payedStatus) {
                         $status = \Yii::$app->getModule('cashbox')->payedStatus;
                     }
+                }
+
+                if (isset($splitPaymentTypes[$paymentTypeId])) {
+                        $cashboxId = $splitPaymentTypes[$paymentTypeId];
+                        $remainigSum = $request['Operation']['itemCost'] - $sum;
+                        if ($remainigSum > 0) {
+                            $transaction = Yii::$app->cashbox->addTransaction($type, $remainigSum, $cashboxId, $params);
+                            $status = \Yii::$app->getModule('cashbox')->payedStatus;
+                        }
                 }
 
                 if ($status) {

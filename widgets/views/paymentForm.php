@@ -19,6 +19,7 @@ use yii\bootstrap\ActiveForm;
     <div class="hidden" data-role="tools" data-less-sum=<?= $lessSum ?>>
         <?= $form->field($model, 'item_id')->textInput(['value' => $order->id])?>
         <?= $form->field($model, 'itemCost')->textInput(['value' => $order->cost])?>
+        <?= $form->field($model, 'paymentTypeId')->textInput(['value' => $order->payment_type_id])?>
     </div>
 
     <div class="row row-centered">
