@@ -36,6 +36,19 @@ php yii migrate --migrationPath=vendor/halumein/yii2-cashbox-module/migrations
             'payedStatus' => 'payed', // для простановки статусов в ордере "оплачен"
             'halfpayedStatus' => 'halfpayed', // для простановки статусов в ордере "частично оплачен"
             'lessSumPaymentTypes' => [5], // тип оплаты в котором сумма платжа допустима быть меньше суммы заказа
+
+            // для автоподстановки кассы в зависимости от типа оплаты из виджета заказа в виджет формы оплаты
+            'paymentTypeToCashbox' => [
+                1 => 1, // id типа оплаты => id кассы
+            ],
+
+            // для формирования ссылок в списке операций
+            'linksToViews' => [
+                'pistol88\order\models\Order' => [
+                    'viewUrl' => '/order/order/view',
+                    'itemIdField' => 'id'
+                ]
+            ],
         ],
         //...
     ]
