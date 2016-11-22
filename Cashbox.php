@@ -77,6 +77,11 @@ class Cashbox extends Component
         return CashboxModel::getAvailable($userId);
     }
 
+    public function getCashboxes($userId = null)
+    {
+        return CashboxModel::find()->all();
+    }
+    
     /**
     *   Получить общую сумму поступлений по всем кассам
     */
