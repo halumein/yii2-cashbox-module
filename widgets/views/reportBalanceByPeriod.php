@@ -1,5 +1,10 @@
 <?php
 use yii\helpers\Url;
+
+$date = $dateStop; 
+if(!$date) {
+    $date = date('Y-m-d H:i:s');
+}
 ?>
 <div class="row">
     <div class="col-sm-12">
@@ -9,7 +14,10 @@ use yii\helpers\Url;
                     Касса
                 </th>
                 <th>
-                    Сумма по операциям за период
+                    Входящие
+                </th>
+                <th>
+                    Исходящие (в т.ч. отмененные)
                 </th>
                 <th>
                     Остаток на конец периода
@@ -23,20 +31,23 @@ use yii\helpers\Url;
                         </td>
                         <td>
                             <?php
-                                $income = \Yii::$app->cashbox->getIncomeSumByPeriod($dateStart, $dateStop, $cashbox->id);
-                                $outcome = \Yii::$app->cashbox->getOutcomeSumByPeriod($dateStart, $dateStop, $cashbox->id);
-
-                                echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', ['OperationSearch' => ['date_start' => $dateStart, 'date_stop' => $dateStop]]]) . " title=\"приход-расход\">" . (int)$income . "-" . (int)$outcome . "=" . ($income - $outcome) . "</a>";
-                                ?>
+                            $income = \Yii::$app->cashbox->getIncomeSumByPeriod($dateStart, $date, $cashbox->id);
+                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', ['OperationSearch' => ['type' => 'income', 'date_start' => $dateStart, 'date_stop' => $date]]]) . "\">".(int)$income."</a>";
+                            ?>
+                        </td>
+                        <td>
+                            
+                            <?php
+                            $outcome = \Yii::$app->cashbox->getOutcomeSumByPeriod($dateStart, $date, $cashbox->id);
+                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', ['OperationSearch' => ['type' => 'outcome', 'date_start' => $dateStart, 'date_stop' => $date]]]) . "\">".(int)$outcome."</a>";
+                            ?>
                         </td>
                         <td>
                             <?php
-                            $date = $dateStop; 
-                            if(!$date) {
-                                $date = date('Y-m-d H:i:s');
-                            }
+                            $balance = \Yii::$app->cashbox->getBalanceByDate($date, $cashbox->id);
+                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', ['OperationSearch' => ['date_start' => $dateStart, 'date_stop' => $date]]]) . "\">".(int)$balance."</a>";
                             ?>
-                            <?= \Yii::$app->cashbox->getBalanceByDate($date, $cashbox->id); ?>
+                            
                         </td>
                     </tr>
                 <?php } ?>
