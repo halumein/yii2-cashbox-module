@@ -32,20 +32,20 @@ if(!$date) {
                         <td>
                             <?php
                             $income = \Yii::$app->cashbox->getIncomeSumByPeriod($dateStart, $date, $cashbox->id);
-                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', ['OperationSearch' => ['type' => 'income', 'date_start' => $dateStart, 'date_stop' => $date]]]) . "\">".(int)$income."</a>";
+                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id, 'type' => 'income']]) . "\">".(int)$income."</a>";
                             ?>
                         </td>
                         <td>
                             
                             <?php
                             $outcome = \Yii::$app->cashbox->getOutcomeSumByPeriod($dateStart, $date, $cashbox->id);
-                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', ['OperationSearch' => ['type' => 'outcome', 'date_start' => $dateStart, 'date_stop' => $date]]]) . "\">".(int)$outcome."</a>";
+                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id, 'type' => 'outcome']]) . "\">".(int)$outcome."</a>";
                             ?>
                         </td>
                         <td>
                             <?php
                             $balance = \Yii::$app->cashbox->getBalanceByDate($date, $cashbox->id);
-                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', ['OperationSearch' => ['date_start' => $dateStart, 'date_stop' => $date]]]) . "\">".(int)$balance."</a>";
+                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id]]) . "\">".(int)$balance."</a>";
                             ?>
                             
                         </td>
