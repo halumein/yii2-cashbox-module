@@ -7,6 +7,13 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model halumein\cashbox\models\Operation */
 /* @var $form yii\bootstrap\ActiveForm */
+
+$cashboxModels = Yii::$app->cashbox->getAvailableCashbox();
+$cashboxes = [];
+
+foreach($cashboxModels as $cm) {
+    $cashboxes[$cm->id] = "{$cm->name} ({$cm->balance})";
+}
 ?>
 
 <div class="operation-form">
@@ -34,7 +41,7 @@ use yii\helpers\ArrayHelper;
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-6">
-            <?= $form->field($model, 'cashbox_id')->dropDownList(ArrayHelper::map(Yii::$app->cashbox->getAvailableCashbox(), 'id', 'name')) ?>
+            <?= $form->field($model, 'cashbox_id')->dropDownList($cashboxes) ?>
         </div>
     </div>
 
