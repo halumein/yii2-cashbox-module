@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete}',
-                'visible' => Yii::$app->user->can('superadmin'),
+                'visible' => Yii::$app->user->can('administrator'),
                 'buttonOptions' => ['class' => 'btn btn-default'],
                 'options' => ['style' => 'width: 125px;']
             ],
