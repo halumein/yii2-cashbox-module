@@ -34,6 +34,10 @@ class Cashbox extends Component
             $model->item_id = $params['itemId'];
         }
 
+        if (isset($params['cancel'])) {
+            $model->cancel = $params['cancel'];
+        }
+        
         if (isset($params['model'])) {
             $model->model = $params['model'];
         }
@@ -109,15 +113,19 @@ class Cashbox extends Component
             'item_id' => $orderId
             ])->all();
 
-
         if ($operations) {
             foreach ($operations as $key => $transaction) {
+                $transaction->cancel = 1;
+                $transaction->save(false);
+                
                 $params = [];
                 $params['comment'] = 'Отмена заказа '.$orderId;
                 $params['itemId'] = $transaction->item_id;
+                $params['cancel'] = 1;
                 $this->addTransaction('outcome', $transaction->sum, $transaction->cashbox_id, $params);
             }
         }
+        
         return true;
     }
 
@@ -155,6 +163,7 @@ class Cashbox extends Component
     {
         return $sum = Operation::find()->where([
             'model' => \Yii::$app->getModule('cashbox')->orderModel,
+            'cancel' => 0,
             'item_id' => $orderId
             ])->sum('sum');
     }

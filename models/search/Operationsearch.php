@@ -18,7 +18,7 @@ class OperationSearch extends Operation
     public function rules()
     {
         return [
-            [['id', 'cashbox_id', 'item_id', 'client_id', 'staffer_id'], 'integer'],
+            [['id', 'cashbox_id', 'item_id', 'client_id', 'staffer_id', 'cancel'], 'integer'],
             [['type', 'model', 'date', 'comment'], 'safe'],
             [['balance', 'sum'], 'number'],
         ];
@@ -66,6 +66,7 @@ class OperationSearch extends Operation
             'date' => $this->date,
             'client_id' => $this->client_id,
             'staffer_id' => $this->staffer_id,
+            'cancel' => $this->cancel,
         ]);
 
         $query->andFilterWhere(['like', 'type', $this->type])

@@ -41,7 +41,7 @@ class Operation extends \yii\db\ActiveRecord
             [['type', 'balance', 'sum', 'cashbox_id', 'date', 'staffer_id'], 'required'],
             [['type', 'comment'], 'string'],
             [['balance', 'sum'], 'number'],
-            [['cashbox_id', 'item_id', 'client_id', 'staffer_id'], 'integer'],
+            [['cashbox_id', 'item_id', 'client_id', 'staffer_id', 'cancel'], 'integer'],
             [['date'], 'safe'],
             [['model'], 'string', 'max' => 255],
             [['cashbox_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cashbox::className(), 'targetAttribute' => ['cashbox_id' => 'id']],
@@ -65,6 +65,7 @@ class Operation extends \yii\db\ActiveRecord
             'client_id' => 'ID клиента',
             'staffer_id' => 'ID работника',
             'comment' => 'Комментарий',
+            'cancel' => 'Отменен',
         ];
     }
 
@@ -89,7 +90,7 @@ class Operation extends \yii\db\ActiveRecord
     public static function getIncomeSumByPeriod($dateStart, $dateStop = null, $cashboxId = null)
     {
         $query = Operation::find();
-        $query->where(['type' => 'income']);
+        $query->where(['type' => 'income', 'cancel' => 0]);
         $query->andWhere(['>=', 'date', date('Y-m-d H:i:s', strtotime($dateStart))]);
         $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop ? $dateStop : $dateStart) + 86399)]);
         if ($cashboxId) {
@@ -101,7 +102,7 @@ class Operation extends \yii\db\ActiveRecord
     public static function getOutcomeSumByPeriod($dateStart, $dateStop = null, $cashboxId = null)
     {
         $query = Operation::find();
-        $query->where(['type' => 'outcome']);
+        $query->where(['type' => 'outcome', 'cancel' => 0]);
         $query->andWhere(['>=', 'date', date('Y-m-d H:i:s', strtotime($dateStart))]);
         $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop ? $dateStop : $dateStart) + 86399)]);
         if ($cashboxId) {
