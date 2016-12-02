@@ -92,7 +92,7 @@ class Operation extends \yii\db\ActiveRecord
         $query = Operation::find();
         $query->where(['type' => 'income', 'cancel' => 0]);
         $query->andWhere(['>=', 'date', date('Y-m-d H:i:s', strtotime($dateStart))]);
-        $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop ? $dateStop : $dateStart) + 86399)]);
+        $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop ? $dateStop : $dateStart))]);
         if ($cashboxId) {
             $query->andWhere(['cashbox_id' => $cashboxId]);
         }
@@ -104,7 +104,7 @@ class Operation extends \yii\db\ActiveRecord
         $query = Operation::find();
         $query->where(['type' => 'outcome', 'cancel' => 0]);
         $query->andWhere(['>=', 'date', date('Y-m-d H:i:s', strtotime($dateStart))]);
-        $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop ? $dateStop : $dateStart) + 86399)]);
+        $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop ? $dateStop : $dateStart))]);
         if ($cashboxId) {
             $query->andWhere(['cashbox_id' => $cashboxId]);
         }

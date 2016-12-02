@@ -33,6 +33,10 @@ class Cashbox extends Component
         if (isset($params['itemId'])) {
             $model->item_id = $params['itemId'];
         }
+        
+        if (isset($params['date'])) {
+            $model->date = $params['date'];
+        }
 
         if (isset($params['cancel'])) {
             $model->cancel = $params['cancel'];
