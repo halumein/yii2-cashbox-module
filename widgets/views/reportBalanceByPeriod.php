@@ -77,13 +77,16 @@ $sum2 = 0;
                     Итого:
                 </th>
                 <th>
+                    <?=$sum1;?>
+                </th>
+                <th>
                     <?=$in;?>
                 </th>
                 <th>
                     <?=$out;?>
                 </th>
                 <th>
-                    <?=$sum;?>
+                    <?=$sum2;?>
                 </th>
             </tfoot>
         </table>
