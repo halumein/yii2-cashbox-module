@@ -8,7 +8,8 @@ if(!$date) {
 
 $in = 0;
 $out = 0;
-$sum = 0;
+$sum1 = 0;
+$sum2 = 0;
 ?>
 <div class="row">
     <div class="col-sm-12">
@@ -18,13 +19,18 @@ $sum = 0;
                     Касса
                 </th>
                 <th>
+                    Остаток<br />
+                    <small><small>Начало периода</small></small>
+                </th>
+                <th>
                     Входящие
                 </th>
                 <th>
                     Исходящие
                 </th>
                 <th>
-                    Остаток
+                    Остаток<br />
+                    <small><small>Конец периода</small></small>
                 </th>
             </thead>
             <tbody>
@@ -32,6 +38,13 @@ $sum = 0;
                     <tr>
                         <td>
                             <?= $cashbox->name ?>
+                        </td>
+                        <td>
+                            <?php
+                            $balance = \Yii::$app->cashbox->getBalanceByDate($dateStart, $cashbox->id);
+                            $sum1+=(int)$balance;
+                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id]]) . "\">".(int)$balance."</a>";
+                            ?>
                         </td>
                         <td>
                             <?php
@@ -51,7 +64,7 @@ $sum = 0;
                         <td>
                             <?php
                             $balance = \Yii::$app->cashbox->getBalanceByDate($date, $cashbox->id);
-                            $sum+=(int)$balance;
+                            $sum2+=(int)$balance;
                             echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id]]) . "\">".(int)$balance."</a>";
                             ?>
                         </td>
