@@ -33,7 +33,7 @@ class Cashbox extends Component
         if (isset($params['itemId'])) {
             $model->item_id = $params['itemId'];
         }
-        
+
         if (isset($params['date'])) {
             $model->date = $params['date'];
         }
@@ -41,7 +41,7 @@ class Cashbox extends Component
         if (isset($params['cancel'])) {
             $model->cancel = $params['cancel'];
         }
-        
+
         if (isset($params['model'])) {
             $model->model = $params['model'];
         }
@@ -89,7 +89,7 @@ class Cashbox extends Component
     {
         return CashboxModel::find()->all();
     }
-    
+
     /**
     *   Получить общую сумму поступлений по всем кассам
     */
@@ -121,7 +121,7 @@ class Cashbox extends Component
             foreach ($operations as $key => $transaction) {
                 $transaction->cancel = 1;
                 $transaction->save(false);
-                
+
                 $params = [];
                 $params['comment'] = 'Отмена заказа '.$orderId;
                 $params['itemId'] = $transaction->item_id;
@@ -129,7 +129,7 @@ class Cashbox extends Component
                 $this->addTransaction('outcome', $transaction->sum, $transaction->cashbox_id, $params);
             }
         }
-        
+
         return true;
     }
 
@@ -148,6 +148,7 @@ class Cashbox extends Component
     {
         $lastOperation = Operation::find()
             ->where('date < :date AND cashbox_id = :cashboxId', [':date' => $date, ':cashboxId' => $cashboxId])
+            ->andWhere(['cancel' => 0])
             ->limit(1)
             ->orderBy('id DESC')
             ->one();

@@ -256,6 +256,7 @@ class OperationController extends Controller
             $sum = $model->sum;
             $cashboxId = $model->cashbox_id;
             $params['comment'] = 'Отмена операции id: '.$model->id;
+            $params['cancel'] = 1;
             $resutl = yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $params);
             $model->cancel = 1;
             $model->save();
