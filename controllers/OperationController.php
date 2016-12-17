@@ -240,6 +240,32 @@ class OperationController extends Controller
         }
     }
 
+    public function actionCancel($id)
+    {
+        $model = Operation::findOne($id);
+
+        if ($model) {
+
+            if ($model->type == 'income') {
+                $type = 'outcome';
+            } elseif ($model->type == 'outcome')  {
+                $type = 'income';
+
+            }
+
+            $sum = $model->sum;
+            $cashboxId = $model->cashbox_id;
+            $params['comment'] = 'Отмена операции id: '.$model->id;
+            $resutl = yii::$app->cashbox->addTransaction($type, $sum, $cashboxId, $params);
+            $model->cancel = 1;
+            $model->save();
+
+        }
+
+        return $this->redirect('index');
+
+
+    }
     /**
      * Finds the Operation model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

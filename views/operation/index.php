@@ -207,7 +207,19 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'client_id',
             // 'staffer_id',
             'comment:ntext',
-
+            [
+                'label' => 'Отмена',
+                'content' => function($model) {
+                    if ($model->cancel != 0) {
+                        return 'Операция отменена';
+                    } else {
+                        if ($model->model === null && !(strpos($model->comment, 'тмена операции id:'))) {
+                            return '<a href="'.Url::toRoute(['/cashbox/operation/cancel', 'id' => $model->id]).'" class="btn btn-danger" title="Отменить" aria-label="Отменить" data-pjax="0" data-confirm="Вы уверены, что хотите отменить эту операцию?" data-method="post"><i class="glyphicon glyphicon-remove-sign" /></a>';
+                        }
+                        return "";
+                    }
+                }
+            ]
             // ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 65px;']],
         ],
     ]); ?>
