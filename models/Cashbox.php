@@ -82,9 +82,13 @@ class Cashbox extends \yii\db\ActiveRecord
     public static function getAvailable($userId = null)
     {
         $userId = $userId ? $userId : \Yii::$app->user->id;
-        $cashBoxIds = UserToCashbox::find()->where(['user_id' => $userId])->all();
-        $cashboxIds = ArrayHelper::getColumn($cashBoxIds, 'cashbox_id');
-        $cashboxes = Cashbox::find()->where(['id' => $cashboxIds]);
+        $cashboxes = UserToCashbox::find()->where(['user_id' => $userId])->all();
+        $cashboxIds = ArrayHelper::getColumn($cashboxes, 'cashbox_id');
+        $commonCashboxes = Cashbox::find()->all();
+
+        $cashboxes = Cashbox::find()
+            ->where(['id' => $cashboxIds])
+            ->orWhere(['not in', 'id', ArrayHelper::getColumn(UserToCashbox::find()->select('cashbox_id')->distinct()->all(), 'cashbox_id')]);
 
         if (\Yii::$app->has('organization') && $organization = \Yii::$app->get('organization')) {
             $organization = \Yii::$app->organization->get();
