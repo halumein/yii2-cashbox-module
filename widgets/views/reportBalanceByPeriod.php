@@ -43,14 +43,14 @@ $sum2 = 0;
                             <?php
                             $balance = \Yii::$app->cashbox->getBalanceByDate($dateStart, $cashbox->id);
                             $sum1+=(int)$balance;
-                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id]]) . "\">".(int)$balance."</a>";
+                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'sort' => 'id', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id]]) . "\">".(int)$balance."</a>";
                             ?>
                         </td>
                         <td>
                             <?php
                             $income = \Yii::$app->cashbox->getIncomeSumByPeriod($dateStart, $date, $cashbox->id);
                             $in+=$income;
-                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id, 'type' => 'income']]) . "\">".(int)$income."</a>";
+                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'sort' => 'id', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id, 'type' => 'income']]) . "\">".(int)$income."</a>";
                             ?>
                         </td>
                         <td>
@@ -58,14 +58,14 @@ $sum2 = 0;
                             <?php
                             $outcome = \Yii::$app->cashbox->getOutcomeSumByPeriod($dateStart, $date, $cashbox->id);
                             $out+=$outcome;
-                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id, 'type' => 'outcome']]) . "\">".(int)$outcome."</a>";
+                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'sort' => 'id', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id, 'type' => 'outcome']]) . "\">".(int)$outcome."</a>";
                             ?>
                         </td>
                         <td>
                             <?php
                             $balance = \Yii::$app->cashbox->getBalanceByDate($date, $cashbox->id);
                             $sum2+=(int)$balance;
-                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id]]) . "\">".(int)$balance."</a>";
+                            echo "<a href=\"" . Url::toRoute(['/cashbox/operation/index', 'sort' => 'id', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['cashbox_id' => $cashbox->id]]) . "\">".(int)$balance."</a>";
                             ?>
                         </td>
                     </tr>
@@ -73,21 +73,28 @@ $sum2 = 0;
             </tbody>
             
             <tfoot>
-                <th>
-                    Итого:
-                </th>
-                <th>
-                    <?=$sum1;?>
-                </th>
-                <th>
-                    <?=$in;?>
-                </th>
-                <th>
-                    <?=$out;?>
-                </th>
-                <th>
-                    <?=$sum2;?>
-                </th>
+                <tr>
+                    <th>
+                        Итого:
+                    </th>
+                    <th>
+                        <?=$sum1;?>
+                    </th>
+                    <th>
+                        <a href="<?=Url::toRoute(['/cashbox/operation/index', 'sort' => 'id', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['type' => 'income']]);?>"><?=$in;?></a>
+                    </th>
+                    <th>
+                        <a href="<?=Url::toRoute(['/cashbox/operation/index', 'sort' => 'id', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => ['type' => 'outcome']]);?>"><?=$out;?></a>
+                    </th>
+                    <th>
+                        <?=$sum2;?>
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="5" align="center">
+                        <a href="<?=Url::toRoute(['/cashbox/operation/index', 'sort' => 'id', 'date_start' => $dateStart, 'date_stop' => $date, 'OperationSearch' => [1]]);?>">Все операции</a>
+                    </td>
+                </tr>
             </tfoot>
         </table>
     </div>

@@ -73,13 +73,16 @@ class OperationSearch extends Operation
             ->andFilterWhere(['like', 'model', $this->model])
             ->andFilterWhere(['like', 'comment', $this->comment]);
 
-        if($dateStart = yii::$app->request->get('date_start')) {
-            $query->andWhere(['>=', 'date', date('Y-m-d H:i:s', strtotime($dateStart))]);
-        }
+        if(yii::$app->request->get('date_start') && yii::$app->request->get('date_start') == yii::$app->request->get('date_stop')) {
+            $query->andWhere(['DATE_FORMAT(date, "%Y-%m-%d")' => date('Y-m-d', strtotime(yii::$app->request->get('date_start')))]);
+        } else {
+            if($dateStart = yii::$app->request->get('date_start')) {
+                $query->andWhere(['>=', 'date', date('Y-m-d H:i:s', strtotime($dateStart))]);
+            }
 
-        if($dateStop = yii::$app->request->get('date_stop')) {
-            $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop))]);
-
+            if($dateStop = yii::$app->request->get('date_stop')) {
+                $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop))]);
+            }
         }
 
         return $dataProvider;

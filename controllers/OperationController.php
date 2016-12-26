@@ -8,7 +8,7 @@ use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use halumein\cashbox\models\Cashbox;
 use halumein\cashbox\models\Operation;
-use halumein\cashbox\models\search\Operationsearch;
+use halumein\cashbox\models\search\OperationSearch;
 
 use yii\helpers\Url;
 /**
@@ -37,7 +37,7 @@ class OperationController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new Operationsearch();
+        $searchModel = new OperationSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
