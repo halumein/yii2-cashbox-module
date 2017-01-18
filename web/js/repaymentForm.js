@@ -14,7 +14,7 @@ halumein.repaymentForm = {
                 $submit = $(self).find('[data-role=submit]'),
                 $paymentChange = $(self).find('[data-role=payment-change]');
 
-            $paymentInput.focus();
+            $paymentInput.focus(); 
             $paymentInput.select();
 
     		// обработчик для поля внесённой суммы. осталвяем только цыфры и точку

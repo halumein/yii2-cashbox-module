@@ -167,10 +167,15 @@ class OperationController extends Controller
         if ($request) {
             $type = 'income';
             $cashboxId = $request['Operation']['cashbox_id'];
-            $params['model'] = Yii::$app->getModule('cashbox')->orderModel;
+            if($request['Operation']['item_model']) {
+                $params['model'] = $request['Operation']['item_model'];
+            } else {
+                $params['model'] = Yii::$app->getModule('cashbox')->orderModel;
+            }
+            
             $params['comment'] = $request['Operation']['comment'];
             $params['itemId'] = $request['Operation']['item_id'];
-            $paymentTypeId = $request['Operation']['paymentTypeId'];
+            $paymentTypeId = @$request['Operation']['paymentTypeId'];
 
             // проверяет если внесено больше денег чем стоит заказ (крупная купюра с которой сдали)
             // то присваиваем входящую сумму равной стоимости заказа.

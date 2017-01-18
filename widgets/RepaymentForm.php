@@ -56,10 +56,6 @@ class RepaymentForm extends \yii\base\Widget
             }
         }
 
-        if ($lastOperations) {
-
-        }
-
         return $this->render('repaymentForm', [
             'model' => $operationModel,
             'lastPayments' => $lastOperations,

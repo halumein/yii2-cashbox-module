@@ -21,6 +21,9 @@ use yii\bootstrap\ActiveForm;
                 </tr>
                 <?php foreach ($lastPayments as $key => $payment) { ?>
                     <tr class="payment-row">
+                        <td colspan="2"><?=$payment->comment;?></td>
+                    </div>
+                    <tr class="payment-row" title="<?=$payment->comment;?>">
                         <td>
                             <?= $payment->date ?>
                         </td>
@@ -33,9 +36,6 @@ use yii\bootstrap\ActiveForm;
         </div>
     </div>
 
-
-
-
     <?php $form = ActiveForm::begin([
         'id' => $model->formName(),
         'action' => $useAjax ? Url::to(['/cashbox/operation/payment-confirm-ajax']) : Url::to(['/cashbox/operation/payment-confirm']),
@@ -47,9 +47,10 @@ use yii\bootstrap\ActiveForm;
     ]); ?>
 
     <div class="hidden" data-role="tools">
+        <?= $form->field($model, 'item_model')->textInput(['value' => $order::className()])?>
         <?= $form->field($model, 'item_id')->textInput(['value' => $order->id])?>
         <?= $form->field($model, 'itemCost')->textInput(['value' => $order->cost])?>
-        <?= $form->field($model, 'comment')->textInput(['value' => 'Оплата заказа '.$order->id])?>
+        <?= $form->field($model, 'comment')->textInput(['value' => 'Оплата '.$order->id])?>
     </div>
 
     <div class="row row-centered">
@@ -81,15 +82,15 @@ use yii\bootstrap\ActiveForm;
 		</div>
     </div>
 
-    <!-- <div class="row row-centered">
+    <div class="row row-centered">
         <div class="col-xs-12 col-centered col-fixed text-left">
-            <?php /* echo $form->field($model, 'comment')->textArea([
+            <?php echo $form->field($model, 'comment')->textArea([
                 'class' => 'form-control',
                 'rows' => 4,
                 'data-role' => 'payment-comment'
-                ]) */ ?>
+                ]) ?>
         </div>
-    </div> -->
+    </div>
     <div>
 		<p><span id="payment-notify"class="payment-form-notify"></span></p>
     </div>
