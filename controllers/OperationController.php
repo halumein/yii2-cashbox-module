@@ -167,12 +167,12 @@ class OperationController extends Controller
         if ($request) {
             $type = 'income';
             $cashboxId = $request['Operation']['cashbox_id'];
-            if($request['Operation']['item_model']) {
+            if(isset($request['Operation']['item_model'])) {
                 $params['model'] = $request['Operation']['item_model'];
             } else {
                 $params['model'] = Yii::$app->getModule('cashbox')->orderModel;
             }
-            
+
             $params['comment'] = $request['Operation']['comment'];
             $params['itemId'] = $request['Operation']['item_id'];
             $paymentTypeId = @$request['Operation']['paymentTypeId'];

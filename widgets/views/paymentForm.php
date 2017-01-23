@@ -23,6 +23,14 @@ use yii\bootstrap\ActiveForm;
     </div>
 
     <div class="row row-centered">
+        <div class="col-xs-12 col-centered col-fixed text-right">
+            <div class="form-group">
+                <?= Html::button('Провести оплату', ['class' => 'btn btn-success', 'id' => 'submit-payment', 'style' => 'width: 100%']); ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-centered">
         <div class="col-xs-12 col-centered col-fixed">
             <h3>Сумма к оплате: <span data-role="payment-cost"><?= $order->cost ?></h3>
         </div>
