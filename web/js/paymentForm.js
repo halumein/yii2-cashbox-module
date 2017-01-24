@@ -7,7 +7,7 @@ halumein.paymentForm = {
 		$paymentInput = $('[data-role=payment-sum]');
 		paymentCost = +$('[data-role=payment-cost]').html();
 		$paymentChange = $('[data-role=payment-change]');
-        $submit = $('#submit-payment');
+        $submit = $('[data-role=submit-payment]');
 		$cancel = $('#cancel-payment');
 
         $paymentInput.focus();
