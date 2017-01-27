@@ -48,10 +48,20 @@ halumein.paymentForm = {
 		});
 
 		$submit.on('click', function(e) {
+            var self = this;
+            $(self).prop("disabled", true);
+            setTimeout(function() {
+                $(self).prop("disabled", false);
+            }, 2000);
 			halumein.paymentForm.sendData(e);
 		});
 
         $cancel.on('click', function() {
+            var self = this;
+            $(self).prop("disabled", true);
+            setTimeout(function() {
+                $(self).prop("disabled", false);
+            }, 2000);
             halumein.paymentForm.cancel();
         });
 	},
