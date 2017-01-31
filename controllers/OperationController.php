@@ -137,6 +137,7 @@ class OperationController extends Controller
 
             if ($status) {
                 // TODO избавиться от сильной связанности
+                // можно вынести в ивент и дёргать на create в кешбоксе
                 Yii::$app->order->setStatus($itemId, $status);
             }
 

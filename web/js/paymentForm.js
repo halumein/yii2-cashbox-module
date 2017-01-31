@@ -50,18 +50,19 @@ halumein.paymentForm = {
 		$submit.on('click', function(e) {
             var self = this;
             $(self).prop("disabled", true);
-            setTimeout(function() {
-                $(self).prop("disabled", false);
-            }, 2000);
+            // setTimeout(function() {
+            //     $(self).prop("disabled", false);
+            // }, 2000);
 			halumein.paymentForm.sendData(e);
 		});
 
         $cancel.on('click', function() {
             var self = this;
-            $(self).prop("disabled", true);
-            setTimeout(function() {
-                $(self).prop("disabled", false);
-            }, 2000);
+            $submit.prop("disabled", true);
+            // $(self).prop("disabled", true);
+            // setTimeout(function() {
+            //     $(self).prop("disabled", false);
+            // }, 2000);
             halumein.paymentForm.cancel();
         });
 	},
@@ -108,6 +109,7 @@ halumein.paymentForm = {
                             if (response.printRedirect !== null) {
                                 $('#orderSubmitter').attr('src', response.printRedirect);
                             }
+                            $submit.prop("disabled", false);
 						} else {
                             alert('ошибка проведения операции');
                         }
