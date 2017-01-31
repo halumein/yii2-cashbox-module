@@ -49,7 +49,7 @@ halumein.paymentForm = {
 
 		$submit.on('click', function(e) {
             var self = this;
-            $(self).prop("disabled", true);
+            $submit.prop("disabled", true);
             // setTimeout(function() {
             //     $(self).prop("disabled", false);
             // }, 2000);
@@ -58,11 +58,10 @@ halumein.paymentForm = {
 
         $cancel.on('click', function() {
             var self = this;
-            $submit.prop("disabled", true);
-            // $(self).prop("disabled", true);
-            // setTimeout(function() {
-            //     $(self).prop("disabled", false);
-            // }, 2000);
+            $(self).prop("disabled", true);
+            setTimeout(function() {
+                $(self).prop("disabled", false);
+            }, 2000);
             halumein.paymentForm.cancel();
         });
 	},
