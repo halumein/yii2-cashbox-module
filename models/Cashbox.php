@@ -84,11 +84,15 @@ class Cashbox extends \yii\db\ActiveRecord
         $userId = $userId ? $userId : \Yii::$app->user->id;
         $cashboxes = UserToCashbox::find()->where(['user_id' => $userId])->all();
         $cashboxIds = ArrayHelper::getColumn($cashboxes, 'cashbox_id');
-        $commonCashboxes = Cashbox::find()->all();
+
+        // заберём все кассы которые к кому-либо привязаны, что бы исключить их из выборки
+        $cashboxInUserToCashbox = ArrayHelper::getColumn(UserToCashbox::find()->select('cashbox_id')->distinct()->all(), 'cashbox_id');
+        // если там вообще по нулям - вернётся пустой массив. в таком случае присвоим 0
+        $cashboxInUserToCashbox = $cashboxInUserToCashbox ? $cashboxInUserToCashbox : 0;
 
         $cashboxes = Cashbox::find()
             ->where(['id' => $cashboxIds])
-            ->orWhere(['not in', 'id', ArrayHelper::getColumn(UserToCashbox::find()->select('cashbox_id')->distinct()->all(), 'cashbox_id')]);
+            ->orWhere(['not in', 'id', $cashboxInUserToCashbox]);
 
         if (\Yii::$app->has('organization') && $organization = \Yii::$app->get('organization')) {
             $organization = \Yii::$app->organization->get();
@@ -96,6 +100,8 @@ class Cashbox extends \yii\db\ActiveRecord
                 $cashboxes->andWhere(['organization_id' => $organization->id]);
             }
         }
+
+        $cashboxes->andWhere(['deleted' => null]);
 
         return $cashboxes->all();
     }
