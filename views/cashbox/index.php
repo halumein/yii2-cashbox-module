@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete}',
-                'visible' => Yii::$app->user->can('administrator'),
+                'visible' => Yii::$app->user->can(\Yii::$app->getModule('cashbox')->cashboxAdminRole),
                 'buttonOptions' => ['class' => 'btn btn-default'],
                 'options' => ['style' => 'width: 125px;']
             ],

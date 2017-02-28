@@ -7,6 +7,7 @@ use Yii;
 class Module extends \yii\base\Module
 {
     public $adminRoles = ['superadmin', 'admin'];
+    public $cashboxAdminRole = 'administrator';
     public $userRoles = ['@'];
     public $orderModel = 'pistol88\order\models\Order';
     public $orderViewAction = '/order/order/view';

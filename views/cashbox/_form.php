@@ -43,7 +43,7 @@ use kartik\select2\Select2;
     //на Select2 c мультивыбором
     echo $form->field($model, 'user_ids')->label('Пользователи, которые имеют доступ')
         ->widget(Select2::classname(), [
-            'data' => ArrayHelper::map($activeUsers, 'id', 'username'),
+            'data' => ArrayHelper::map($activeUsers, 'id', 'name'),
             'language' => 'ru',
             'options' => ['multiple' => true, 'placeholder' => 'Выберите пользователей ...'],
             'pluginOptions' => [
