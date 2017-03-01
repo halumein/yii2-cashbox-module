@@ -37,7 +37,7 @@ class RepaymentForm extends \yii\base\Widget
             return false;
         }
 
-        $userModel = Yii::$app->getModule('cashbox')->userModel;
+        // $userModel = Yii::$app->getModule('cashbox')->userModel;
         $order = $this->order;
 
         $lastOperations = Operation::find()->where([
@@ -48,7 +48,7 @@ class RepaymentForm extends \yii\base\Widget
         $operationModel = new Operation();
         $cashboxes = Cashbox::getAvailable();
 
-        $operationModel->cashbox_id = $userModel->defaultCashbox;
+        $operationModel->cashbox_id = \Yii::$app->user->identity->defaultCashbox;
 
         if ($paymentTypeToCashbox = Yii::$app->getModule('cashbox')->paymentTypeToCashbox) {
             if (isset($paymentTypeToCashbox[$this->order->payment_type_id])) {
