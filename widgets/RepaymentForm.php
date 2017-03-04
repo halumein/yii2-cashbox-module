@@ -48,9 +48,9 @@ class RepaymentForm extends \yii\base\Widget
         $operationModel = new Operation();
         $cashboxes = Cashbox::getAvailable();
 
-        $userModel = Yii::$app->getModule('cashbox')->userModel;
+        // $userModel = Yii::$app->getModule('cashbox')->userModel;
+        $operationModel->cashbox_id = \Yii::$app->user->identity->defaultCashbox;
 
-        $operationModel->cashbox_id = $userModel->defaultCashbox;
 
         if ($paymentTypeToCashbox = Yii::$app->getModule('cashbox')->paymentTypeToCashbox) {
             if (isset($paymentTypeToCashbox[$this->order->payment_type_id])) {
