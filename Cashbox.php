@@ -172,5 +172,13 @@ class Cashbox extends Component
             'item_id' => $orderId
             ])->sum('sum');
     }
-
+    
+    public function getOperationsByOrder($orderId)
+    {
+        return $sum = Operation::find()->where([
+            'model' => \Yii::$app->getModule('cashbox')->orderModel,
+            'cancel' => 0,
+            'item_id' => $orderId
+            ])->all();
+    }
 }
