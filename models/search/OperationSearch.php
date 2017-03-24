@@ -68,7 +68,7 @@ class OperationSearch extends Operation
             'staffer_id' => $this->staffer_id,
             'cancel' => $this->cancel,
         ]);
-
+        
         $query->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'model', $this->model])
             ->andFilterWhere(['like', 'comment', $this->comment]);
@@ -77,11 +77,11 @@ class OperationSearch extends Operation
             $query->andWhere(['DATE_FORMAT(date, "%Y-%m-%d")' => date('Y-m-d', strtotime(yii::$app->request->get('date_start')))]);
         } else {
             if($dateStart = yii::$app->request->get('date_start')) {
-                $query->andWhere(['>=', 'date', date('Y-m-d H:i:s', strtotime($dateStart))]);
+                $query->andWhere('DATE_FORMAT(date, "%Y-%m-%d") >= :start', [':start' => date('Y-m-d', strtotime($dateStart))]);
             }
 
             if($dateStop = yii::$app->request->get('date_stop')) {
-                $query->andWhere(['<=', 'date', date('Y-m-d H:i:s', strtotime($dateStop))]);
+                $query->andWhere('DATE_FORMAT(date, "%Y-%m-%d") <= :stop', [':stop' => date('Y-m-d', strtotime($dateStop))]);
             }
         }
 
