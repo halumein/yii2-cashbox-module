@@ -83,11 +83,11 @@ class ExchangeController extends Controller
             $fromCashboxModel = Cashbox::find($postData['Exchange']['from_cashbox_id'])->one();
 
             if ($postData['Exchange']['from_sum'] > $fromCashboxModel->balance) {
-                Yii::$app->getSession()->setFlash('error', "Сумма списания не может быть больше суммы в кассе");
-                return $this->render('create', [
-                    'model' => $model,
-                    'activeCashboxes' => Cashbox::getAvailable(),
-                ]);
+                //Yii::$app->getSession()->setFlash('error', "Сумма списания не может быть больше суммы в кассе");
+                //return $this->render('create', [
+                //    'model' => $model,
+                //    'activeCashboxes' => Cashbox::getAvailable(),
+                //]);
             }
 
             if ($model->from_cashbox_id === $model->to_cashbox_id){
