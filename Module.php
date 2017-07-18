@@ -9,7 +9,7 @@ class Module extends \yii\base\Module
     public $adminRoles = ['superadmin', 'admin'];
     public $cashboxAdminRole = 'administrator';
     public $userRoles = ['@'];
-    public $orderModel = 'pistol88\order\models\Order';
+    public $orderModel = 'dvizh\order\models\Order';
     public $orderViewAction = '/order/order/view';
     public $userModel = null;
     public $cashiersList = null;

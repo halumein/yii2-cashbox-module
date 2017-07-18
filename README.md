@@ -44,7 +44,7 @@ php yii migrate --migrationPath=vendor/halumein/yii2-cashbox-module/migrations
 
             // для формирования ссылок в списке операций
             'linksToViews' => [
-                'pistol88\order\models\Order' => [
+                'dvizh\order\models\Order' => [
                     'viewUrl' => '/order/order/view',
                     'itemIdField' => 'id'
                 ]
